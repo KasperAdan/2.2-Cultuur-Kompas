@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/pastelgroen">
 
     <ImageButton
         android:id="@+id/routeScreen_backButton"
@@ -13,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/roundedbutton"
         android:layout_margin="16dp"
-        android:src="@drawable/outline_west_24"/>
+        android:src="@drawable/back"/>
 
     <ImageButton
         android:id="@+id/routeScreen_helpButton"
@@ -23,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/roundedbutton"
         android:layout_margin="16dp"
-        android:src="@drawable/outline_help_24"/>
+        android:src="@drawable/outline_help_24" />
 
     <TextView
         android:id="@+id/routeScreen_title"
@@ -51,21 +52,27 @@
             android:layout_height="wrap_content"
             android:text="All"
             app:layout_constraintTop_toBottomOf="@id/routeScreen_backButton"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"/>
         <Button
             android:id="@+id/routeScreen_sortComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Complete"
             app:layout_constraintTop_toBottomOf="@id/routeScreen_backButton"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"/>
         <Button
             android:id="@+id/routeScreen_sortIncomplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Incomplete"
             app:layout_constraintTop_toBottomOf="@id/routeScreen_backButton"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 
@@ -77,8 +84,6 @@
         app:layout_constraintTop_toBottomOf="@id/routeScreen_buttonLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

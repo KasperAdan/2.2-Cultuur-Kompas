@@ -13,7 +13,7 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:src="@drawable/outline_west_black_18dp"
-        android:background="@color/gold_tips"
+        android:background="@drawable/roundedbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +35,7 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:src="@drawable/outline_help_outline_black_18dp"
-        android:background="@color/gold_tips"
+        android:background="@drawable/roundedbutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailRouteScreenActivity">
+    tools:context=".DetailRouteScreenActivity"
+    android:background="@color/pastelgroen">
 
     <ImageButton
         android:id="@+id/routeDetailScreen_backButton"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/roundedbutton"
-        android:src="@drawable/outline_west_24"
+        android:src="@drawable/back"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -95,6 +96,7 @@
         android:text="Start Route"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:backgroundTint="@color/gold_tips"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
