@@ -8,4 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#E6A02B</color>
+    
+    <color name="potlood_grijs">#5C615D</color>
+    <color name="donker_bos_groen">#1E8000</color>
+    <color name="gold_tips">#E6A02B</color>
+    <color name="summer_sky_blue">#229FDB</color>
+    <color name="pastelgroen">#88E5A0</color>
+
 </resources>
