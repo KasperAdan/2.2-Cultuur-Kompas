@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageButton
+        android:id="@+id/routeScreen_backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/roundedbutton"
+        android:layout_margin="16dp"
+        android:src="@drawable/outline_west_24"/>
+
+    <ImageButton
+        android:id="@+id/routeScreen_helpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/roundedbutton"
+        android:layout_margin="16dp"
+        android:src="@drawable/outline_help_24"/>
+
+    <TextView
+        android:id="@+id/routeScreen_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="30sp"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@id/routeScreen_backButton"
+        app:layout_constraintRight_toLeftOf="@id/routeScreen_helpButton"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="16dp"/>
+
+    <LinearLayout
+        android:id="@+id/routeScreen_buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/routeScreen_backButton">
+
+        <Button
+            android:id="@+id/routeScreen_sortAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All"
+            app:layout_constraintTop_toBottomOf="@id/routeScreen_backButton"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+        <Button
+            android:id="@+id/routeScreen_sortComplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Complete"
+            app:layout_constraintTop_toBottomOf="@id/routeScreen_backButton"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+        <Button
+            android:id="@+id/routeScreen_sortIncomplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incomplete"
+            app:layout_constraintTop_toBottomOf="@id/routeScreen_backButton"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/routeScreen_listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/routeScreen_buttonLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
