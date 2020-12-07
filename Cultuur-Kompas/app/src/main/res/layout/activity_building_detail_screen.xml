@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/pastelgroen">
+
+    <ImageButton
+        android:id="@+id/ib_buildingdetail_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_rounded"
+        android:src="@drawable/icon_back"
+        android:tint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_buildingdetail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Placeholder"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_buildingdetail_back"
+        app:layout_constraintEnd_toStartOf="@+id/ib_buildingdetail_help"
+        app:layout_constraintStart_toEndOf="@id/ib_buildingdetail_back"
+        app:layout_constraintTop_toTopOf="@+id/ib_buildingdetail_back" />
+
+    <ImageButton
+        android:id="@+id/ib_buildingdetail_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_rounded"
+        android:src="@drawable/icon_help"
+        android:tint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_buildingdetail_item"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_margin="40dp"
+        android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_buildingdetail_title"/>
+
+    <LinearLayout
+        android:id="@+id/TOCHANGETOLIST"
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_buildingdetail_item"
+        app:layout_constraintTop_toTopOf="@+id/iv_buildingdetail_item" />
+
+    <ImageButton
+        android:id="@+id/ib_buildingdetail_audio"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/pastelgroen"
+        android:src="@drawable/icon_volume_up"
+        android:tint="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_buildingdetail_item"
+        app:layout_constraintEnd_toEndOf="@+id/TOCHANGETOLIST"
+        app:layout_constraintStart_toStartOf="@+id/TOCHANGETOLIST"
+        app:layout_constraintTop_toBottomOf="@+id/TOCHANGETOLIST" />
+
+    <CheckBox
+        android:id="@+id/cb_buildingdetail_visited"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:text="Bezocht"
+        android:textAlignment="viewStart"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_buildingdetail_item"
+        app:layout_constraintStart_toStartOf="@+id/iv_buildingdetail_item"
+        app:layout_constraintTop_toBottomOf="@+id/iv_buildingdetail_item" />
+
+    <TextView
+        android:id="@+id/tv_buildingdetail_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/ib_buildingdetail_map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cb_buildingdetail_visited" />
+
+    <ImageButton
+        android:id="@+id/ib_buildingdetail_route"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/btn_rounded"
+        android:src="@drawable/icon_exploration"
+        android:tint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ib_buildingdetail_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/btn_rounded"
+        android:src="@drawable/icon_worldmap"
+        android:tint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
