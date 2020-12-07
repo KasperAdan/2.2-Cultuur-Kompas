@@ -1,8 +1,10 @@
-package com.example.cultuurkompas;
+package com.example.cultuurkompas.activities.detail;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.cultuurkompas.R;
 
 public class BuildingDetailScreenActivity extends AppCompatActivity {
 

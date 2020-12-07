@@ -1,8 +1,10 @@
-package com.example.cultuurkompas;
+package com.example.cultuurkompas.activities.detail;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cultuurkompas.R;
 
 public class RouteDetailScreenActivity extends AppCompatActivity {
 
