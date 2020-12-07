@@ -9,14 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CultuurKompas">
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapScreenActivity" />
+        <activity android:name=".activities.MapScreenActivity" />
+        <activity android:name=".activities.RouteScreenActivity" />
+        <activity android:name=".activities.detail.RouteDetailScreenActivity" />
+        <activity android:name=".activities.BuildingScreenActivity" />
+        <activity android:name=".activities.detail.BuildingDetailScreenActivity" />
     </application>
-
 </manifest>
