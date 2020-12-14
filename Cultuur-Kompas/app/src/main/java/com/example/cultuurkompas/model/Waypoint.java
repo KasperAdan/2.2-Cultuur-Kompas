@@ -1,4 +1,7 @@
 package com.example.cultuurkompas.model;
 
-public class Waypoint {
+import java.io.Serializable;
+
+public class Waypoint implements Serializable {
+
 }

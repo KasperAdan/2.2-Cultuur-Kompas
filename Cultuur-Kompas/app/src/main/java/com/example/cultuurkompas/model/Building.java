@@ -2,22 +2,20 @@ package com.example.cultuurkompas.model;
 
 import java.util.ArrayList;
 
-public class Route {
+public class Building {
 
     private String name;
-    private String info;
     private String description;
     private String imgLink;
-    private ArrayList<Waypoint> waypoints;
     private ArrayList<String> tags;
+    private Boolean hasVisited;
 
-    public Route(String name, String info, String description, String imgLink, ArrayList<Waypoint> waypoints, ArrayList<String> tags) {
+    public Building(String name, String description, String imgLink, ArrayList<String> tags) {
         this.name = name;
-        this.info = info;
         this.description = description;
         this.imgLink = imgLink;
-        this.waypoints = waypoints;
         this.tags = tags;
+        this.hasVisited = false;
     }
 
     public String getName() {
@@ -32,15 +30,15 @@ public class Route {
         return imgLink;
     }
 
-    public ArrayList<Waypoint> getWaypoints() {
-        return waypoints;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
     public ArrayList<String> getTags() {
         return tags;
+    }
+
+    public Boolean getHasVisited() {
+        return hasVisited;
+    }
+
+    public void setHasVisited(Boolean hasVisited) {
+        this.hasVisited = hasVisited;
     }
 }
