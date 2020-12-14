@@ -27,6 +27,7 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 
@@ -41,6 +42,7 @@ public class MapScreenActivity extends AppCompatActivity {
     private Route route;
     private LocationListener locationListener;
     private LocationManager locationManager;
+    private Marker marker;
 
 
     @Override
@@ -78,10 +80,14 @@ public class MapScreenActivity extends AppCompatActivity {
         mapView.setDestroyMode(false);
         mapView.setTag("mapView");
         mapView.setMultiTouchControls(true);
+        marker = new Marker(mapView);
+        marker.setPosition(cityGeoPoint);
+        mapView.getOverlays().add(marker);
         mapView.setBuiltInZoomControls(false);
         mapController = mapView.getController();
         mapController.setZoom(17.5);
-        mapController.setCenter(cityGeoPoint);
+        mapController.setCenter(cityGeoPoint)
+        ;
     }
 
     public void onButtonCurrentLocationClick(View view){
@@ -177,6 +183,7 @@ public class MapScreenActivity extends AppCompatActivity {
 
     public void locationChanged(GeoPoint geoPoint){
         mapController.setCenter(geoPoint);
+        marker.setPosition(geoPoint);
     }
 
 
