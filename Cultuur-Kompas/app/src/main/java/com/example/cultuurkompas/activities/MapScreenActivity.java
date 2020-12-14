@@ -6,16 +6,20 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.interfaces.MyLocationListener;
 import com.example.cultuurkompas.viewmodel.orsdata.Route;
 
 import org.osmdroid.api.IMapController;
@@ -28,14 +32,15 @@ import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 
 import java.util.ArrayList;
 
-public class MapScreenActivity extends AppCompatActivity implements LocationListener {
+public class MapScreenActivity extends AppCompatActivity {
 
     private MapView mapView = null;
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private IMapController mapController;
     private GeoPoint cityGeoPoint;
     private Route route;
-
+    private LocationListener locationListener;
+    private LocationManager locationManager;
 
 
     @Override
@@ -43,7 +48,7 @@ public class MapScreenActivity extends AppCompatActivity implements LocationList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
 
-        requestPermissionsIfNecessary(new String[] {
+        requestPermissionsIfNecessary(new String[]{
                 // if you need to show the current location, uncomment the line below
                 // Manifest.permission.ACCESS_FINE_LOCATION,
                 // WRITE_EXTERNAL_STORAGE is required in order to show the map
@@ -51,6 +56,20 @@ public class MapScreenActivity extends AppCompatActivity implements LocationList
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         });
         Configuration.getInstance().setUserAgentValue("com.example.cultuurkompas");
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new MyLocationListener(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+
 
         cityGeoPoint = new GeoPoint(51.589457,4.777006);
 
@@ -156,9 +175,9 @@ public class MapScreenActivity extends AppCompatActivity implements LocationList
         return line;
     }
 
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        GeoPoint geoPoint = new GeoPoint(location.getLatitude(),location.getLongitude());
+    public void locationChanged(GeoPoint geoPoint){
         mapController.setCenter(geoPoint);
     }
+
+
 }
