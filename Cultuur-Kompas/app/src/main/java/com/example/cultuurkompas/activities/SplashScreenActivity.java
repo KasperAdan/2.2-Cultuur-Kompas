@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.data.GenerateJSON;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                 finish();
             }, spashScreenDuration);
         }
+
+        GenerateJSON generateJSON = new GenerateJSON(this);
 
     }
 
