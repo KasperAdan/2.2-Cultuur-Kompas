@@ -63,11 +63,7 @@ public class RouteRVAdapter extends RecyclerView.Adapter<RouteRVAdapter.ViewHold
         public void onClick(View view) {
             Route route = routes.get(getLayoutPosition());
             Intent intent = new Intent(itemView.getContext(), RouteDetailScreenActivity.class);
-            intent.putExtra("name", route.getName());
-            intent.putExtra("description", route.getDescription());
-            intent.putExtra("imgLink", route.getImgLink());
-            intent.putExtra("waypoints", route.getWaypoints());
-            intent.putExtra("tags", route.getTags());
+            intent.putExtra("route", route);
             itemView.getContext().startActivity(intent);
         }
     }

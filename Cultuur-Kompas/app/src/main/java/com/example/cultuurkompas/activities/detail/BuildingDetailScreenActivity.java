@@ -9,24 +9,30 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.model.Building;
 import com.squareup.picasso.Picasso;
 
 public class BuildingDetailScreenActivity extends AppCompatActivity {
+
+    private Building building;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_detail_screen);
         Intent intent = getIntent();
-        ((TextView) findViewById(R.id.tv_buildingdetail_title)).setText(intent.getStringExtra("name"));
-        ((TextView) findViewById(R.id.tv_buildingdetail_title)).setText(intent.getStringExtra("description"));
 
-        Picasso.get().load(intent.getStringExtra("imgLink")).into((ImageView) findViewById(R.id.iv_buildingdetail_item));
+        building = (Building) intent.getSerializableExtra("building");
 
-        ((CheckBox) findViewById(R.id.cb_buildingdetail_visited)).setChecked(intent.getBooleanExtra("hasVisited", false));
+        ((TextView) findViewById(R.id.tv_buildingdetail_title)).setText(building.getName());
+        ((TextView) findViewById(R.id.tv_buildingdetail_text)).setText(building.getDescription());
+
+        Picasso.get().load(building.getImgLink()).into((ImageView) findViewById(R.id.iv_buildingdetail_item));
+
+        ((CheckBox) findViewById(R.id.cb_buildingdetail_visited)).setChecked(building.getHasVisited());
 
 //        TODO Add tags to list
-//        intent.getStringArrayExtra("tags");
+//        building.getTags();
 
     }
 }

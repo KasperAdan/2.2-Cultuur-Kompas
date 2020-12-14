@@ -22,4 +22,5 @@
         <activity android:name=".activities.BuildingScreenActivity" />
         <activity android:name=".activities.detail.BuildingDetailScreenActivity" />
     </application>
+
 </manifest>

@@ -60,11 +60,7 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
         public void onClick(View view) {
             Building building = buildings.get(getLayoutPosition());
             Intent intent = new Intent(itemView.getContext(), BuildingDetailScreenActivity.class);
-            intent.putExtra("name", building.getName());
-            intent.putExtra("description", building.getDescription());
-            intent.putExtra("imgLink", building.getImgLink());
-            intent.putExtra("hasVisited", building.getHasVisited());
-            intent.putExtra("tags", building.getTags());
+            intent.putExtra("building", building);
             itemView.getContext().startActivity(intent);
         }
     }

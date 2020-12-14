@@ -1,8 +1,9 @@
 package com.example.cultuurkompas.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Route {
+public class Route implements Serializable {
 
     private String name;
     private String info;
