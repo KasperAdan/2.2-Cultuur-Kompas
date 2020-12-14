@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -74,6 +76,7 @@ public class MapScreenActivity extends AppCompatActivity {
         mapView.setMultiTouchControls(true);
         marker = new Marker(mapView);
         marker.setPosition(cityGeoPoint);
+        marker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_my_location, null));
         mapView.getOverlays().add(marker);
         mapView.setBuiltInZoomControls(false);
         mapController = mapView.getController();
