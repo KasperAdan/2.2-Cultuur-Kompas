@@ -36,7 +36,6 @@ import java.util.ArrayList;
 public class MapScreenActivity extends AppCompatActivity {
 
     private MapView mapView = null;
-    private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private IMapController mapController;
     private GeoPoint cityGeoPoint;
     private Route route;
@@ -50,13 +49,6 @@ public class MapScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
 
-        requestPermissionsIfNecessary(new String[]{
-                // if you need to show the current location, uncomment the line below
-                // Manifest.permission.ACCESS_FINE_LOCATION,
-                // WRITE_EXTERNAL_STORAGE is required in order to show the map
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        });
         Configuration.getInstance().setUserAgentValue("com.example.cultuurkompas");
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new MyLocationListener(this);
@@ -130,36 +122,7 @@ public class MapScreenActivity extends AppCompatActivity {
         mapView.onPause();  //needed for compass, my location overlays, v6.0.0 and up
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        ArrayList<String> permissionsToRequest = new ArrayList<>();
-        for (int i = 0; i < grantResults.length; i++) {
-            permissionsToRequest.add(permissions[i]);
-        }
-        if (permissionsToRequest.size() > 0) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    permissionsToRequest.toArray(new String[0]),
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-    }
 
-    private void requestPermissionsIfNecessary(String[] permissions) {
-        ArrayList<String> permissionsToRequest = new ArrayList<>();
-        for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission)
-                    != PackageManager.PERMISSION_GRANTED) {
-                // Permission is not granted
-                permissionsToRequest.add(permission);
-            }
-        }
-        if (permissionsToRequest.size() > 0) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    permissionsToRequest.toArray(new String[0]),
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-    }
 
     public Polyline drawLine(ArrayList<GeoPoint> geoPoints){
         Polyline line = new Polyline();
