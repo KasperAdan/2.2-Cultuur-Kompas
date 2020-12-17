@@ -1,24 +1,27 @@
-package com.example.cultuurkompas.data;
-
-import android.content.Context;
-import android.util.Log;
+package com.example.cultuurkompas.interfaces;
 
 import com.example.cultuurkompas.data.datamodel.Route;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
-import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.List;
 
-public class GenerateJSON {
-    private Context context;
+public class DataConnector {
+    private static DataConnector single_instance = null;
 
-    public GenerateJSON(Context context) {
-        this.context = context;
-        ArrayList<Waypoint> waypoints = new ArrayList<>();
+    private List<Waypoint> waypoints;
+    private List<Route> routes;
+
+    public static DataConnector getInstance()
+    {
+        if (single_instance == null)
+            single_instance = new DataConnector();
+
+        return single_instance;
+    }
+
+    private DataConnector() {
+        waypoints = new ArrayList<>();
         waypoints.add(new Waypoint(1,"Stadhuis",51.588750,4.776112, "VVV beginpunt vanaf 2020"));
         waypoints.add(new Waypoint(2,"tussen punt",51.587972,4.776362,"Terug naar begin Grote Markt"));
         waypoints.add(new Waypoint(3,"tussen punt",51.5875000,4.776555,"Zuidpunt Grote Markt"));
@@ -64,29 +67,22 @@ public class GenerateJSON {
         waypoints.add(new Waypoint(43,"Bevrijdingsmonument",51.588028,4.776333, ""));
 
 
-        Route route = new Route("route1", waypoints);
+        Route routeNormal = new Route("Normal route", waypoints);
 
-        Gson gson = new Gson();
+        List<Waypoint> waypointsShort = waypoints.subList(0, waypoints.size() / 2);
+        Route routeShort = new Route("Short route", waypointsShort);
 
-        String json = gson.toJson(route);
+        List<Waypoint> waypointsLong = new ArrayList<>();
+        waypointsLong.addAll(waypoints);
+        waypointsLong.addAll(waypoints);
+        Route routeLong = new Route("Long route", waypointsLong);
 
-        writeToFile(json, this.context);
+        routes = new ArrayList<>();
+        routes.add(routeNormal);
+        routes.add(routeShort);
+        routes.add(routeLong);
     }
 
-    private void writeToFile(String data, Context context) {
-        try {
-            File path = context.getFilesDir();
-            File file = new File(path,"routesJSON.txt");
-            Log.e("Path", path.toString());
-            FileOutputStream stream = new FileOutputStream(file);
-            try {
-                stream.write("text-to-write".getBytes());
-            } finally {
-                stream.close();
-            }
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
+    public List<Waypoint> getWaypoints() { return this.waypoints; }
+    public List<Route> getRoutes() { return this.routes; }
 }
