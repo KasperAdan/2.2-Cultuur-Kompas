@@ -3,13 +3,18 @@ package com.example.cultuurkompas.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.activities.popup.AlertDialog;
+import com.example.cultuurkompas.activities.popup.DialogListener;
+import com.example.cultuurkompas.activities.popup.HelpDialog;
 
-public class MapScreenActivity extends AppCompatActivity {
+public class MapScreenActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +27,9 @@ public class MapScreenActivity extends AppCompatActivity {
     }
 
     public void onButtonHelpMapClick(View view){
-        Toast.makeText(this,"HELP!", Toast.LENGTH_LONG).show();
+        HelpDialog dialog = new HelpDialog(this, "Description");
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 
     public void onButtonBuildingMapClick(View view){

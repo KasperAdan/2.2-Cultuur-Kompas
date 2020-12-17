@@ -16,12 +16,14 @@ public class AlertDialog extends Dialog implements View.OnClickListener {
     private final Activity activity;
     private final String title;
     private final String message;
+    private DialogListener listener;
 
-    public AlertDialog(Activity a, String title, String message) {
+    public AlertDialog(Activity a, String title, String message, DialogListener listener) {
         super(a);
         this.activity = a;
         this.title = title;
         this.message = message;
+        this.listener = listener;
     }
 
     @Override
@@ -44,11 +46,11 @@ public class AlertDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.alertDialog_positive:
-                //todo add functionality Yes button
+                listener.dialogCallback(true);
                 dismiss();
                 break;
             case R.id.alertDialog_negative:
-                //todo add functionality No button
+                listener.dialogCallback(false);
                 dismiss();
                 break;
             default:
