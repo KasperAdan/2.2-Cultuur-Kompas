@@ -21,9 +21,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.data.datamodel.Waypoint;
+import com.example.cultuurkompas.interfaces.DataConnector;
 import com.example.cultuurkompas.interfaces.MyLocationListener;
+import com.example.cultuurkompas.viewmodel.OpenRouteServiceConnection;
 import com.example.cultuurkompas.viewmodel.orsdata.Route;
+import com.example.cultuurkompas.viewmodel.orsdata.TravelType;
 
+import org.jetbrains.annotations.NotNull;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -33,7 +38,14 @@ import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MapScreenActivity extends AppCompatActivity {
 
@@ -81,8 +93,9 @@ public class MapScreenActivity extends AppCompatActivity {
         mapView.setBuiltInZoomControls(false);
         mapController = mapView.getController();
         mapController.setZoom(17.5);
-        mapController.setCenter(cityGeoPoint)
-        ;
+        mapController.setCenter(cityGeoPoint);
+
+        getDirections(DataConnector.getInstance().getRoutes().get(0).getWaypoints());
     }
 
     public void onButtonCurrentLocationClick(View view){
@@ -126,7 +139,6 @@ public class MapScreenActivity extends AppCompatActivity {
     }
 
 
-
     public Polyline drawLine(ArrayList<GeoPoint> geoPoints){
         Polyline line = new Polyline();
         line.setTitle("Road back home");
@@ -152,5 +164,24 @@ public class MapScreenActivity extends AppCompatActivity {
         marker.setPosition(geoPoint);
     }
 
+    private void getDirections(List<Waypoint> waypoints) {
+        List<GeoPoint> geoPoints = new ArrayList<>();
+        for(Waypoint waypoint : waypoints) {
+            geoPoints.add(waypoint.getGeoPoint());
+        }
 
+        OpenRouteServiceConnection.getInstance().getRouteInfo("5b3ce3597851110001cf62488c97c6c701f64827afad2deda82ec4da", geoPoints, TravelType.FOOT_WALKING, new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                //TODO handle error
+                Log.e("MAP", "ERROR on route response");
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                //TODO handle success
+                Log.d("MAP", response.toString());
+            }
+        });
+    }
 }

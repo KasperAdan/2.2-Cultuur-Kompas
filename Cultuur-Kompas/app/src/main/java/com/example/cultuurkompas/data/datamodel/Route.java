@@ -4,12 +4,12 @@ import java.util.List;
 
 public class Route {
     private String name;
-    private List<Waypoint> route;
+    private List<Waypoint> waypoints;
     private boolean finished;
 
-    public Route(String name, List<Waypoint> route) {
+    public Route(String name, List<Waypoint> waypoints) {
         this.name = name;
-        this.route = route;
+        this.waypoints = waypoints;
         finished = false;
     }
 
@@ -17,8 +17,8 @@ public class Route {
         return name;
     }
 
-    public List<Waypoint> getRoute() {
-        return route;
+    public List<Waypoint> getWaypoints() {
+        return waypoints;
     }
 
     public boolean isFinished() {
