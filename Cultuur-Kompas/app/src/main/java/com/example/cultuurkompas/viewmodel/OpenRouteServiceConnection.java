@@ -11,6 +11,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -20,6 +21,9 @@ public class OpenRouteServiceConnection {
     private static OpenRouteServiceConnection instance = null;
     private static final String TAG = OpenRouteServiceConnection.class.getName();
     private OkHttpClient client = null;
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
+
 
     synchronized public static OpenRouteServiceConnection getInstance(){
         if (instance == null){
@@ -50,10 +54,10 @@ public class OpenRouteServiceConnection {
         }
         bodyString += "]}";
 
-
-        RequestBody body = RequestBody.create(geoPoints.toString(), MediaType.parse("text/plain"));//MediaType.parse("application/json; charset=utf-8"));
-        Log.d(TAG, body.toString());
-        final Request request = new Request.Builder().url(url).post(body).build();
+        RequestBody requestBody = RequestBody.create(bodyString, JSON);
+       /* RequestBody body = RequestBody.create(geoPoints.toString(), MediaType.parse("text/plain"));//MediaType.parse("application/json; charset=utf-8"));*/
+        Log.d(TAG, requestBody.toString());
+        final Request request = new Request.Builder().url(url).post(requestBody).build();
         Call call = client.newCall(request);
         call.enqueue(callback);
         return call;
