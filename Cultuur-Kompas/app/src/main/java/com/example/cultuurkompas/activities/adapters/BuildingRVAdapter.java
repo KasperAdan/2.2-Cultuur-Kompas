@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.detail.BuildingDetailScreenActivity;
-import com.example.cultuurkompas.model.Building;
+import com.example.cultuurkompas.data.datamodel.Waypoint;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.ViewHolder> {
 
-    private ArrayList<Building> buildings;
+    private ArrayList<Waypoint> buildings;
 
-    public BuildingRVAdapter(ArrayList<Building> buildings) {
+    public BuildingRVAdapter(ArrayList<Waypoint> buildings) {
         this.buildings = buildings;
     }
 
@@ -34,7 +34,7 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Building building = buildings.get(position);
+        Waypoint building = buildings.get(position);
         Picasso.get().load(building.getImgLink()).into(holder.image);
         holder.name.setText(building.getName());
     }
@@ -58,7 +58,7 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
 
         @Override
         public void onClick(View view) {
-            Building building = buildings.get(getLayoutPosition());
+            Waypoint building = buildings.get(getLayoutPosition());
             Intent intent = new Intent(itemView.getContext(), BuildingDetailScreenActivity.class);
             intent.putExtra("building", building);
             itemView.getContext().startActivity(intent);

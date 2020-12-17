@@ -4,17 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cultuurkompas.R;
-import com.example.cultuurkompas.model.Building;
+import com.example.cultuurkompas.data.datamodel.Waypoint;
 import com.squareup.picasso.Picasso;
 
 public class BuildingDetailScreenActivity extends AppCompatActivity {
 
-    private Building building;
+    private Waypoint building;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +23,20 @@ public class BuildingDetailScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_building_detail_screen);
         Intent intent = getIntent();
 
-        building = (Building) intent.getSerializableExtra("building");
+        building = (Waypoint) intent.getSerializableExtra("building");
 
         ((TextView) findViewById(R.id.tv_buildingdetail_title)).setText(building.getName());
         ((TextView) findViewById(R.id.tv_buildingdetail_text)).setText(building.getDescription());
 
         Picasso.get().load(building.getImgLink()).into((ImageView) findViewById(R.id.iv_buildingdetail_item));
 
-        ((CheckBox) findViewById(R.id.cb_buildingdetail_visited)).setChecked(building.getHasVisited());
+        ((CheckBox) findViewById(R.id.cb_buildingdetail_visited)).setChecked(building.isVisited());
 
-//        TODO Add tags to list
-//        building.getTags();
-
+        LinearLayout ll = (LinearLayout) findViewById(R.id.ll_buildingdetail_tags);
+        for (String tag: building.getTags()) {
+            TextView tv = new TextView(this);
+            tv.setText(tag);
+            ll.addView(tv);
+        }
     }
 }

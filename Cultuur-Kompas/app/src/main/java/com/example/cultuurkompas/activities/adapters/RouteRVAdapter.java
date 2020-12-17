@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.detail.RouteDetailScreenActivity;
-import com.example.cultuurkompas.model.Route;
+import com.example.cultuurkompas.data.datamodel.Route;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

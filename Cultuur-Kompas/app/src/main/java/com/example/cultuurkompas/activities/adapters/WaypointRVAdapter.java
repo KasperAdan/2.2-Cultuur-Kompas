@@ -11,16 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.detail.BuildingDetailScreenActivity;
-import com.example.cultuurkompas.model.Waypoint;
+import com.example.cultuurkompas.data.datamodel.Waypoint;
+import com.example.cultuurkompas.interfaces.DataConnector;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class WaypointRVAdapter extends RecyclerView.Adapter<WaypointRVAdapter.ViewHolder> {
 
-    private ArrayList<Waypoint> waypoints;
+    private List<Waypoint> waypoints;
 
-    public WaypointRVAdapter(ArrayList<Waypoint> waypoints) {
-        this.waypoints = waypoints;
+    public WaypointRVAdapter() {
+        this.waypoints = DataConnector.getInstance().getWaypoints();
     }
 
     @NonNull
