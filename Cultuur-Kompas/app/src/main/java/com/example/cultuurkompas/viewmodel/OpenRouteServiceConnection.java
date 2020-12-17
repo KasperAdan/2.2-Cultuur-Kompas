@@ -63,6 +63,20 @@ public class OpenRouteServiceConnection {
         return call;
     }
 
+    public Call getRouteInfo(String key, GeoPoint start, GeoPoint end, TravelType travelType, Callback callback){
+        Log.d(TAG, "Start: " + start + ", End: " + end);
+        final String url = "https://api.openrouteservice.org/v2/directions/" +
+                TravelType.getTravelType(travelType) +
+                "?api_key=" + key +
+                "&start=" + start.getLongitude() + "," + start.getLatitude() +
+                "&end=" + end.getLongitude() + "," + end.getLatitude();
+        Log.d(TAG, url);
+        final Request request = new Request.Builder().url(url).build();
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+        return call;
+    }
+
     public Call getCoordinatesOfAddress(String key, String address, String city, Callback callback){
         final String url = "https://api.openrouteservice.org/geocode/search/structured?" +
                 "api_key=" + key +

@@ -16,6 +16,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -29,6 +31,8 @@ import com.example.cultuurkompas.viewmodel.orsdata.Route;
 import com.example.cultuurkompas.viewmodel.orsdata.TravelType;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -40,7 +44,10 @@ import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -56,7 +63,9 @@ public class MapScreenActivity extends AppCompatActivity {
     private LocationListener locationListener;
     private LocationManager locationManager;
     private Marker marker;
-
+    private boolean finished = false;
+    private List<GeoPoint> routeGeoPoints;
+    private GeoPoint myLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +109,9 @@ public class MapScreenActivity extends AppCompatActivity {
 
     public void onButtonCurrentLocationClick(View view){
         Toast.makeText(this,"CURRENT LOCATION", Toast.LENGTH_LONG).show();
+        if(myLocation != null) {
+            mapController.setCenter(myLocation);
+        }
     }
 
     public void onButtonHelpMapClick(View view){
@@ -139,12 +151,12 @@ public class MapScreenActivity extends AppCompatActivity {
     }
 
 
-    public Polyline drawLine(ArrayList<GeoPoint> geoPoints){
+    public Polyline drawLine(List<GeoPoint> geoPoints){
         Polyline line = new Polyline();
         line.setTitle("Road back home");
         line.setSubDescription(Polyline.class.getCanonicalName());
         //line.setWidth(20f);
-        line.getOutlinePaint().setStrokeWidth(20f);
+        line.getOutlinePaint().setStrokeWidth(10f);
         line.getOutlinePaint().setColor(Color.RED);
         line.setPoints(geoPoints);
         line.setGeodesic(true);
@@ -160,7 +172,8 @@ public class MapScreenActivity extends AppCompatActivity {
     }
 
     public void locationChanged(GeoPoint geoPoint){
-        mapController.setCenter(geoPoint);
+        //mapController.setCenter(geoPoint);
+        myLocation = geoPoint;
         marker.setPosition(geoPoint);
     }
 
@@ -170,18 +183,47 @@ public class MapScreenActivity extends AppCompatActivity {
             geoPoints.add(waypoint.getGeoPoint());
         }
 
-        OpenRouteServiceConnection.getInstance().getRouteInfo("5b3ce3597851110001cf62488c97c6c701f64827afad2deda82ec4da", geoPoints, TravelType.FOOT_WALKING, new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                //TODO handle error
-                Log.e("MAP", "ERROR on route response");
-            }
+        routeGeoPoints = Collections.synchronizedList(new ArrayList<GeoPoint>());
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                //TODO handle success
-                Log.d("MAP", response.toString());
-            }
-        });
+
+        for(int i = 0; i < geoPoints.size() - 1; i++) {
+            while(!finished && i != 0){}
+            finished = false;
+            OpenRouteServiceConnection.getInstance().getRouteInfo("5b3ce3597851110001cf62488c97c6c701f64827afad2deda82ec4da", geoPoints.get(i), geoPoints.get(i+1), TravelType.FOOT_WALKING, new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    //TODO handle error
+                    Log.e("MAP", "ERROR on route response");
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    Log.d("MAP", response.toString());
+
+                    JSONObject responseJson = null;
+                    try {
+                        synchronized (routeGeoPoints) {
+                            responseJson = new JSONObject(response.body().string());
+                            route = new Route(responseJson);
+                            ArrayList<double[]> coordinates = route.features.get(0).geometry.coordinates;
+                            for (double[] coordinate : coordinates) {
+                                routeGeoPoints.add(new GeoPoint(coordinate[1], coordinate[0]));
+                            }
+                            System.out.println("GeoPoints: " + routeGeoPoints.size() + " Coordinates: " + coordinates.size());
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    finished = true;
+                }
+            });
+        }
+        while(routeGeoPoints.size() < 294){
+        }
+        //mapController.setCenter(routeGeoPoints.get(0));
+        Polyline line = drawLine(routeGeoPoints);
+        if (line != null){
+            mapView.getOverlayManager().add(line);
+        }
     }
 }
