@@ -2,6 +2,7 @@ package com.example.cultuurkompas.activities.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,9 +14,11 @@ import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class BuildingDetailScreenActivity extends AppCompatActivity {
 
-    private Waypoint building;
+    private Waypoint waypoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,20 +26,23 @@ public class BuildingDetailScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_building_detail_screen);
         Intent intent = getIntent();
 
-        building = (Waypoint) intent.getSerializableExtra("building");
+        waypoint = (Waypoint) intent.getSerializableExtra("waypoint");
 
-        ((TextView) findViewById(R.id.tv_buildingdetail_title)).setText(building.getName());
-        ((TextView) findViewById(R.id.tv_buildingdetail_text)).setText(building.getDescription());
+        ((TextView) findViewById(R.id.tv_buildingdetail_title)).setText(waypoint.getName());
+        ((TextView) findViewById(R.id.tv_buildingdetail_text)).setText(waypoint.getDescription());
 
-        Picasso.get().load(building.getImgLink()).into((ImageView) findViewById(R.id.iv_buildingdetail_item));
+        Picasso.get().load(waypoint.getImgLink()).into((ImageView) findViewById(R.id.iv_buildingdetail_item));
 
-        ((CheckBox) findViewById(R.id.cb_buildingdetail_visited)).setChecked(building.isVisited());
-
-        LinearLayout ll = (LinearLayout) findViewById(R.id.ll_buildingdetail_tags);
-        for (String tag: building.getTags()) {
+        LinearLayout ll = findViewById(R.id.ll_buildingdetail_tags);
+        ArrayList<String> tags = waypoint.getTags();
+        for (int i = 0; i < tags.size(); i++) {
             TextView tv = new TextView(this);
-            tv.setText(tag);
+            tv.setText(tags.get(i));
+            tv.setId(i);
+            tv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             ll.addView(tv);
         }
+
+        ((CheckBox) findViewById(R.id.cb_buildingdetail_visited)).setChecked(waypoint.isVisited());
     }
 }

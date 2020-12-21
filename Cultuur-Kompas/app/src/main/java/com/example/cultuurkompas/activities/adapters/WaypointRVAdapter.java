@@ -30,11 +30,12 @@ public class WaypointRVAdapter extends RecyclerView.Adapter<WaypointRVAdapter.Vi
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_waypoint, parent, false);
         return new WaypointRVAdapter.ViewHolder(view);
     }
-    // TODO Add waypoint info to recyclerview
+
     @Override
     public void onBindViewHolder(@NonNull WaypointRVAdapter.ViewHolder holder, int position) {
         Waypoint waypoint = waypoints.get(position);
-//        holder.name.setText(waypoint.getName());
+        String text = waypoint.getName();
+        holder.name.setText(text);
     }
 
     @Override
@@ -51,16 +52,11 @@ public class WaypointRVAdapter extends RecyclerView.Adapter<WaypointRVAdapter.Vi
             name = itemView.findViewById(R.id.tv_waypoint_item_name);
             itemView.setOnClickListener(this);
         }
-        //TODO Put waypoint data in intent
         @Override
         public void onClick(View view) {
             Waypoint waypoint = waypoints.get(getLayoutPosition());
             Intent intent = new Intent(itemView.getContext(), BuildingDetailScreenActivity.class);
-//            intent.putExtra("name", route.getName());
-//            intent.putExtra("description", route.getDescription());
-//            intent.putExtra("imgLink", route.getImgLink());
-//            intent.putExtra("waypoints", route.getWaypoints());
-//            intent.putExtra("tags", route.getTags());
+            intent.putExtra("waypoint", waypoint);
             itemView.getContext().startActivity(intent);
         }
     }

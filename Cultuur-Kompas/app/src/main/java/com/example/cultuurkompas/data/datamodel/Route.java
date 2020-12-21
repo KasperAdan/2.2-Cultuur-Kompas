@@ -17,6 +17,13 @@ public class Route implements Serializable {
         this.name = name;
         this.route = route;
         finished = false;
+        this.info ="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum nibh accumsan lacinia placerat. Nulla consectetur pulvinar diam, eu luctus leo. ";
+        this.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum nibh accumsan lacinia placerat. Nulla consectetur pulvinar diam, eu luctus leo. Nullam varius neque urna, ut laoreet tortor posuere ut. Donec ac leo lorem. Mauris efficitur porta est nec condimentum. Aliquam nisi libero, fermentum eget semper vitae, fringilla ut justo. Aenean cursus, dui in rhoncus gravida, nisi nisl tempus odio, ac feugiat sem massa ac sem. ";
+        this.imgLink="https://photoeditor.polarr.co/img/onboarding/02_01_preview_2x.jpg";
+        this.tags = new ArrayList<>();
+        tags.add("tag 1");
+        tags.add("tag 2");
+        tags.add("tag 3");
     }
 
     public Route(String name, String info, String description, String imgLink, List<Waypoint> route, List<String> tags) {

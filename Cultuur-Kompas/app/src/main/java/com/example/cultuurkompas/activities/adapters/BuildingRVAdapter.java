@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
 
     private List<Waypoint> buildings;
 
+    //TODO Checkbox turns invisible when checked
+
     public BuildingRVAdapter() {
         this.buildings = DataConnector.getInstance().getWaypoints();
     }
@@ -39,6 +42,7 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
         Waypoint building = buildings.get(position);
         Picasso.get().load(building.getImgLink()).into(holder.image);
         holder.name.setText(building.getName());
+        holder.checkBox.setChecked(building.isVisited());
     }
 
     @Override
@@ -50,19 +54,21 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
 
         ImageView image;
         TextView name;
+        CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.iv_buildingscreen_item);
             name = itemView.findViewById(R.id.tv_building_title);
+            checkBox = itemView.findViewById(R.id.cb_buildingdetail_visited);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            Waypoint building = buildings.get(getLayoutPosition());
+            Waypoint waypoint = buildings.get(getLayoutPosition());
             Intent intent = new Intent(itemView.getContext(), BuildingDetailScreenActivity.class);
-            intent.putExtra("building", building);
+            intent.putExtra("waypoint", waypoint);
             itemView.getContext().startActivity(intent);
         }
     }
