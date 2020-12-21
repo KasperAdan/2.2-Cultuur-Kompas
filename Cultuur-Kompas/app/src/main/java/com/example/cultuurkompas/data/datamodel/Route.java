@@ -5,12 +5,14 @@ import java.util.List;
 public class Route {
     private String name;
     private List<Waypoint> waypoints;
+    private int progressionCounter;
     private boolean finished;
 
-    public Route(String name, List<Waypoint> waypoints) {
+    public Route(String name, List<Waypoint> waypoints, boolean isFinished, int progression) {
         this.name = name;
         this.waypoints = waypoints;
-        finished = false;
+        finished = isFinished;
+        progressionCounter = progression;
     }
 
     public String getName() {
@@ -25,7 +27,27 @@ public class Route {
         return finished;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setFinished(boolean state) { finished = state; }
+
+    public int getProgressionCounter() { return progressionCounter; }
+
+    public void resetRouteProgression() {
+        progressionCounter = 0;
     }
+
+    public boolean incrementProgressionCounter() {
+        progressionCounter++;
+        if(progressionCounter >= waypoints.size()){
+            return true;
+        }
+        return false;
+    }
+
+//    public void reachedNewWaypoint() {
+//        waypoints.get(progressionCounter).setVisited(true);
+//        progressionCounter++;
+//        if(progressionCounter > waypoints.size()){
+//            finished = true;
+//        }
+//    }
 }

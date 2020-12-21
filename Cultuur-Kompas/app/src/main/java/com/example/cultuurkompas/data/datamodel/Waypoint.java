@@ -9,12 +9,12 @@ public class Waypoint {
     private String description;
     private boolean visited;
 
-    public Waypoint(int number, String name, double longitude, double latitude, String description) {
+    public Waypoint(int number, String name, double longitude, double latitude, String description, boolean isVisited) {
         this.number = number;
         this.name = name;
         this.geoPoint = new GeoPoint(longitude, latitude);
         this.description = description;
-        visited = false;
+        visited = isVisited;
     }
 
     public int getNumber() {

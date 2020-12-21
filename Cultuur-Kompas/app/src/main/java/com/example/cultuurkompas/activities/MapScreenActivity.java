@@ -89,6 +89,7 @@ public class MapScreenActivity extends AppCompatActivity {
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
+        DataConnector.getInstance().getAllData(this);
 
         cityGeoPoint = new GeoPoint(51.589457,4.777006);
 
