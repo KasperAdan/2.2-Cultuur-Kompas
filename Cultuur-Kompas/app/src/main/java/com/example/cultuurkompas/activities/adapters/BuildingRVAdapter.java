@@ -33,7 +33,7 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_route, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_building, parent, false);
         return new ViewHolder(view);
     }
 
@@ -42,7 +42,6 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
         Waypoint building = buildings.get(position);
         Picasso.get().load(building.getImgLink()).into(holder.image);
         holder.name.setText(building.getName());
-        holder.checkBox.setChecked(building.isVisited());
     }
 
     @Override
@@ -54,13 +53,11 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
 
         ImageView image;
         TextView name;
-        CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.iv_buildingscreen_item);
-            name = itemView.findViewById(R.id.tv_building_title);
-            checkBox = itemView.findViewById(R.id.cb_buildingdetail_visited);
+            name = itemView.findViewById(R.id.tv_buildingscreen_item_name);
             itemView.setOnClickListener(this);
         }
 

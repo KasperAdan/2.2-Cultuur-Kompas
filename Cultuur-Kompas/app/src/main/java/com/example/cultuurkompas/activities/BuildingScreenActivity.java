@@ -18,7 +18,7 @@ public class BuildingScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_building_screen);
 
         BuildingRVAdapter adapter = new BuildingRVAdapter();
-        RecyclerView rc = findViewById(R.id.rv_route_items);
+        RecyclerView rc = findViewById(R.id.rv_building_items);
         rc.setAdapter(adapter);
         rc.setLayoutManager(new LinearLayoutManager(this));
 

@@ -1,24 +1,19 @@
 package com.example.cultuurkompas.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.interfaces.MyLocationListener;
@@ -67,7 +62,7 @@ public class MapScreenActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
 
-        cityGeoPoint = new GeoPoint(51.589457,4.777006);
+        cityGeoPoint = new GeoPoint(51.589457, 4.777006);
 
         mapView = findViewById(R.id.osm_map);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
@@ -81,26 +76,25 @@ public class MapScreenActivity extends AppCompatActivity {
         mapView.setBuiltInZoomControls(false);
         mapController = mapView.getController();
         mapController.setZoom(17.5);
-        mapController.setCenter(cityGeoPoint)
-        ;
+        mapController.setCenter(cityGeoPoint);
     }
 
-    public void onButtonCurrentLocationClick(View view){
-        Toast.makeText(this,"CURRENT LOCATION", Toast.LENGTH_LONG).show();
+    public void onButtonCurrentLocationClick(View view) {
+        Toast.makeText(this, "CURRENT LOCATION", Toast.LENGTH_LONG).show();
     }
 
-    public void onButtonHelpMapClick(View view){
-        Toast.makeText(this,"HELP!", Toast.LENGTH_LONG).show();
+    public void onButtonHelpMapClick(View view) {
+        Toast.makeText(this, "HELP!", Toast.LENGTH_LONG).show();
     }
 
-    public void onButtonBuildingMapClick(View view){
-        Toast.makeText(this,"BUILDINGS", Toast.LENGTH_LONG).show();
+    public void onButtonBuildingMapClick(View view) {
+        Toast.makeText(this, "BUILDINGS", Toast.LENGTH_LONG).show();
         Intent i = new Intent(MapScreenActivity.this, BuildingScreenActivity.class);
         startActivity(i);
     }
 
-    public void onButtonRouteMapClick(View view){
-        Toast.makeText(this,"ROUTES", Toast.LENGTH_LONG).show();
+    public void onButtonRouteMapClick(View view) {
+        Toast.makeText(this, "ROUTES", Toast.LENGTH_LONG).show();
         Intent i = new Intent(MapScreenActivity.this, RouteScreenActivity.class);
         startActivity(i);
     }
@@ -126,8 +120,7 @@ public class MapScreenActivity extends AppCompatActivity {
     }
 
 
-
-    public Polyline drawLine(ArrayList<GeoPoint> geoPoints){
+    public Polyline drawLine(ArrayList<GeoPoint> geoPoints) {
         Polyline line = new Polyline();
         line.setTitle("Road back home");
         line.setSubDescription(Polyline.class.getCanonicalName());
@@ -140,14 +133,14 @@ public class MapScreenActivity extends AppCompatActivity {
         line.setOnClickListener(new Polyline.OnClickListener() {
             @Override
             public boolean onClick(Polyline polyline, MapView mapView, GeoPoint eventPos) {
-                Toast.makeText(getApplicationContext(),"WAT KLIK JE",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "WAT KLIK JE", Toast.LENGTH_LONG).show();
                 return false;
             }
         });
         return line;
     }
 
-    public void locationChanged(GeoPoint geoPoint){
+    public void locationChanged(GeoPoint geoPoint) {
         mapController.setCenter(geoPoint);
         marker.setPosition(geoPoint);
     }
