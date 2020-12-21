@@ -13,16 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.detail.BuildingDetailScreenActivity;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
+import com.example.cultuurkompas.interfaces.DataConnector;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.ViewHolder> {
 
-    private ArrayList<Waypoint> buildings;
+    private List<Waypoint> buildings;
 
-    public BuildingRVAdapter(ArrayList<Waypoint> buildings) {
-        this.buildings = buildings;
+    public BuildingRVAdapter() {
+        this.buildings = DataConnector.getInstance().getWaypoints();
     }
 
     @NonNull

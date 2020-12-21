@@ -13,16 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.detail.RouteDetailScreenActivity;
 import com.example.cultuurkompas.data.datamodel.Route;
+import com.example.cultuurkompas.interfaces.DataConnector;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RouteRVAdapter extends RecyclerView.Adapter<RouteRVAdapter.ViewHolder> {
 
-    private ArrayList<Route> routes;
+    private List<Route> routes;
 
-    public RouteRVAdapter(ArrayList<Route> routes) {
-        this.routes = routes;
+    public RouteRVAdapter() {
+        this.routes = DataConnector.getInstance().getRoutes();
     }
 
     @NonNull
