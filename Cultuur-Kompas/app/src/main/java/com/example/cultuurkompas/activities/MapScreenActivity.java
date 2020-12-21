@@ -106,13 +106,30 @@ public class MapScreenActivity extends AppCompatActivity {
         mapController.setZoom(17.5);
         mapController.setCenter(cityGeoPoint);
 
+
+
         selectedRoute = new ArrayList<>();
         selectedRoute.addAll(DataConnector.getInstance().getRoutes().get(0).getWaypoints());
         if(myLocation != null) {
             getDirectionsToNextWaypoint(selectedRoute.get(0));
         }
         mapView.invalidate();
+
+        for(Waypoint waypoint : selectedRoute){
+            Marker marker = new Marker(mapView);
+            marker.setPosition(waypoint.getGeoPoint());
+            marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker, MapView mapView) {
+                    Toast.makeText(getApplicationContext(),waypoint.getName(),Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            });
+            mapView.getOverlays().add(marker);
+        }
     }
+
+
 
     public void onButtonCurrentLocationClick(View view){
         Toast.makeText(this,"CURRENT LOCATION", Toast.LENGTH_LONG).show();
