@@ -1,6 +1,7 @@
 package com.example.cultuurkompas.activities;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,5 +21,8 @@ public class RouteScreenActivity extends AppCompatActivity {
         RecyclerView rc = findViewById(R.id.rv_route_items);
         rc.setAdapter(adapter);
         rc.setLayoutManager(new LinearLayoutManager(this));
+
+        ImageButton backButton = findViewById(R.id.ib_routescreen_back);
+        backButton.setOnClickListener(view -> super.onBackPressed());
     }
 }

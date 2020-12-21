@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,5 +45,8 @@ public class BuildingDetailScreenActivity extends AppCompatActivity {
         }
 
         ((CheckBox) findViewById(R.id.cb_buildingdetail_visited)).setChecked(waypoint.isVisited());
+
+        ImageButton backButton = findViewById(R.id.ib_buildingdetail_back);
+        backButton.setOnClickListener(view -> super.onBackPressed());
     }
 }

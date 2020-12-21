@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.adapters.BuildingRVAdapter;
@@ -20,5 +21,8 @@ public class BuildingScreenActivity extends AppCompatActivity {
         RecyclerView rc = findViewById(R.id.rv_route_items);
         rc.setAdapter(adapter);
         rc.setLayoutManager(new LinearLayoutManager(this));
+
+        ImageButton backButton = findViewById(R.id.btn_building_back);
+        backButton.setOnClickListener(view -> super.onBackPressed());
     }
 }
