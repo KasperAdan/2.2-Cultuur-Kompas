@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cultuur Kompas</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="buildingDetailScreenBezocht">Bezocht</string>
+    <string name="buildingScreenBuildingScreen">Bouwscherm</string>
+    <string name="buildingScreenAll">ALLE</string>
+    <string name="buildingScreenVisited">BEZOCHT</string>
+    <string name="buildingScreenUnvisited">ONBEZOCHT</string>
+    <string name="routeDetailScreenTitle">Titel</string>
+    <string name="routeDetailScreenStartButton">Start Route</string>
+    <string name="routeScreenTitle">Title</string>
+    <string name="routeScreenAll">ALLE</string>
+    <string name="routeScreenComplete">AFGEROND</string>
+    <string name="routeScreenIncomplete">NIET AFGEROND</string>
+    <string name="itemBuildingPlaceholder">Placeholder</string>
+    <string name="itemRouteTextView1">Textview1</string>
+    <string name="itemRouteTextView2">Textview2</string>
+</resources>

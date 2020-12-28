@@ -1,7 +1,11 @@
 package com.example.cultuurkompas.activities.detail;
 
 import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -10,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.activities.MapScreenActivity;
 import com.example.cultuurkompas.activities.adapters.WaypointRVAdapter;
 import com.example.cultuurkompas.data.datamodel.Route;
 import com.squareup.picasso.Picasso;
@@ -25,10 +31,20 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
 
     private Route route;
 
+    private Button startButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_detail_screen);
+        this.startButton = findViewById(R.id.btn_routedetailscreen_start);
+
+        this.startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlertDialog(view);
+            }
+        });
 
         Intent intent = getIntent();
         route = (Route) intent.getSerializableExtra("route");
@@ -54,6 +70,25 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
 
         ImageButton backButton = findViewById(R.id.btn_routedetailscreen_back);
         backButton.setOnClickListener(view -> super.onBackPressed());
+    }
+
+
+    public void showAlertDialog(View view){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("ALERT");
+        alert.setMessage("Weet je zeker dat je de route opnieuw wilt lopen?");
+        alert.setPositiveButton("JA", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(view.getContext(), "Er is geen nieuwe route gestart", Toast.LENGTH_SHORT);
+            }
+        });
+        alert.setNegativeButton("NEE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(view.getContext(), "Er is een nieuwe route gestart", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     @Override

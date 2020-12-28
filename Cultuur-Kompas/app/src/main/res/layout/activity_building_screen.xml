@@ -24,7 +24,7 @@
         android:id="@+id/tv_building_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Building screen"
+        android:text="@string/buildingScreenBuildingScreen"
         android:textColor="@color/black"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/btn_building_back"
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@android:color/white"
-            android:text="ALL"
+            android:text="@string/buildingScreenAll"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@android:color/white"
-            android:text="VISITED"
+            android:text="@string/buildingScreenVisited"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@android:color/white"
-            android:text="UNVISITED"
+            android:text="@string/buildingScreenUnvisited"
             android:textColor="@color/black"
             android:textSize="14sp" />
     </LinearLayout>
