@@ -42,12 +42,4 @@ public class Route {
         }
         return false;
     }
-
-//    public void reachedNewWaypoint() {
-//        waypoints.get(progressionCounter).setVisited(true);
-//        progressionCounter++;
-//        if(progressionCounter > waypoints.size()){
-//            finished = true;
-//        }
-//    }
 }

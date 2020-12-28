@@ -18,6 +18,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -66,7 +67,8 @@ public class MapScreenActivity extends AppCompatActivity {
     private boolean finished = false;
     private List<GeoPoint> routeGeoPoints;
     private GeoPoint myLocation;
-    private List<Waypoint> selectedRoute;
+//    private List<Waypoint> selectedRoute;
+    private com.example.cultuurkompas.data.datamodel.Route selectedRoute;
     private Polyline line;
 
     @Override
@@ -106,13 +108,6 @@ public class MapScreenActivity extends AppCompatActivity {
         mapController = mapView.getController();
         mapController.setZoom(17.5);
         mapController.setCenter(cityGeoPoint);
-
-        selectedRoute = new ArrayList<>();
-        selectedRoute.addAll(DataConnector.getInstance().getRoutes().get(0).getWaypoints());
-        if(myLocation != null) {
-            getDirectionsToNextWaypoint(selectedRoute.get(0));
-        }
-        mapView.invalidate();
     }
 
     public void onButtonCurrentLocationClick(View view){
@@ -120,13 +115,15 @@ public class MapScreenActivity extends AppCompatActivity {
         if(myLocation != null) {
             mapController.setCenter(myLocation);
         }
+
+        // TESTING
+        if(selectedRoute != null) {
+            reachedWaypoint();
+        }
     }
 
     public void onButtonHelpMapClick(View view){
         Toast.makeText(this,"HELP!", Toast.LENGTH_LONG).show();
-
-        // TESTING
-        reachedWaypoint();
     }
 
     public void onButtonBuildingMapClick(View view){
@@ -184,9 +181,25 @@ public class MapScreenActivity extends AppCompatActivity {
     }
 
     public void locationChanged(GeoPoint geoPoint){
-        //mapController.setCenter(geoPoint);
         myLocation = geoPoint;
         marker.setPosition(geoPoint);
+        mapView.invalidate();
+        
+        // TESTING
+        if(selectedRoute == null){
+            startRoute(DataConnector.getInstance().getRoutes().get(1));
+        }
+    }
+
+    public void startRoute(com.example.cultuurkompas.data.datamodel.Route route){
+//        selectedRoute = new ArrayList<>();
+//        selectedRoute.addAll(route.getWaypoints().subList(route.getProgressionCounter(), route.getWaypoints().size()));
+        selectedRoute = route;
+
+        if(myLocation != null) {
+            getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
+        }
+        mapView.invalidate();
     }
 
     private void reachedWaypoint(){
@@ -195,10 +208,14 @@ public class MapScreenActivity extends AppCompatActivity {
             mapView.invalidate();
         }
         if(selectedRoute != null){
-            selectedRoute.remove(0);
-            if(selectedRoute.size() > 0) {
-                getDirectionsToNextWaypoint(selectedRoute.get(0));
+            DataConnector.getInstance().reachedNewWaypoint(selectedRoute);
+            if(!selectedRoute.isFinished()){
+                getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
             }
+//            selectedRoute.remove(0);
+//            if(selectedRoute.size() > 0) {
+//                getDirectionsToNextWaypoint(selectedRoute.get(0));
+//            }
         }
     }
 

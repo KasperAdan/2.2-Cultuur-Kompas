@@ -102,4 +102,14 @@ public class DataConnector {
         // Apply changes
         builder.apply();
     }
+
+    public void resetRoute(Route route){
+        route.resetRouteProgression();
+
+        SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor builder = sharedPref.edit();
+
+        builder.putInt(route.getName() + "progression", route.getProgressionCounter());
+        builder.apply();
+    }
 }
