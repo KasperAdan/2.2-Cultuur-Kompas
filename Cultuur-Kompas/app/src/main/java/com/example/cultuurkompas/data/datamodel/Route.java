@@ -9,13 +9,13 @@ public class Route implements Serializable {
     private String info;
     private String description;
     private String imgLink;
-    private List<Waypoint> route;
+    private List<Waypoint> waypoints;
     private List<String> tags;
     private boolean finished;
 
-    public Route(String name, List<Waypoint> route) {
+    public Route(String name, List<Waypoint> waypoints) {
         this.name = name;
-        this.route = route;
+        this.waypoints = waypoints;
         finished = false;
         this.info ="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum nibh accumsan lacinia placerat. Nulla consectetur pulvinar diam, eu luctus leo. ";
         this.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum nibh accumsan lacinia placerat. Nulla consectetur pulvinar diam, eu luctus leo. Nullam varius neque urna, ut laoreet tortor posuere ut. Donec ac leo lorem. Mauris efficitur porta est nec condimentum. Aliquam nisi libero, fermentum eget semper vitae, fringilla ut justo. Aenean cursus, dui in rhoncus gravida, nisi nisl tempus odio, ac feugiat sem massa ac sem. ";
@@ -40,8 +40,8 @@ public class Route implements Serializable {
         return name;
     }
 
-    public List<Waypoint> getRoute() {
-        return route;
+    public List<Waypoint> getWaypoints() {
+        return waypoints;
     }
 
     public boolean isFinished() {
