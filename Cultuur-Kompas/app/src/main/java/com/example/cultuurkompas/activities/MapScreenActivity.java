@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -17,10 +18,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.activities.detail.BuildingDetailScreenActivity;
 import com.example.cultuurkompas.activities.popup.AlertDialog;
 import com.example.cultuurkompas.activities.popup.DialogListener;
 import com.example.cultuurkompas.activities.popup.HelpDialog;
@@ -121,10 +125,23 @@ public class MapScreenActivity extends AppCompatActivity{
         for(Waypoint waypoint : selectedRoute){
             Marker marker = new Marker(mapView);
             marker.setPosition(waypoint.getGeoPoint());
+            if (!waypoint.isVisited()){
+                Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
+                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+                DrawableCompat.setTint(wrappedDrawable, Color.GRAY);
+                marker.setIcon(wrappedDrawable);
+            }else {
+                Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
+                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+                DrawableCompat.setTint(wrappedDrawable, Color.GREEN);
+                marker.setIcon(wrappedDrawable);
+            }
             marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker, MapView mapView) {
-                    Toast.makeText(getApplicationContext(),waypoint.getName(),Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MapScreenActivity.this, BuildingDetailScreenActivity.class);
+                    intent.putExtra("waypoint",waypoint);
+                    startActivity(intent);
                     return false;
                 }
             });
