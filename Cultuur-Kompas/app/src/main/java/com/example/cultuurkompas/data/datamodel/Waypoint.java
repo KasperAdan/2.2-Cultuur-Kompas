@@ -22,9 +22,9 @@ public class Waypoint implements Serializable {
         this.description = description;
         this.imgLink = "https://photoeditor.polarr.co/img/onboarding/02_01_preview_2x.jpg";
         this.tags = new ArrayList<>();
-        tags.add("tag 1");
-        tags.add("tag 2");
-        tags.add("tag 3");
+        this.tags.add("tag 1");
+        this.tags.add("tag 2");
+        this.tags.add("tag 3");
         visited = false;
     }
 

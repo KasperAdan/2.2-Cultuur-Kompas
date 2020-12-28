@@ -46,11 +46,11 @@ public class AlertDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.alertDialog_positive:
-                listener.dialogCallback(true);
+                listener.DialogCallback(true);
                 dismiss();
                 break;
             case R.id.alertDialog_negative:
-                listener.dialogCallback(false);
+                listener.DialogCallback(false);
                 dismiss();
                 break;
             default:

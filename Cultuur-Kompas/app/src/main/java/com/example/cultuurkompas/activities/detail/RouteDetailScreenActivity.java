@@ -22,12 +22,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.MapScreenActivity;
 import com.example.cultuurkompas.activities.adapters.WaypointRVAdapter;
+import com.example.cultuurkompas.activities.popup.DialogListener;
 import com.example.cultuurkompas.data.datamodel.Route;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RouteDetailScreenActivity extends AppCompatActivity {
+public class RouteDetailScreenActivity extends AppCompatActivity implements DialogListener {
 
     private Route route;
 
@@ -90,7 +91,6 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public void DialogCallback(boolean okPressed) {
         if (okPressed) {
