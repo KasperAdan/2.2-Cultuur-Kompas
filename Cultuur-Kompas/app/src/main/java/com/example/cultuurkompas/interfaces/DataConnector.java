@@ -1,0 +1,88 @@
+package com.example.cultuurkompas.interfaces;
+
+import com.example.cultuurkompas.data.datamodel.Route;
+import com.example.cultuurkompas.data.datamodel.Waypoint;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DataConnector {
+    private static DataConnector single_instance = null;
+
+    private List<Waypoint> waypoints;
+    private List<Route> routes;
+
+    public static DataConnector getInstance()
+    {
+        if (single_instance == null)
+            single_instance = new DataConnector();
+
+        return single_instance;
+    }
+
+    private DataConnector() {
+        waypoints = new ArrayList<>();
+        waypoints.add(new Waypoint(1,"Stadhuis",51.588750,4.776112, "VVV beginpunt vanaf 2020", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(2,"tussen punt",51.587972,4.776362,"Terug naar begin Grote Markt", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(3,"tussen punt",51.5875000,4.776555,"Zuidpunt Grote Markt", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(4,"Antonius van Paduakerk",51.587638,4.777250, "St Janstraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(5,"tussen punt",51.588278,4.778500,"Kruisingn St.Janstraat/Molenstraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(6,"Bibliotheel-nieuwe Veste",51.588000,4.778945, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(7,"tussen punt",51.587362,4.780222,"Kruising Molenstraat/Kloosterplein", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(8,"Kloosterkazerne",51.587722,4.781028, "Huidige Casino", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(9,"Chasse theater",51.587750,4.782000, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(10,"tussen punt",51.587750,4.781250,"Kruising Kloosterplein/Vlaszak", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(11,"Binding van Isaac",51.588612,4.780888, "Grasveld Vlaszak", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(12,"tussen punt",51.589500,4.780445,"Kruising Vlaszak/Boschstraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(13,"Beyerd",51.589667,4.781000, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(14,"tussen punt",51.589500,4.780445,"Kruising Vlaszak/Boschstraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(15,"Gasthuispoort",51.589555,4.780000, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(16,"tussen punt",51.589417,4.779862,"Ingang Veemarktstraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(17,"tussen punt",51.589028,4.779695,"1e bocht Veemarktstraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(18,"tussen punt",51.588555,4.778333,"Kruising Veemarktstraat/St.Annastraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(19,"Willem Merkxtuin",51.589112,4.777945, "Ingang Willem Merxtuin", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(20,"tussen punt",51.589667,4.777805,"Kruising St.Annastraat/Catharinastraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(21,"Begijnenhof",51.589695,4.778362, "Ingang Begijnenhof", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(22,"tussen punt",51.589667,4.777805,"Kruising St.Annastraat/Catharinastraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(23,"Halverwege stadswandeling",51.589500,4.776250, "Halverwege punt 2020", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(24,"Nassau Baronie Monument",51.592500,4.779695, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(25,"tussen punt",51.592500,4.779388,"Pad ten westen van monument", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(26,"The Light House",51.592833,4.778472, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(27,"tussen punt",51.592667,4.777917,"Halverwege park", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(28,"tussen punt",51.590612,4.777000,"Einde park", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(29,"Kasteel van Breda",51.590612,4.776167, "Kasteelplein", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(30,"Stadhouderspoort",51.589695,4.776138, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(31,"tussen punt",51.590333,4.776000,"Kruising Kasteelplein/Cingelstraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(32,"tussen punt",51.590388,4.775000,"Bocht Cingelstraat", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(33,"Huis van Brecht (rechter zijde)",51.590028,4.7743620, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(34,"Spanjaardsgat (rechter zijde)",51.590195,4.773445, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(35,"Begin Vismarkt",51.589833,4.773333, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(36,"Begin Havermarkt",51.589362,4.774445, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(37,"tussen punt",51.588778,4.774888,"Kruising Torenstraat/Kerkplein", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(38,"Grote Kerk",51.588833,4.775278, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(39,"tussen punt",51.588778,4.774888,"Kruising Torenstraat/Kerkplein", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(40,"Het Poortje",51.588195,4.775138, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(41,"Ridderstraat",51.587083,4.775750, "", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(42,"Grote Markt",51.587417,4.776555, "Zuidpunt Grote Markt", "", new ArrayList<>()));
+        waypoints.add(new Waypoint(43,"Bevrijdingsmonument",51.588028,4.776333, "", "", new ArrayList<>()));
+
+
+        Route routeNormal = new Route("Normal route", waypoints);
+
+        List<Waypoint> waypointsShort = waypoints.subList(0, waypoints.size() / 2);
+        Route routeShort = new Route("Short route", waypointsShort);
+
+        List<Waypoint> waypointsLong = new ArrayList<>();
+        waypointsLong.addAll(waypoints);
+        waypointsLong.addAll(waypoints);
+        Route routeLong = new Route("Long route", waypointsLong);
+
+        routes = new ArrayList<>();
+        routes.add(routeNormal);
+        routes.add(routeShort);
+        routes.add(routeLong);
+    }
+
+    public List<Waypoint> getWaypoints() { return this.waypoints; }
+    public List<Route> getRoutes() { return this.routes; }
+}
