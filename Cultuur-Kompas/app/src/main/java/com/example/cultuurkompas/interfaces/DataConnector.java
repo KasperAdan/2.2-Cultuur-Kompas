@@ -112,4 +112,24 @@ public class DataConnector {
         builder.putInt(route.getName() + "progression", route.getProgressionCounter());
         builder.apply();
     }
+
+    // TESTING
+    public void resetProgression(){
+        SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor builder = sharedPref.edit();
+
+        for (int i = 1; i <= waypoints.size(); i++){
+            waypoints.get(i-1).setVisited(false);
+            builder.putBoolean("waypoint" + i, false);
+        }
+
+        for(Route route : routes){
+            route.setFinished(false);
+            route.resetRouteProgression();
+            builder.putBoolean(route.getName(), false);
+            builder.putInt(route.getName() + "progression", 0);
+        }
+
+        builder.apply();
+    }
 }

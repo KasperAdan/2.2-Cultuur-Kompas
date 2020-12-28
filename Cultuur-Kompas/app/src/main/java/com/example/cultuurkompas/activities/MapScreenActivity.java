@@ -92,6 +92,8 @@ public class MapScreenActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
         DataConnector.getInstance().getAllData(this);
+        // Enable this to reset all progress
+//        DataConnector.getInstance().resetProgression();
 
         cityGeoPoint = new GeoPoint(51.589457,4.777006);
 
@@ -184,11 +186,18 @@ public class MapScreenActivity extends AppCompatActivity {
         myLocation = geoPoint;
         marker.setPosition(geoPoint);
         mapView.invalidate();
-        
-        // TESTING
+
         if(selectedRoute == null){
-            startRoute(DataConnector.getInstance().getRoutes().get(1));
+            // TESTING
+            startRoute(DataConnector.getInstance().getRoutes().get(0));
+            
+//            for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
+//                if(route.getProgressionCounter() > 0){
+//                    startRoute(route);
+//                }
+//            }
         }
+
     }
 
     public void startRoute(com.example.cultuurkompas.data.datamodel.Route route){
@@ -197,7 +206,7 @@ public class MapScreenActivity extends AppCompatActivity {
         selectedRoute = route;
 
         if(myLocation != null) {
-            getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
+            //getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
         }
         mapView.invalidate();
     }
@@ -210,7 +219,7 @@ public class MapScreenActivity extends AppCompatActivity {
         if(selectedRoute != null){
             DataConnector.getInstance().reachedNewWaypoint(selectedRoute);
             if(!selectedRoute.isFinished()){
-                getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
+                //getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
             }
 //            selectedRoute.remove(0);
 //            if(selectedRoute.size() > 0) {
