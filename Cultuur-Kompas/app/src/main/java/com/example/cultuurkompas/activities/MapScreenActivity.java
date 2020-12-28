@@ -204,6 +204,12 @@ public class MapScreenActivity extends AppCompatActivity{
     public void locationChanged(GeoPoint geoPoint){
         //mapController.setCenter(geoPoint);
         myLocation = geoPoint;
+        for (Waypoint waypoint : selectedRoute) {
+            if(waypoint.getGeoPoint().distanceToAsDouble(myLocation)<15){
+                Log.d("Close Enough", "Close "+waypoint.getName());
+            }
+
+        }
         marker.setPosition(geoPoint);
     }
 
