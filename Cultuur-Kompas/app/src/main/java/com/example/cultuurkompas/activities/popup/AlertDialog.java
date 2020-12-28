@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.cultuurkompas.R;
 
-public class AlertDialog extends Dialog implements View.OnClickListener {
+public class AlertDialog extends Dialog implements View.OnClickListener{
 
     private final Activity activity;
     private final String title;

@@ -31,7 +31,7 @@ public class Route implements Serializable {
         this.info = info;
         this.description = description;
         this.imgLink = imgLink;
-        this.waypoints = waypoints;
+        this.waypoints = route;
         this.tags = tags;
         this.finished = false;
     }
