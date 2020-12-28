@@ -26,7 +26,7 @@ public class Route implements Serializable {
         tags.add("tag 3");
     }
 
-    public Route(String name, String info, String description, String imgLink, List<Waypoint> route, List<String> tags) {
+    public Route(String name, String info, String description, String imgLink, List<Waypoint> waypoints, List<String> tags) {
         this.name = name;
         this.info = info;
         this.description = description;
