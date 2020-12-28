@@ -3,6 +3,8 @@ package com.example.cultuurkompas.activities;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.LocationListener;
@@ -19,6 +21,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.activities.popup.AlertDialog;
+import com.example.cultuurkompas.activities.popup.DialogListener;
+import com.example.cultuurkompas.activities.popup.HelpDialog;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 import com.example.cultuurkompas.interfaces.DataConnector;
 import com.example.cultuurkompas.interfaces.MyLocationListener;
@@ -50,7 +55,7 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MapScreenActivity extends AppCompatActivity {
+public class MapScreenActivity extends AppCompatActivity{
 
     private MapView mapView = null;
     private IMapController mapController;
@@ -64,6 +69,8 @@ public class MapScreenActivity extends AppCompatActivity {
     private GeoPoint myLocation;
     private List<Waypoint> selectedRoute;
     private Polyline line;
+
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,10 +142,9 @@ public class MapScreenActivity extends AppCompatActivity {
     }
 
     public void onButtonHelpMapClick(View view){
-        Toast.makeText(this,"HELP!", Toast.LENGTH_LONG).show();
-
-        // TESTING
-        reachedWaypoint();
+        HelpDialog dialog = new HelpDialog(this, "Description");
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 
     public void onButtonBuildingMapClick(View view) {

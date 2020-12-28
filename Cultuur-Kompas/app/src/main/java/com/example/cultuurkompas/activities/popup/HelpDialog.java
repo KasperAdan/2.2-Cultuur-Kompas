@@ -20,14 +20,13 @@ public class HelpDialog extends Dialog implements View.OnClickListener {
         super(a);
         this.activity = a;
         this.helpText = helpText;
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.help_popup);
+        setContentView(R.layout.help_dialog);
         TextView textView = findViewById(R.id.helpPopup_text);
         textView.setText(helpText);
         this.exitButton = findViewById(R.id.helpPopup_closeButton);

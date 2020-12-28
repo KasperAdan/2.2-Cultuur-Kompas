@@ -55,4 +55,14 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.btn_routedetailscreen_back);
         backButton.setOnClickListener(view -> super.onBackPressed());
     }
+
+    @Override
+    public void DialogCallback(boolean okPressed) {
+        if (okPressed) {
+            Toast.makeText(this,"Yes pressed!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this,"No pressed!", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
