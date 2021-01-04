@@ -130,10 +130,10 @@ public class MapScreenActivity extends AppCompatActivity{
         }
 
         // TESTING
-//        if(selectedRoute != null) {
-//            //reachedWaypoint();
+        if(selectedRoute != null) {
+            reachedWaypoint();
 //            stopCurrentRoute();
-//        }
+        }
     }
 
     public void onButtonHelpMapClick(View view){
@@ -199,12 +199,21 @@ public class MapScreenActivity extends AppCompatActivity{
 
             // Checks if there is an ongoing route
             for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
-                if(route.getProgressionCounter() > 0){
-                    startRoute(route);
+                if(route.getProgressionCounter() > 0) {
+                    AlertDialog routeAlertDialog = new AlertDialog(this, "Route", "Wilt u de gestarte route hervatten?", new DialogListener() {
+                        @Override
+                        public void DialogCallback(boolean okPressed) {
+                            if(okPressed) {
+                                startRoute(route);
+                            } else {
+                                DataConnector.getInstance().resetRoute(route);
+                            }
+                        }
+                    });
+                    routeAlertDialog.show();
                 }
             }
         }
-
     }
 
     public boolean startRoute(com.example.cultuurkompas.data.datamodel.Route route){
