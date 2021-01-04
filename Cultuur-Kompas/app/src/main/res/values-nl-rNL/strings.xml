@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cultuur Kompas</string>
-    <string name="placeholder">Placeholder</string>
     <string name="buildingDetailScreenBezocht">Bezocht</string>
     <string name="buildingScreenBuildingScreen">Bouwscherm</string>
     <string name="buildingScreenAll">ALLE</string>
@@ -16,4 +15,7 @@
     <string name="itemBuildingPlaceholder">Placeholder</string>
     <string name="itemRouteTextView1">Textview1</string>
     <string name="itemRouteTextView2">Textview2</string>
+    <string name="helpTextMap">Dit scherm bevat alle bezienswaardigheden en de kortste route hier naar toe. \n\nDe knoppen:\n        links - een lijst van alle beziendswaardigheden\n        midden - de map centreren\n        rechts - een lijst van alle routes</string>
+    <string name="helpTextRoute">" Dit scherm bevat alle routes die je kan volgen  \\n De knoppen:         Je hebt 3 filter knoppen:         - alle: alle routes die beschikbaar zijn         - afgerond: de routes die all eerder zijn afgerond         - niet afgerond: de routes die nog niet eerder zijn afgerond         "</string>
+    <string name="helpTextBuilding">" Dit scherm bevat alle bezienswaardigheden die je kan bezoeken\n \n De knoppen:         \n        Je hebt 3 filter knoppen:         \n        - alle: alle bezienswaardigheden die beschikbaar zijn        \n        - bezocht: de bezienswaardigheden die al eerder zijn bezocht\n        - onbezocht: de bezienswaardigheden die nog niet eerder bezocht zijn        "</string>
 </resources>

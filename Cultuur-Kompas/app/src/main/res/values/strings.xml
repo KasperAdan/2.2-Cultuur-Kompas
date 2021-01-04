@@ -22,4 +22,8 @@
     <string name="itemRouteTextView1">TextView1</string>
     <string name="itemRouteTextView2">TextView2</string>
 
+    <string name="helpTextMap">This screen contains all the sights and the closest route towards these places.\n\nThe Buttons:\n        left - a list of all the sights\n        middel - recenter the map\n        right - a list of all the routes</string>
+    <string name="helpTextRoute">" This screen contains all the routes you can follow \n \n The buttons:         \n        You got 3 filter buttons:         \n        - all: all the routes avalible         \n        - complete: the routes you have already completed         \n        - incomplete: the routes you have yet to complete"</string>
+    <string name="helpTextBuilding">" This screen contains all the sights you can visit\n \n The buttons:         \n        You got 3 filter buttons:         \n        - all: all the sights that are avalible     \n        - visited: the sights you have visited before  \n        - unvisited: the sights you have yet to visit"</string>
+
 </resources>
