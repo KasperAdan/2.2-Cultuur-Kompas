@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,20 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.detail.BuildingDetailScreenActivity;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
-import com.example.cultuurkompas.interfaces.DataConnector;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.ViewHolder> {
 
-    private List<Waypoint> buildings;
+    private List<Waypoint> waypoints;
 
-    //TODO Checkbox turns invisible when checked
+    public BuildingRVAdapter(List<Waypoint> waypoints) {
+        this.waypoints = waypoints;
+    }
 
-    public BuildingRVAdapter() {
-        this.buildings = DataConnector.getInstance().getWaypoints();
+    public void setWaypoints(List<Waypoint> waypoints) {
+        this.waypoints = waypoints;
     }
 
     @NonNull
@@ -39,17 +38,17 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Waypoint building = buildings.get(position);
+        Waypoint building = waypoints.get(position);
         Picasso.get().load(building.getImgLink()).into(holder.image);
         holder.name.setText(building.getName());
     }
 
     @Override
     public int getItemCount() {
-        return buildings.size();
+        return waypoints.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView image;
         TextView name;
@@ -63,7 +62,7 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
 
         @Override
         public void onClick(View view) {
-            Waypoint waypoint = buildings.get(getLayoutPosition());
+            Waypoint waypoint = waypoints.get(getLayoutPosition());
             Intent intent = new Intent(itemView.getContext(), BuildingDetailScreenActivity.class);
             intent.putExtra("waypoint", waypoint);
             itemView.getContext().startActivity(intent);

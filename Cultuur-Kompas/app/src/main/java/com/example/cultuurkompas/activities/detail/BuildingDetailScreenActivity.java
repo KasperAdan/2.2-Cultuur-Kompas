@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
+import com.example.cultuurkompas.interfaces.DataConnector;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -44,7 +45,11 @@ public class BuildingDetailScreenActivity extends AppCompatActivity {
             ll.addView(tv);
         }
 
-        ((CheckBox) findViewById(R.id.cb_buildingdetail_visited)).setChecked(waypoint.isVisited());
+        CheckBox checkBox = findViewById(R.id.cb_buildingdetail_visited);
+        checkBox.setChecked(waypoint.isVisited());
+        checkBox.setOnCheckedChangeListener((compoundButton, b) -> {
+            DataConnector.getInstance().setVisited(waypoint.getNumber(), b);
+        });
 
         ImageButton backButton = findViewById(R.id.ib_buildingdetail_back);
         backButton.setOnClickListener(view -> super.onBackPressed());

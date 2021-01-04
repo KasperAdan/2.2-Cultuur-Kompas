@@ -61,10 +61,7 @@ public class Route implements Serializable {
 
     public boolean incrementProgressionCounter() {
         progressionCounter++;
-        if(progressionCounter >= waypoints.size()){
-            return true;
-        }
-        return false;
+        return progressionCounter >= waypoints.size();
     }
 
     public String getInfo() {

@@ -16,7 +16,6 @@ import com.example.cultuurkompas.data.datamodel.Route;
 import com.example.cultuurkompas.interfaces.DataConnector;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RouteRVAdapter extends RecyclerView.Adapter<RouteRVAdapter.ViewHolder> {
@@ -47,7 +46,7 @@ public class RouteRVAdapter extends RecyclerView.Adapter<RouteRVAdapter.ViewHold
         return routes.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView image;
         TextView name;

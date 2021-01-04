@@ -82,6 +82,10 @@ public class DataConnector {
     public List<Waypoint> getWaypoints() { return this.waypoints; }
     public List<Route> getRoutes() { return this.routes; }
 
+    public void setVisited(int i, boolean bool){
+        waypoints.get(i-1).setVisited(bool);
+    }
+
     public void reachedNewWaypoint(Route route){
         // Get the editor
         SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
