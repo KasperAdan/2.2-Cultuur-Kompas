@@ -30,6 +30,8 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
         this.buildings = DataConnector.getInstance().getWaypoints();
     }
 
+    public void setBuildings(List<Waypoint> waypoints) { this.buildings = waypoints; }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
