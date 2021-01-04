@@ -2,6 +2,7 @@ package com.example.cultuurkompas.activities.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
+import com.example.cultuurkompas.interfaces.DataConnector;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -48,5 +50,9 @@ public class BuildingDetailScreenActivity extends AppCompatActivity {
 
         ImageButton backButton = findViewById(R.id.ib_buildingdetail_back);
         backButton.setOnClickListener(view -> super.onBackPressed());
+    }
+
+    public void onButtonVisitedBuildingDetailClick(View view) {
+        DataConnector.getInstance().overrideWaypointVisitedState(waypoint.getNumber() - 1);
     }
 }
