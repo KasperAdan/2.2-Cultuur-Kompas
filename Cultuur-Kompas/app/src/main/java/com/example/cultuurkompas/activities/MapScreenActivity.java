@@ -67,7 +67,6 @@ public class MapScreenActivity extends AppCompatActivity {
     private boolean finished = false;
     private List<GeoPoint> routeGeoPoints;
     private GeoPoint myLocation;
-//    private List<Waypoint> selectedRoute;
     private com.example.cultuurkompas.data.datamodel.Route selectedRoute;
     private Polyline line;
 
@@ -119,9 +118,10 @@ public class MapScreenActivity extends AppCompatActivity {
         }
 
         // TESTING
-        if(selectedRoute != null) {
-            reachedWaypoint();
-        }
+//        if(selectedRoute != null) {
+//            //reachedWaypoint();
+//            stopCurrentRoute();
+//        }
     }
 
     public void onButtonHelpMapClick(View view){
@@ -189,26 +189,38 @@ public class MapScreenActivity extends AppCompatActivity {
 
         if(selectedRoute == null){
             // TESTING
-            startRoute(DataConnector.getInstance().getRoutes().get(0));
-            
-//            for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
-//                if(route.getProgressionCounter() > 0){
-//                    startRoute(route);
-//                }
-//            }
+//            startRoute(DataConnector.getInstance().getRoutes().get(0));
+
+            // Checks if there is an ongoing route
+            for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
+                if(route.getProgressionCounter() > 0){
+                    startRoute(route);
+                }
+            }
         }
 
     }
 
-    public void startRoute(com.example.cultuurkompas.data.datamodel.Route route){
-//        selectedRoute = new ArrayList<>();
-//        selectedRoute.addAll(route.getWaypoints().subList(route.getProgressionCounter(), route.getWaypoints().size()));
+    public boolean startRoute(com.example.cultuurkompas.data.datamodel.Route route){
+        if(selectedRoute != null) {
+            return false;
+        }
         selectedRoute = route;
 
         if(myLocation != null) {
-            //getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
+            getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
         }
-        mapView.invalidate();
+        return true;
+    }
+
+    public void stopCurrentRoute(){
+        DataConnector.getInstance().resetRoute(selectedRoute);
+        selectedRoute = null;
+        if(line != null) {
+            mapView.getOverlayManager().remove(line);
+            line = null;
+            mapView.invalidate();
+        }
     }
 
     private void reachedWaypoint(){
@@ -219,61 +231,10 @@ public class MapScreenActivity extends AppCompatActivity {
         if(selectedRoute != null){
             DataConnector.getInstance().reachedNewWaypoint(selectedRoute);
             if(!selectedRoute.isFinished()){
-                //getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
+                getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
+            } else {
+                selectedRoute = null;
             }
-//            selectedRoute.remove(0);
-//            if(selectedRoute.size() > 0) {
-//                getDirectionsToNextWaypoint(selectedRoute.get(0));
-//            }
-        }
-    }
-
-    private void getDirections(List<Waypoint> waypoints) {
-        List<GeoPoint> geoPoints = new ArrayList<>();
-        for(Waypoint waypoint : waypoints) {
-            geoPoints.add(waypoint.getGeoPoint());
-        }
-
-        routeGeoPoints = Collections.synchronizedList(new ArrayList<GeoPoint>());
-
-        for(int i = 0; i < geoPoints.size() - 1; i++) {
-            while(!finished && i != 0){}
-            finished = false;
-            OpenRouteServiceConnection.getInstance().getRouteInfo("5b3ce3597851110001cf62488c97c6c701f64827afad2deda82ec4da", geoPoints.get(i), geoPoints.get(i+1), TravelType.FOOT_WALKING, new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    //TODO handle error
-                    Log.e("MAP", "ERROR on route response");
-                }
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    Log.d("MAP", response.toString());
-
-                    JSONObject responseJson = null;
-                    try {
-                        synchronized (routeGeoPoints) {
-                            responseJson = new JSONObject(response.body().string());
-                            route = new Route(responseJson);
-                            ArrayList<double[]> coordinates = route.features.get(0).geometry.coordinates;
-                            for (double[] coordinate : coordinates) {
-                                routeGeoPoints.add(new GeoPoint(coordinate[1], coordinate[0]));
-                            }
-                            System.out.println("GeoPoints: " + routeGeoPoints.size() + " Coordinates: " + coordinates.size());
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    finished = true;
-                }
-            });
-        }
-        while(routeGeoPoints.size() < 294){
-        }
-        //mapController.setCenter(routeGeoPoints.get(0));
-        line = drawLine(routeGeoPoints);
-        if (line != null){
-            mapView.getOverlayManager().add(line);
         }
     }
 
