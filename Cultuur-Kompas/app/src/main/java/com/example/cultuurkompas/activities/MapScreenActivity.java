@@ -164,6 +164,7 @@ public class MapScreenActivity extends AppCompatActivity {
         if(intent.getSerializableExtra("waypoint")!=null){
             Waypoint waypoint = (Waypoint)intent.getSerializableExtra("waypoint");
             mapController.setCenter(waypoint.getGeoPoint());
+            mapController.setZoom(20);
         }
 
         mapView.onResume();
