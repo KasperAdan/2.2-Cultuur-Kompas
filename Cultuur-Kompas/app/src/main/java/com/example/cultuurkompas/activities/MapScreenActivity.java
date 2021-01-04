@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -67,7 +68,7 @@ public class MapScreenActivity extends AppCompatActivity{
     private boolean finished = false;
     private List<GeoPoint> routeGeoPoints;
     private GeoPoint myLocation;
-    private List<Waypoint> selectedRoute;
+    private com.example.cultuurkompas.data.datamodel.Route selectedRoute;
     private Polyline line;
 
     
@@ -81,17 +82,13 @@ public class MapScreenActivity extends AppCompatActivity{
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new MyLocationListener(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
+        DataConnector.getInstance().getAllData(this);
+        // Enable this to reset all progress
+//        DataConnector.getInstance().resetProgression();
 
         cityGeoPoint = new GeoPoint(51.589457, 4.777006);
 
@@ -139,6 +136,12 @@ public class MapScreenActivity extends AppCompatActivity{
         if(myLocation != null) {
             mapController.setCenter(myLocation);
         }
+
+        // TESTING
+//        if(selectedRoute != null) {
+//            //reachedWaypoint();
+//            stopCurrentRoute();
+//        }
     }
 
     public void onButtonHelpMapClick(View view){
@@ -162,21 +165,13 @@ public class MapScreenActivity extends AppCompatActivity{
     @Override
     public void onResume() {
         super.onResume();
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
-        mapView.onResume(); //needed for compass, my location overlays, v6.0.0 and up
+        mapView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //Configuration.getInstance().save(this, prefs);
-        mapView.onPause();  //needed for compass, my location overlays, v6.0.0 and up
+        mapView.onPause();
     }
 
 
@@ -202,9 +197,44 @@ public class MapScreenActivity extends AppCompatActivity{
     }
 
     public void locationChanged(GeoPoint geoPoint){
-        //mapController.setCenter(geoPoint);
         myLocation = geoPoint;
         marker.setPosition(geoPoint);
+        mapView.invalidate();
+
+        if(selectedRoute == null){
+            // TESTING
+//            startRoute(DataConnector.getInstance().getRoutes().get(0));
+
+            // Checks if there is an ongoing route
+            for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
+                if(route.getProgressionCounter() > 0){
+                    startRoute(route);
+                }
+            }
+        }
+
+    }
+
+    public boolean startRoute(com.example.cultuurkompas.data.datamodel.Route route){
+        if(selectedRoute != null) {
+            return false;
+        }
+        selectedRoute = route;
+
+        if(myLocation != null) {
+            getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
+        }
+        return true;
+    }
+
+    public void stopCurrentRoute(){
+        DataConnector.getInstance().resetRoute(selectedRoute);
+        selectedRoute = null;
+        if(line != null) {
+            mapView.getOverlayManager().remove(line);
+            line = null;
+            mapView.invalidate();
+        }
     }
 
     private void reachedWaypoint(){
@@ -213,59 +243,12 @@ public class MapScreenActivity extends AppCompatActivity{
             mapView.invalidate();
         }
         if(selectedRoute != null){
-            selectedRoute.remove(0);
-            if(selectedRoute.size() > 0) {
-                getDirectionsToNextWaypoint(selectedRoute.get(0));
+            DataConnector.getInstance().reachedNewWaypoint(selectedRoute);
+            if(!selectedRoute.isFinished()){
+                getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
+            } else {
+                stopCurrentRoute();
             }
-        }
-    }
-
-    private void getDirections(List<Waypoint> waypoints) {
-        List<GeoPoint> geoPoints = new ArrayList<>();
-        for(Waypoint waypoint : waypoints) {
-            geoPoints.add(waypoint.getGeoPoint());
-        }
-
-        routeGeoPoints = Collections.synchronizedList(new ArrayList<GeoPoint>());
-
-        for(int i = 0; i < geoPoints.size() - 1; i++) {
-            while(!finished && i != 0){}
-            finished = false;
-            OpenRouteServiceConnection.getInstance().getRouteInfo("5b3ce3597851110001cf62488c97c6c701f64827afad2deda82ec4da", geoPoints.get(i), geoPoints.get(i+1), TravelType.FOOT_WALKING, new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    //TODO handle error
-                    Log.e("MAP", "ERROR on route response");
-                }
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    Log.d("MAP", response.toString());
-
-                    JSONObject responseJson = null;
-                    try {
-                        synchronized (routeGeoPoints) {
-                            responseJson = new JSONObject(response.body().string());
-                            route = new Route(responseJson);
-                            ArrayList<double[]> coordinates = route.features.get(0).geometry.coordinates;
-                            for (double[] coordinate : coordinates) {
-                                routeGeoPoints.add(new GeoPoint(coordinate[1], coordinate[0]));
-                            }
-                            System.out.println("GeoPoints: " + routeGeoPoints.size() + " Coordinates: " + coordinates.size());
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    finished = true;
-                }
-            });
-        }
-        while(routeGeoPoints.size() < 294){
-        }
-        //mapController.setCenter(routeGeoPoints.get(0));
-        line = drawLine(routeGeoPoints);
-        if (line != null){
-            mapView.getOverlayManager().add(line);
         }
     }
 

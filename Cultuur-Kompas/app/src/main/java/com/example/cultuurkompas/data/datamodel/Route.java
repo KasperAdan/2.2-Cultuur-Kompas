@@ -10,12 +10,15 @@ public class Route implements Serializable {
     private String description;
     private String imgLink;
     private List<Waypoint> waypoints;
+    private int progressionCounter;
     private List<String> tags;
     private boolean finished;
 
-    public Route(String name, List<Waypoint> waypoints) {
+    public Route(String name, List<Waypoint> waypoints, boolean isFinished, int progression) {
         this.name = name;
         this.waypoints = waypoints;
+        finished = isFinished;
+        progressionCounter = progression;
         finished = false;
         this.info ="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum nibh accumsan lacinia placerat. Nulla consectetur pulvinar diam, eu luctus leo. ";
         this.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum nibh accumsan lacinia placerat. Nulla consectetur pulvinar diam, eu luctus leo. Nullam varius neque urna, ut laoreet tortor posuere ut. Donec ac leo lorem. Mauris efficitur porta est nec condimentum. Aliquam nisi libero, fermentum eget semper vitae, fringilla ut justo. Aenean cursus, dui in rhoncus gravida, nisi nisl tempus odio, ac feugiat sem massa ac sem. ";
@@ -48,8 +51,20 @@ public class Route implements Serializable {
         return finished;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setFinished(boolean state) { finished = state; }
+
+    public int getProgressionCounter() { return progressionCounter; }
+
+    public void resetRouteProgression() {
+        progressionCounter = 0;
+    }
+
+    public boolean incrementProgressionCounter() {
+        progressionCounter++;
+        if(progressionCounter >= waypoints.size()){
+            return true;
+        }
+        return false;
     }
 
     public String getInfo() {
