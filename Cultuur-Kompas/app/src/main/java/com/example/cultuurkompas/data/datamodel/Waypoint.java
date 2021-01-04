@@ -15,7 +15,7 @@ public class Waypoint implements Serializable {
     private boolean visited;
 
 
-    public Waypoint(int number, String name, double longitude, double latitude, String description, String imgLink, ArrayList<String> tags) {
+    public Waypoint(int number, String name, double longitude, double latitude, String description, String imgLink, ArrayList<String> tags, boolean isVisited) {
         this.number = number;
         this.name = name;
         this.geoPoint = new GeoPoint(longitude, latitude);
@@ -26,6 +26,7 @@ public class Waypoint implements Serializable {
         this.tags.add("tag 2");
         this.tags.add("tag 3");
         visited = false;
+        visited = isVisited;
     }
 
     public int getNumber() {

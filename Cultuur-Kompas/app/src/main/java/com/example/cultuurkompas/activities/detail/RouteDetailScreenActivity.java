@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +22,7 @@ import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.MapScreenActivity;
 import com.example.cultuurkompas.activities.adapters.WaypointRVAdapter;
 import com.example.cultuurkompas.activities.popup.DialogListener;
+import com.example.cultuurkompas.activities.popup.AlertDialog;
 import com.example.cultuurkompas.data.datamodel.Route;
 import com.squareup.picasso.Picasso;
 
@@ -75,21 +75,8 @@ public class RouteDetailScreenActivity extends AppCompatActivity implements Dial
 
 
     public void showAlertDialog(View view){
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("ALERT");
-        alert.setMessage("Weet je zeker dat je de route opnieuw wilt lopen?");
-        alert.setPositiveButton("JA", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(view.getContext(), "Er is geen nieuwe route gestart", Toast.LENGTH_SHORT);
-            }
-        });
-        alert.setNegativeButton("NEE", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(view.getContext(), "Er is een nieuwe route gestart", Toast.LENGTH_SHORT);
-            }
-        });
+        //todo Language check
+        new AlertDialog(this, "ALERT", "Weet je zeker dat je de route opnieuw wilt lopen?", this).show();
     }
     @Override
     public void DialogCallback(boolean okPressed) {
