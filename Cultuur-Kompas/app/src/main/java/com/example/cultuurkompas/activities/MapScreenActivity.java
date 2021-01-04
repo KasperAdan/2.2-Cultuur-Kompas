@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,11 +26,14 @@ import com.example.cultuurkompas.activities.popup.DialogListener;
 import com.example.cultuurkompas.activities.popup.HelpDialog;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 import com.example.cultuurkompas.interfaces.DataConnector;
-import com.example.cultuurkompas.interfaces.MyLocationListener;
+import com.example.cultuurkompas.interfaces.LocationService;
 import com.example.cultuurkompas.viewmodel.OpenRouteServiceConnection;
 import com.example.cultuurkompas.viewmodel.orsdata.Route;
 import com.example.cultuurkompas.viewmodel.orsdata.TravelType;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +60,7 @@ public class MapScreenActivity extends AppCompatActivity{
     private IMapController mapController;
     private GeoPoint cityGeoPoint;
     private Route route;
-    private LocationListener locationListener;
+    private LocationService locationService;
     private LocationManager locationManager;
     private Marker marker;
     private boolean finished = false;
@@ -67,20 +69,37 @@ public class MapScreenActivity extends AppCompatActivity{
     private com.example.cultuurkompas.data.datamodel.Route selectedRoute;
     private Polyline line;
 
-    
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LocationService.LocationEvent event) {
+        myLocation = event.getGeoPoint();
+        Log.d("LOCATION_CHANGED:", myLocation.getLatitude() + "," + myLocation.getLongitude());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
-
+        
         Configuration.getInstance().setUserAgentValue("com.example.cultuurkompas");
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new MyLocationListener(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+        Intent intent = new Intent(this,LocationService.class);
+        startService(intent);
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, (LocationListener) locationService);
 
         DataConnector.getInstance().getAllData(this);
         // Enable this to reset all progress
