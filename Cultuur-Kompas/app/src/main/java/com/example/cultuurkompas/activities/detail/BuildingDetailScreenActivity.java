@@ -2,6 +2,7 @@ package com.example.cultuurkompas.activities.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
+import com.example.cultuurkompas.interfaces.WaypointChangedListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -20,12 +22,16 @@ import java.util.ArrayList;
 public class BuildingDetailScreenActivity extends AppCompatActivity {
 
     private Waypoint waypoint;
+    private WaypointChangedListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_detail_screen);
         Intent intent = getIntent();
+        if (intent.getSerializableExtra("test") != null){
+            listener = (WaypointChangedListener) intent.getSerializableExtra("test");
+        }
 
         waypoint = (Waypoint) intent.getSerializableExtra("waypoint");
 
@@ -47,6 +53,15 @@ public class BuildingDetailScreenActivity extends AppCompatActivity {
         ((CheckBox) findViewById(R.id.cb_buildingdetail_visited)).setChecked(waypoint.isVisited());
 
         ImageButton backButton = findViewById(R.id.ib_buildingdetail_back);
-        backButton.setOnClickListener(view -> super.onBackPressed());
+        backButton.setOnClickListener(v -> {
+
+            boolean ischecked = ((CheckBox)findViewById(R.id.cb_buildingdetail_visited)).isChecked();
+
+            waypoint.setVisited(ischecked);
+            if (listener != null){
+                listener.onWaypointChanged(waypoint);
+            }
+            super.onBackPressed();
+        });
     }
 }
