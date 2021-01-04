@@ -132,4 +132,14 @@ public class DataConnector {
 
         builder.apply();
     }
+
+    public void overrideWaypointVisitedState(int waypointNumber) {
+        SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor builder = sharedPref.edit();
+
+        waypoints.get(waypointNumber).setVisited(!waypoints.get(waypointNumber).isVisited());
+        builder.putBoolean("waypoint" + (waypointNumber + 1), waypoints.get(waypointNumber).isVisited());
+
+        builder.apply();
+    }
 }
