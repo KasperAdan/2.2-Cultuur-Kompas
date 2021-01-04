@@ -1,7 +1,10 @@
 package com.example.cultuurkompas.activities.detail;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.activities.popup.HelpDialog;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 import com.squareup.picasso.Picasso;
 
@@ -48,5 +52,11 @@ public class BuildingDetailScreenActivity extends AppCompatActivity {
 
         ImageButton backButton = findViewById(R.id.ib_buildingdetail_back);
         backButton.setOnClickListener(view -> super.onBackPressed());
+    }
+
+    public void onButtonHelpBuildingDetailClick(View view){
+        HelpDialog dialog = new HelpDialog(this, getResources().getString(R.string.helpTextBuildingDetail));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 }
