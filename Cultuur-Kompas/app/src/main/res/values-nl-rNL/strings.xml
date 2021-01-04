@@ -16,4 +16,7 @@
     <string name="itemBuildingPlaceholder">Placeholder</string>
     <string name="itemRouteTextView1">Textview1</string>
     <string name="itemRouteTextView2">Textview2</string>
+    <string name="routeBeginMessage">De route is gestart</string>
+    <string name="routeEndMessage">De route is afgerond</string>
+    <string name="routeMidMessage">Het halverwege punt is bereikt</string>
 </resources>
