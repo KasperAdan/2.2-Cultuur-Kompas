@@ -50,7 +50,7 @@ public class DataConnector {
                 "Do\t8:30–22:00\n" +
                 "Vr\t8:30–22:00\n" +
                 "Za\t9:00–17:00\n" +
-                "Zo\t12:00–17:00 \r\n" +
+                "Zo\t12:00–17:00\n" +
                 "Website: https://www.bibliotheekbreda.nl/iguana/www.main.cls", null, null,sharedPref.getBoolean("waypoint" + 3, false)));
         waypoints.add(new Waypoint(4,"Kloosterkazerne",51.587722,4.781028, "Huidige Casino \r\n" +
                 "Tel: - \r\n" +
@@ -71,7 +71,7 @@ public class DataConnector {
                 "Do\t12:00 - 18:00\n" +
                 "Vr\t12:00 - 20:00\n" +
                 "Za\t12:00 - 20:00\n" +
-                "Zo\t12:00 - 18:00 \r\n" +
+                "Zo\t12:00 - 18:00\n" +
                 "Website: https://www.beyerd.nl/", null, null,sharedPref.getBoolean("waypoint" + 7, false)));
         waypoints.add(new Waypoint(8,"Gasthuispoort",51.589555,4.780000, "Tel: - \r\n" +
                 "Openingstijden: - \r\n" +
@@ -85,7 +85,7 @@ public class DataConnector {
                 "Do\t8:00-16:00\n" +
                 "Vr\t8:00-16:00\n" +
                 "Za\t11:00-17:00\n" +
-                "Zo\t11:00-17:00 \r\n" +
+                "Zo\t11:00-17:00\n" +
                 "Website: -", null, null,sharedPref.getBoolean("waypoint" + 9, false)));
         waypoints.add(new Waypoint(10,"Begijnenhof",51.589695,4.778362, "Ingang Begijnenhof \r\n" +
                 "Tel: 076 521 1276 \r\n" +
@@ -96,7 +96,7 @@ public class DataConnector {
                 "Do 9:00-18:00\n" +
                 "Vr 9:00-18:00\n" +
                 "Za 9:00-18:00\n" +
-                "Zo 9:00-18:00 \r\n" +
+                "Zo 9:00-18:00\n" +
                 "Website: https://www.begijnhofbreda.nl/", null, null,sharedPref.getBoolean("waypoint" + 10, false)));
         waypoints.add(new Waypoint(11,"Halverwege stadswandeling",51.589500,4.776250, "Halverwege punt 2020", null, null,sharedPref.getBoolean("waypoint" + 11, false)));
         waypoints.add(new Waypoint(12,"Nassau Baronie Monument",51.592500,4.779695, "Tel: - \r\n" +
@@ -110,7 +110,7 @@ public class DataConnector {
                 "Do\t9:00-18:00\n" +
                 "Vr\t9:00-18:00\n" +
                 "Za\tClosed\n" +
-                "Zo\tClosed \r\n" +
+                "Zo\tClosed\n" +
                 "Website: -", null, null,sharedPref.getBoolean("waypoint" + 13, false)));
         waypoints.add(new Waypoint(14,"Kasteel van Breda",51.590612,4.776167, "Kasteelplein \r\n" +
                 "Tel: 0900 5222444 \r\n" +
@@ -139,11 +139,21 @@ public class DataConnector {
                 "Do\t10:00-17:00\n" +
                 "Vr\t10:00-17:00\n" +
                 "Za\t10:00-17:00\n" +
-                "Zo\t13:00-17:00\n", null, null,sharedPref.getBoolean("waypoint" + 20, false)));
-        waypoints.add(new Waypoint(21,"Het Poortje",51.588195,4.775138, "", null, null,sharedPref.getBoolean("waypoint" + 21, false)));
-        waypoints.add(new Waypoint(22,"Ridderstraat",51.587083,4.775750, "", null, null,sharedPref.getBoolean("waypoint" + 22, false)));
-        waypoints.add(new Waypoint(23,"Grote Markt",51.587417,4.776555, "Zuidpunt Grote Markt", null, null,sharedPref.getBoolean("waypoint" + 23, false)));
-        waypoints.add(new Waypoint(24,"Bevrijdingsmonument",51.588028,4.776333, "", null, null,sharedPref.getBoolean("waypoint" + 24, false)));
+                "Zo\t13:00-17:00\n" +
+                "Website: https://grotekerkbreda.nl/", null, null,sharedPref.getBoolean("waypoint" + 20, false)));
+        waypoints.add(new Waypoint(21,"Het Poortje",51.588195,4.775138, "Tel: - \r\n" +
+                "Openingstijden: Altijd zichtbaar \r\n" +
+                "Website: - ", null, null,sharedPref.getBoolean("waypoint" + 21, false)));
+        waypoints.add(new Waypoint(22,"Ridderstraat",51.587083,4.775750, "Tel: - \r\n" +
+                "Openingstijden: Altijd zichtbaar \r\n" +
+                "Website: - ", null, null,sharedPref.getBoolean("waypoint" + 22, false)));
+        waypoints.add(new Waypoint(23,"Grote Markt",51.587417,4.776555, "Zuidpunt Grote Markt \r\n" +
+                "Tel: - \r\n" +
+                "Openingstijden: Tijden verschillen \r\n" +
+                "Website: https://www.breda.nl/markten", null, null,sharedPref.getBoolean("waypoint" + 23, false)));
+        waypoints.add(new Waypoint(24,"Bevrijdingsmonument",51.588028,4.776333, "Tel: - \r\n" +
+                "Openingstijden: Altijd zichtbaar \r\n" +
+                "Website: - ", null, null,sharedPref.getBoolean("waypoint" + 24, false)));
 
         String normalRouteName = "Normal route";
         Route routeNormal = new Route(normalRouteName, new ArrayList<>(waypoints), sharedPref.getBoolean(normalRouteName, false), sharedPref.getInt(normalRouteName + "progression", 0));
