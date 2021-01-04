@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.activities.detail.BuildingDetailScreenActivity;
 import com.example.cultuurkompas.activities.popup.AlertDialog;
 import com.example.cultuurkompas.activities.popup.DialogListener;
 import com.example.cultuurkompas.activities.popup.HelpDialog;
@@ -56,7 +57,7 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MapScreenActivity extends AppCompatActivity{
+public class MapScreenActivity extends AppCompatActivity {
 
     private MapView mapView = null;
     private IMapController mapController;
@@ -71,7 +72,6 @@ public class MapScreenActivity extends AppCompatActivity{
     private com.example.cultuurkompas.data.datamodel.Route selectedRoute;
     private Polyline line;
 
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,13 +107,13 @@ public class MapScreenActivity extends AppCompatActivity{
         mapController.setCenter(cityGeoPoint);
 
 
-        for(Waypoint waypoint : DataConnector.getInstance().getWaypoints()){
+        for (Waypoint waypoint : DataConnector.getInstance().getWaypoints()) {
             Marker marker = new Marker(mapView);
             marker.setPosition(waypoint.getGeoPoint());
             marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker, MapView mapView) {
-                    Toast.makeText(getApplicationContext(),waypoint.getName(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), waypoint.getName(), Toast.LENGTH_LONG).show();
                     return false;
                 }
             });
@@ -122,10 +122,9 @@ public class MapScreenActivity extends AppCompatActivity{
     }
 
 
-
-    public void onButtonCurrentLocationClick(View view){
-        Toast.makeText(this,"CURRENT LOCATION", Toast.LENGTH_LONG).show();
-        if(myLocation != null) {
+    public void onButtonCurrentLocationClick(View view) {
+        Toast.makeText(this, "CURRENT LOCATION", Toast.LENGTH_LONG).show();
+        if (myLocation != null) {
             mapController.setCenter(myLocation);
         }
 
@@ -136,7 +135,7 @@ public class MapScreenActivity extends AppCompatActivity{
 //        }
     }
 
-    public void onButtonHelpMapClick(View view){
+    public void onButtonHelpMapClick(View view) {
         HelpDialog dialog = new HelpDialog(this, "Description");
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
@@ -167,7 +166,7 @@ public class MapScreenActivity extends AppCompatActivity{
     }
 
 
-    public Polyline drawLine(List<GeoPoint> geoPoints){
+    public Polyline drawLine(List<GeoPoint> geoPoints) {
         Polyline line = new Polyline();
         line.setTitle("Road back home");
         line.setSubDescription(Polyline.class.getCanonicalName());
@@ -188,61 +187,73 @@ public class MapScreenActivity extends AppCompatActivity{
         return line;
     }
 
-    public void locationChanged(GeoPoint geoPoint){
-        myLocation = geoPoint;
-        for (Waypoint waypoint : selectedRoute) {
-            if(waypoint.getGeoPoint().distanceToAsDouble(myLocation)<15){
-                Log.d("Close Enough", "Close "+waypoint.getName());
-            }
+    public void locationChanged(GeoPoint geoPoint) {
+        if (selectedRoute == null) {
+            //TESTING
+            startRoute(DataConnector.getInstance().getRoutes().get(0));
 
-        }
-        marker.setPosition(geoPoint);
-        mapView.invalidate();
-
-        if(selectedRoute == null){
-            // TESTING
-//            startRoute(DataConnector.getInstance().getRoutes().get(0));
-
-            // Checks if there is an ongoing route
-            for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
-                if(route.getProgressionCounter() > 0){
+            //Checks if there is an ongoing route
+            for (com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()) {
+                if (route.getProgressionCounter() > 0) {
                     startRoute(route);
                 }
             }
         }
+        myLocation = geoPoint;
+        //myLocation = DataConnector.getInstance().getWaypoints().get(0).getGeoPoint();
+        if (selectedRoute != null) {
+            for (Waypoint waypoint : DataConnector.getInstance().getWaypoints()) {
+                if (!waypoint.isVisited()) {
+                    if (waypoint.getGeoPoint().distanceToAsDouble(myLocation) < 15) {
+                        Log.d("Close Enough", "Close " + waypoint.getName());
+                        waypoint.setVisited(true);
+                        Intent intent = new Intent(getApplicationContext(), BuildingDetailScreenActivity.class);
+                        intent.putExtra("waypoint", waypoint);
+                        getApplicationContext().startActivity(intent);
+                        if(waypoint==selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter())){
+                            reachedWaypoint();
+                            Log.d("MapScreenActivity","Next Waypoint");
+                        }
+                    }
+                }
+            }
+        }
+
+        marker.setPosition(geoPoint);
+        mapView.invalidate();
 
     }
 
-    public boolean startRoute(com.example.cultuurkompas.data.datamodel.Route route){
-        if(selectedRoute != null) {
+    public boolean startRoute(com.example.cultuurkompas.data.datamodel.Route route) {
+        if (selectedRoute != null) {
             return false;
         }
         selectedRoute = route;
 
-        if(myLocation != null) {
+        if (myLocation != null) {
             getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
         }
         return true;
     }
 
-    public void stopCurrentRoute(){
+    public void stopCurrentRoute() {
         DataConnector.getInstance().resetRoute(selectedRoute);
         selectedRoute = null;
-        if(line != null) {
+        if (line != null) {
             mapView.getOverlayManager().remove(line);
             line = null;
             mapView.invalidate();
         }
     }
 
-    private void reachedWaypoint(){
-        if(line != null) {
+    private void reachedWaypoint() {
+        if (line != null) {
             mapView.getOverlayManager().remove(line);
             mapView.invalidate();
         }
-        if(selectedRoute != null){
+        if (selectedRoute != null) {
             DataConnector.getInstance().reachedNewWaypoint(selectedRoute);
-            if(!selectedRoute.isFinished()){
+            if (!selectedRoute.isFinished()) {
                 getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
             } else {
                 stopCurrentRoute();
@@ -259,6 +270,7 @@ public class MapScreenActivity extends AppCompatActivity{
                 //TODO handle error
                 Log.e("MAP", "ERROR on route response");
             }
+
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 Log.d("MAP", response.toString());
@@ -282,7 +294,7 @@ public class MapScreenActivity extends AppCompatActivity{
         });
 
         // Wait for the API to respond
-        while(!finished) {
+        while (!finished) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -291,7 +303,7 @@ public class MapScreenActivity extends AppCompatActivity{
         }
         finished = false;
         line = drawLine(routeGeoPoints);
-        if (line != null){
+        if (line != null) {
             mapView.getOverlayManager().add(line);
             mapView.invalidate();
         }
