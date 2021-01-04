@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.activities.MapScreenActivity;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 import com.squareup.picasso.Picasso;
 
@@ -48,5 +49,13 @@ public class BuildingDetailScreenActivity extends AppCompatActivity {
 
         ImageButton backButton = findViewById(R.id.ib_buildingdetail_back);
         backButton.setOnClickListener(view -> super.onBackPressed());
+
+        ImageButton mapDetailButton = findViewById(R.id.ib_buildingdetail_map);
+        mapDetailButton.setOnClickListener(view -> {
+            //TODO
+            Intent mapIntent = new Intent(BuildingDetailScreenActivity.this, MapScreenActivity.class);
+            mapIntent.putExtra("waypoint",waypoint);
+            startActivity(mapIntent);
+        });
     }
 }

@@ -153,9 +153,19 @@ public class MapScreenActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
+
+        Intent intent = getIntent();
+
+        if(intent.getSerializableExtra("waypoint")!=null){
+            Waypoint waypoint = (Waypoint)intent.getSerializableExtra("waypoint");
+            mapController.setCenter(waypoint.getGeoPoint());
+        }
+
         mapView.onResume();
     }
 
