@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cultuur Kompas</string>
-    <string name="placeholder">Placeholder</string>
+    <string name="buildingDetailsScreenPlaceholder">Placeholder</string>
     <string name="buildingDetailScreenBezocht">Bezocht</string>
     <string name="buildingScreenBuildingScreen">Bouwscherm</string>
     <string name="buildingScreenAll">ALLE</string>
@@ -19,4 +19,6 @@
     <string name="routeBeginMessage">De route is gestart</string>
     <string name="routeEndMessage">De route is afgerond</string>
     <string name="routeMidMessage">Het halverwege punt is bereikt</string>
+    <string name="routeRestartText">Weet je zeker dat je de route opnieuw wilt lopen?</string>
+    <string name="routeStartText">Weet je zeker dat je deze route wilt starten?</string>
 </resources>

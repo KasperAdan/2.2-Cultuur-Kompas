@@ -26,4 +26,7 @@
     <string name="routeEndMessage">The route has been completed</string>
     <string name="routeMidMessage">Half-way point has been reached</string>
 
+    <string name="routeRestartText">Are you sure you want to walk this route again?</string>
+    <string name="routeStartText">Are you sure you want to start this route?</string>
+
 </resources>

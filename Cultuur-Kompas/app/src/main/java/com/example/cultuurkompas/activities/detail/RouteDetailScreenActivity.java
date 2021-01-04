@@ -43,7 +43,11 @@ public class RouteDetailScreenActivity extends AppCompatActivity implements Dial
         this.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAlertDialog(view);
+                if(route.isFinished()){
+                    showAlertDialog(view, getResources().getText(R.string.routeRestartText).toString());
+                } else {
+                    showAlertDialog(view, getResources().getText(R.string.routeStartText).toString());
+                }
             }
         });
 
@@ -74,10 +78,10 @@ public class RouteDetailScreenActivity extends AppCompatActivity implements Dial
     }
 
 
-    public void showAlertDialog(View view){
-        //todo Language check
-        new AlertDialog(this, "ALERT", "Weet je zeker dat je de route opnieuw wilt lopen?", this).show();
+    public void showAlertDialog(View view, String dialogText){
+        new AlertDialog(this, "ALERT", dialogText, this).show();
     }
+
     @Override
     public void DialogCallback(boolean okPressed) {
         if (okPressed) {
