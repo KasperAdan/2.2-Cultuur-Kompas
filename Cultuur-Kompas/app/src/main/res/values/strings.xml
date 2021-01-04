@@ -21,5 +21,6 @@
 
     <string name="itemRouteTextView1">TextView1</string>
     <string name="itemRouteTextView2">TextView2</string>
+    <string name="reachedwaypoint_toast">You reached your location</string>
 
 </resources>

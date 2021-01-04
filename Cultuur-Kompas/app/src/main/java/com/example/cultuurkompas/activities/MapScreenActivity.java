@@ -199,20 +199,21 @@ public class MapScreenActivity extends AppCompatActivity {
                 }
             }
         }
-        myLocation = geoPoint;
-        //myLocation = DataConnector.getInstance().getWaypoints().get(0).getGeoPoint();
+        //myLocation = geoPoint;
+        myLocation = DataConnector.getInstance().getWaypoints().get(0).getGeoPoint();
         if (selectedRoute != null) {
             for (Waypoint waypoint : DataConnector.getInstance().getWaypoints()) {
                 if (!waypoint.isVisited()) {
                     if (waypoint.getGeoPoint().distanceToAsDouble(myLocation) < 15) {
                         Log.d("Close Enough", "Close " + waypoint.getName());
                         waypoint.setVisited(true);
-                        Intent intent = new Intent(getApplicationContext(), BuildingDetailScreenActivity.class);
+                        Intent intent = new Intent(this, BuildingDetailScreenActivity.class);
                         intent.putExtra("waypoint", waypoint);
-                        getApplicationContext().startActivity(intent);
+                        this.startActivity(intent);
                         if(waypoint==selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter())){
                             reachedWaypoint();
                             Log.d("MapScreenActivity","Next Waypoint");
+                            Toast.makeText(this, getResources().getString(R.string.reachedwaypoint_toast), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

@@ -16,4 +16,5 @@
     <string name="itemBuildingPlaceholder">Placeholder</string>
     <string name="itemRouteTextView1">Textview1</string>
     <string name="itemRouteTextView2">Textview2</string>
+    <string name="reachedwaypoint_toast">Je bent bij locatie aangekomen</string>
 </resources>
