@@ -124,16 +124,16 @@ public class MapScreenActivity extends AppCompatActivity{
 
 
     public void onButtonCurrentLocationClick(View view){
-        Toast.makeText(this,"CURRENT LOCATION", Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"CURRENT LOCATION", Toast.LENGTH_SHORT).show();
         if(myLocation != null) {
             mapController.setCenter(myLocation);
         }
 
         // TESTING
-        if(selectedRoute != null) {
-            reachedWaypoint();
+//        if(selectedRoute != null) {
+//            reachedWaypoint();
 //            stopCurrentRoute();
-        }
+//        }
     }
 
     public void onButtonHelpMapClick(View view){
@@ -143,13 +143,13 @@ public class MapScreenActivity extends AppCompatActivity{
     }
 
     public void onButtonBuildingMapClick(View view) {
-        Toast.makeText(this, "BUILDINGS", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "BUILDINGS", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(MapScreenActivity.this, BuildingScreenActivity.class);
         startActivity(i);
     }
 
     public void onButtonRouteMapClick(View view) {
-        Toast.makeText(this, "ROUTES", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "ROUTES", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(MapScreenActivity.this, RouteScreenActivity.class);
         startActivity(i);
     }
@@ -197,7 +197,7 @@ public class MapScreenActivity extends AppCompatActivity{
             // TESTING
 //            startRoute(DataConnector.getInstance().getRoutes().get(0));
 
-            // Checks if there is an ongoing route
+            // Checks if there is an ongoing route and resumes it
             for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
                 if(route.getProgressionCounter() > 0) {
                     AlertDialog routeAlertDialog = new AlertDialog(this, "Route", "Wilt u de gestarte route hervatten?", new DialogListener() {
@@ -225,6 +225,7 @@ public class MapScreenActivity extends AppCompatActivity{
         if(myLocation != null) {
             getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
         }
+        Toast.makeText(this, getResources().getText(R.string.routeBeginMessage), Toast.LENGTH_LONG).show();
         return true;
     }
 
@@ -246,8 +247,12 @@ public class MapScreenActivity extends AppCompatActivity{
         if(selectedRoute != null){
             DataConnector.getInstance().reachedNewWaypoint(selectedRoute);
             if(!selectedRoute.isFinished()){
+                if(selectedRoute.getProgressionCounter() == selectedRoute.getWaypoints().size() / 2){
+                    Toast.makeText(this, getResources().getText(R.string.routeMidMessage), Toast.LENGTH_LONG).show();
+                }
                 getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
             } else {
+                Toast.makeText(this, getResources().getText(R.string.routeEndMessage), Toast.LENGTH_LONG).show();
                 stopCurrentRoute();
             }
         }

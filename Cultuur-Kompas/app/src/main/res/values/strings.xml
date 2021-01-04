@@ -22,4 +22,8 @@
     <string name="itemRouteTextView1">TextView1</string>
     <string name="itemRouteTextView2">TextView2</string>
 
+    <string name="routeBeginMessage">The route has been started</string>
+    <string name="routeEndMessage">The route has been completed</string>
+    <string name="routeMidMessage">Half-way point has been reached</string>
+
 </resources>
