@@ -107,15 +107,7 @@ public class MapScreenActivity extends AppCompatActivity{
         mapController.setCenter(cityGeoPoint);
 
 
-
-        selectedRoute = new ArrayList<>();
-        selectedRoute.addAll(DataConnector.getInstance().getRoutes().get(0).getWaypoints());
-        if(myLocation != null) {
-            getDirectionsToNextWaypoint(selectedRoute.get(0));
-        }
-        mapView.invalidate();
-
-        for(Waypoint waypoint : selectedRoute){
+        for(Waypoint waypoint : DataConnector.getInstance().getWaypoints()){
             Marker marker = new Marker(mapView);
             marker.setPosition(waypoint.getGeoPoint());
             marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
