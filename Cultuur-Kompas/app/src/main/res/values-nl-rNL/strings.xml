@@ -23,4 +23,28 @@
     <string name="helpTextBuilding">" Dit scherm bevat alle bezienswaardigheden die je kan bezoeken\n \n De knoppen:         \n        Je hebt 3 filter knoppen:         \n        - alle: alle bezienswaardigheden die beschikbaar zijn        \n        - bezocht: de bezienswaardigheden die al eerder zijn bezocht\n        - onbezocht: de bezienswaardigheden die nog niet eerder bezocht zijn        "</string>
     <string name="helpTextBuildingDetail">Dit scherm bevat informatie over de geselecteerde bezienswaardigheid\n\nHet bevat tags voor extra informatie.\n\nOok een aanvink box om te kijken of je dit al eerder gezien hebt.\n\nDe wereldbol laat de locatie op de map zien.\n\nHet kompas laat je de routes zien</string>
     <string name="helpTextRouteDetail">Dit scherm bevat informatie van de geselecteerde route\n\n Er zijn tags voor extra informatie.\n \n Een beschrijving van de route.\n \n En een lijst van alle punten in de route,\n hierop kan u klikken voor meer informatie.</string>
+    <string name="StadHuisInfo">VVV beginpunt vanaf 2020\nTel: -\nOpeningstijden: - \nWebsite: https://www.Breda.nl</string>
+    <string name="AntoniusVanPaduakerkInfo">St Janstraat\nTel: 076 521 5764\nOpeningstijden: - \nWebsite: https://parochiebredacentrum.bisdomvanbreda.nl</string>
+    <string name="BibliotheekNieuweVesteInfo">Tel: 076 200 3200\nOpeningstijden: \nMa 8:30–22:00\nDi  8:30–22:00\nWo 8:30–22:00\nDo 8:30–22:00\nVr 8:30–22:00\nZa 9:00–17:00\nZo 12:00–17:00\nWebsite: https://www.bibliotheekbreda.nl/iguana/www.main.cls</string>
+    <string name="KloosterkazerneInfo">Naam: Kloosterkazerne\nTel: -\nOpeningstijden: Altijd geopend\nWebsite: https://www.hollandcasino.nl/en/vestigingen/breda\n</string>
+    <string name="ChasseTheaterInfo">Tel: 076 530 3132\nOpeningstijden: -\nWebsite: https://www.chasse.nl/\n</string>
+    <string name="BindingVanIsaacInfo">Grasveld Vlaszak\nTel: -\nOpeningstijden: -\nWebsite: -\n</string>
+    <string name="BeyerdInfo">Tel: 076 521 4265\nOpeningstijden:\nMa\t12:00 - 18:00\nDi\t12:00 - 18:00\nWo\tGesloten\t\nDo\t12:00 - 18:00\nVr\t12:00 - 20:00\nZa\t12:00 - 20:00\nZo\t12:00 - 18:00\nWebsite: https://www.beyerd.nl/\n</string>
+    <string name="GasthuispoortInfo">Tel: -\nOpeningstijden: -\nWebsite: -\n</string>
+    <string name="WillemMerkxtuinInfo">Merkxtuin ingang\nTel: -\nOpeningstijden:\nMa 8:00-16:00\nDi 8:00-16:00\nWo 8:00-16:00\nDo 8:00-16:00\nVr 8:00-16:00\nZa 11:00-17:00\nZo 11:00-17:00\nWebsite: -\n</string>
+    <string name="BegijnenhofInfo">Ingang Begijnenhof\nTel: 076 521 1276\nOpeningstijden: \nMa 9:00-18:00\nDi 9:00-18:00\nWo 9:00-18:00\nDo 9:00-18:00\nVr 9:00-18:00\nZa 9:00-18:00\nZo 9:00-18:00\nWebsite: https://www.begijnhofbreda.nl/\n</string>
+    <string name="Halverwegen">Halverwegen van de route</string>
+    <string name="NassauBaronieMonumentInfo">Tel: -\nOpeningstijden: -\nWebsite: https://www.bredanassaustad.nl/monument/nassau-monument-valkenberg\n</string>
+    <string name="TheLightHouseInfo">Tel: 076 514 1057\nOpeningstijden: \nMa 9:00-18:00\nDi 9:00-18:00\nWo 9:00-18:00\nDo 9:00-18:00\nVr 9:00-18:00\nZa Closed\nZo Closed\nWebsite: -\n</string>
+    <string name="KasteelVanBredaInfo">Kasteel plein\nTel: 0900 5222444\nOpeningstijden: -\nWebsite: https://www.welkominbreda.nl/locaties/630891090/kasteel-van-breda?ins_rd=d3d3LnZ2dmJyZWRhLm5s\n</string>
+    <string name="StadhouderspoortInfo">Tel: -\nOpeningstijden: -\nWebsite: -\n</string>
+    <string name="HuisVanBrechtInfo">Tel: -\nOpeningstijden: -\nWebsite: -\n\n</string>
+    <string name="SpanjaardsgatInfo">Tel: -\nOpeningstijden: -\nWebsite: \n</string>
+    <string name="BeginVismarktInfo">Tel: -\nOpeningstijden: -\nWebsite: \n</string>
+    <string name="BeginHavermarktInfo">Tel: -\nOpeningstijden: -\nWebsite: -\n</string>
+    <string name="GroteKerkInfo">Tel: -\nOpeningstijden: \nMa 10:00-17:00\nDi 10:00-17:00\nWo 10:00-17:00\nDo 10:00-17:00\nVr 10:00-17:00\nZa 10:00-17:00\nZo 13:00-17:00\nWebsite: https://grotekerkbreda.nl/\n</string>
+    <string name="RidderstraatInfo">Tel: -\nOpeningstijden: -\nWebsite: -\n</string>
+    <string name="HetPoortjeInfo">Tel: -\nOpeningstijden: -\nWebsite: -\n</string>
+    <string name="GroteMarktInfo">Zuidpunt grote markt\nTel: -\nOpeningstijden: Tijden verschillen\nWebsite: https://www.breda.nl/markten\n</string>
+    <string name="BevrijdingsmonumentInfo">Laatste waypoint van de route\nTel: -\nOpeningstijden: Altijd zichtbaar\nWebsite: -\n</string>
 </resources>

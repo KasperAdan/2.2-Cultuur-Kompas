@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Cultuur Kompas</string>
 
-    <string name="buildingDetailsScreenPlaceholder">Placeholder</string>
+    <string name="buildingDetailsScreenPlaceholder" translatable="false">Placeholder</string>
     <string name="buildingDetailScreenBezocht">Visited</string>
 
     <string name="buildingScreenBuildingScreen">Building screen</string>
@@ -31,5 +31,29 @@
     <string name="helpTextBuilding">" This screen contains all the sights you can visit\n \n The buttons:         \n        You got 3 filter buttons:         \n        - all: all the sights that are avalible     \n        - visited: the sights you have visited before  \n        - unvisited: the sights you have yet to visit"</string>
     <string name="helpTextBuildingDetail">" This screen shows you information about the selected sight\n \n It contains tags if you want some additional information.\n \n It also sad a checkbox if you have seen this sight already.\n \n You can press the globe if you want to see this sight on the map.\n \n The compas will take you to the routes."</string>
     <string name="helpTextRouteDetail">" This screen contains information about the selected route\n \n It has tags for additinal information.\n \n A description about the route.\n \n And a list of all the points in this route,\n you can click on a point for detailed information."</string>
+    <string name="StadHuisInfo">VVV StartPoint from 2020\nPhone: -\nOpen hours: - \nWebsite: https://www.Breda.nl</string>
+    <string name="AntoniusVanPaduakerkInfo">St Janstraat \nPhone: 076 521 5764\nOpen hours: - \nWebsite: https://parochiebredacentrum.bisdomvanbreda.nl/\"</string>
+    <string name="BibliotheekNieuweVesteInfo">Phone: 076 200 3200 Open hours:  Mon 8:30–22:00 Tue 8:30–22:00 Wed 8:30–22:00 Thu 8:30–22:00 Fri 8:30–22:00 Sat 9:00–17:00 Sun 12:00–17:00 Website: https://www.bibliotheekbreda.nl/iguana/www.main.cls</string>
+    <string name="KloosterkazerneInfo">The Casino\nPhone: -\nOpen hours: 24 hours every day opened\nWebsite: https://www.hollandcasino.nl/en/vestigingen/breda</string>
+    <string name="ChasseTheaterInfo">Phone: 076 530 3132\nOpen hours: -\nWebsite: https://www.chasse.nl/\n</string>
+    <string name="BindingVanIsaacInfo">Grassfield Vlaszak\nPhone: -\nOpen hours: -\nWebsite: -\n</string>
+    <string name="BeyerdInfo">Phone: 076 521 4265\nOpen hours:\nMon 12:00 - 18:00\nTue  12:00 - 18:00\nWed Gesloten\t\nThu\t12:00 - 18:00\nFri\t12:00 - 20:00\nSat\t12:00 - 20:00\nSun\t12:00 - 18:00\nWebsite: https://www.beyerd.nl/\n</string>
+    <string name="GasthuispoortInfo">Phone: -\nOpen hours: -\nWebsite: -\n</string>
+    <string name="WillemMerkxtuinInfo">Merkxtuin entrance\nPhone: -\nOpen hours:\nMon 8:00-16:00\nTue 8:00-16:00\nWed 8:00-16:00\nThu 8:00-16:00\nFri 8:00-16:00\nSat 11:00-17:00\nSun 11:00-17:00\nWebsite: -\n</string>
+    <string name="BegijnenhofInfo">Entrance Begijnenhof\nPhone: 076 521 1276\nOpen hours: \nMon 9:00-18:00\nTue 9:00-18:00\nWed 9:00-18:00\nThu 9:00-18:00\nFri 9:00-18:00\nSat 9:00-18:00\nSun 9:00-18:00\nWebsite: https://www.begijnhofbreda.nl/\n</string>
+    <string name="Halverwegen">Halfway done with the route</string>
+    <string name="NassauBaronieMonumentInfo">Phone: -\nOpen hours: -\nWebsite: https://www.bredanassaustad.nl/monument/nassau-monument-valkenberg\n</string>
+    <string name="TheLightHouseInfo">Phone: 076 514 1057\nOpen hours: \nMon 9:00-18:00\nTue 9:00-18:00\nWed 9:00-18:00\nThu 9:00-18:00\nFri 9:00-18:00\nSat Closed\nSun Closed\nWebsite: -\n</string>
+    <string name="KasteelVanBredaInfo">Castle garden\nPhone: 0900 5222444\nOpen hours: -\nWebsite: https://www.welkominbreda.nl/locaties/630891090/kasteel-van-breda?ins_rd=d3d3LnZ2dmJyZWRhLm5s\n</string>
+    <string name="StadhouderspoortInfo">Phone: -\nOpen hours: -\nWebsite: -\n</string>
+    <string name="HuisVanBrechtInfo">Phone: -\nOpen hours: -\nWebsite: -\n</string>
+    <string name="SpanjaardsgatInfo">Phone: -\nOpen hours: -\nWebsite: -\n</string>
+    <string name="BeginVismarktInfo">Phone: -\nOpen hours: -\nWebsite: -\n</string>
+    <string name="BeginHavermarktInfo">Phone: -\nOpen hours: -\nWebsite: -\n</string>
+    <string name="GroteKerkInfo">Phone: -\nOpen hours: \nMon 10:00-17:00\nTue 10:00-17:00\nWed 10:00-17:00\nThu 10:00-17:00\nFri 10:00-17:00\nSat 10:00-17:00\nSun 13:00-17:00\nWebsite: https://grotekerkbreda.nl/\n</string>
+    <string name="RidderstraatInfo">Phone: -\nOpen hours: -\nWebsite: -\n</string>
+    <string name="HetPoortjeInfo">Phone: -\nOpen hours: -\nWebsite: -\n</string>
+    <string name="GroteMarktInfo">South of the market\nPhone: -\nOpen hours: Tijden verschillen\nWebsite: https://www.breda.nl/markten\n</string>
+    <string name="BevrijdingsmonumentInfo">Last waypoint of the route\nPhone: -\nOpen hours: Always available\nWebsite: -\n</string>
 
 </resources>
