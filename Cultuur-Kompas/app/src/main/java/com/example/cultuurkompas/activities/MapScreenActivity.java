@@ -77,7 +77,9 @@ public class MapScreenActivity extends AppCompatActivity {
     public void onLocationEvent(LocationService.LocationEvent event) {
         myLocation = event.getGeoPoint();
         marker.setPosition(myLocation);
+        DataConnector.getInstance().setLastKnownLocation(myLocation);
         Log.d("LOCATION_CHANGED:", myLocation.getLatitude() + "," + myLocation.getLongitude());
+        mapView.invalidate();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -94,6 +96,40 @@ public class MapScreenActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+
+        Intent intent = getIntent();
+
+        if(intent.getStringExtra("routestart") != null) {
+            DataConnector.getInstance().EndActiveRoute();
+            startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestart")));
+            intent.removeExtra("routestart");
+        } else if (intent.getStringExtra("routestop") != null) {
+            DataConnector.getInstance().resetRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestop")));
+            intent.removeExtra("routestop");
+        } else if (intent.getStringExtra("routerestart") != null) {
+            DataConnector.getInstance().EndActiveRoute();
+            DataConnector.getInstance().resetRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routerestart")));
+            startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routerestart")));
+            intent.removeExtra("routerestart");
+        }
+
+        if (selectedRoute == null) {
+            // Checks if there is an ongoing route and resumes it
+            for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
+                if(route.getProgressionCounter() >= 0) {
+                    AlertDialog routeAlertDialog = new AlertDialog(this, "Route", getResources().getText(R.string.routeContinueText).toString(), new DialogListener() {
+                        @Override
+                        public void DialogCallback(boolean okPressed) {
+                            if(okPressed) {
+                                startRoute(route);
+                            } else {
+                                DataConnector.getInstance().resetRoute(route);
+                            }
+                        }});
+                    routeAlertDialog.show();
+                }
+            }
+        }
     }
 
     @Override
@@ -128,7 +164,7 @@ public class MapScreenActivity extends AppCompatActivity {
         mapView.setTag("mapView");
         mapView.setMultiTouchControls(true);
         marker = new Marker(mapView);
-        marker.setPosition(cityGeoPoint);
+//        marker.setPosition(cityGeoPoint);
         marker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_my_location, null));
         mapView.getOverlays().add(marker);
         mapView.setBuiltInZoomControls(false);
@@ -136,12 +172,6 @@ public class MapScreenActivity extends AppCompatActivity {
         mapController.setZoom(17.5);
         mapController.setCenter(cityGeoPoint);
 
-//        selectedRoute = new ArrayList<>();
-//        selectedRoute.addAll(DataConnector.getInstance().getRoutes().get(0).getWaypoints());
-//        if(myLocation != null) {
-//            getDirectionsToNextWaypoint(selectedRoute.get(0));
-//        }
-//        mapView.invalidate();
         Intent intent = new Intent(this,LocationService.class);
         intent.putExtra("geoFenceRoute", DataConnector.getInstance().getRoutes().get(0));
         startForegroundService(intent);
@@ -173,6 +203,10 @@ public class MapScreenActivity extends AppCompatActivity {
         mapView.getOverlays().add(marker);
 
         mapView.invalidate();
+        }
+
+        if(DataConnector.getInstance().getLastKnownLocation() != null) {
+            onLocationEvent(new LocationService.LocationEvent(DataConnector.getInstance().getLastKnownLocation()));
         }
     }
 
@@ -224,21 +258,6 @@ public class MapScreenActivity extends AppCompatActivity {
         }
 
         mapView.onResume();
-
-        if(intent.getStringExtra("routestart") != null) {
-            DataConnector.getInstance().EndActiveRoute();
-            startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestart")));
-            intent.removeExtra("routestart");
-        } else if (intent.getStringExtra("routestop") != null) {
-            DataConnector.getInstance().resetRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestop")));
-            intent.removeExtra("routestop");
-        } else if (intent.getStringExtra("routerestart") != null) {
-            DataConnector.getInstance().EndActiveRoute();
-            DataConnector.getInstance().resetRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routerestart")));
-            startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routerestart")));
-            intent.removeExtra("routerestart");
-        }
-
     }
 
     @Override
@@ -273,28 +292,24 @@ public class MapScreenActivity extends AppCompatActivity {
         myLocation = geoPoint;
         marker.setPosition(geoPoint);
         mapView.invalidate();
-        DataConnector.getInstance().setLastKnownLocation(geoPoint);
 
-            if (selectedRoute == null) {
-                // TESTING
-//            startRoute(DataConnector.getInstance().getRoutes().get(0));
-
-            // Checks if there is an ongoing route and resumes it
-            for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
-                if(route.getProgressionCounter() >= 0) {
-                    AlertDialog routeAlertDialog = new AlertDialog(this, "Route", getResources().getText(R.string.routeContinueText).toString(), new DialogListener() {
-                        @Override
-                        public void DialogCallback(boolean okPressed) {
-                            if(okPressed) {
-                                startRoute(route);
-                            } else {
-                                DataConnector.getInstance().resetRoute(route);
-                            }
-                        }});
-                        routeAlertDialog.show();
-                    }
-                }
-            }
+//            if (selectedRoute == null) {
+//            // Checks if there is an ongoing route and resumes it
+//            for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
+//                if(route.getProgressionCounter() >= 0) {
+//                    AlertDialog routeAlertDialog = new AlertDialog(this, "Route", getResources().getText(R.string.routeContinueText).toString(), new DialogListener() {
+//                        @Override
+//                        public void DialogCallback(boolean okPressed) {
+//                            if(okPressed) {
+//                                startRoute(route);
+//                            } else {
+//                                DataConnector.getInstance().resetRoute(route);
+//                            }
+//                        }});
+//                        routeAlertDialog.show();
+//                    }
+//                }
+//            }
         }
 
     public void startRoute(com.example.cultuurkompas.data.datamodel.Route route) {
