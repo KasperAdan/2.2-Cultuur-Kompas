@@ -7,14 +7,15 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
@@ -28,11 +29,14 @@ import com.example.cultuurkompas.activities.popup.DialogListener;
 import com.example.cultuurkompas.activities.popup.HelpDialog;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 import com.example.cultuurkompas.interfaces.DataConnector;
-import com.example.cultuurkompas.interfaces.MyLocationListener;
+import com.example.cultuurkompas.interfaces.LocationService;
 import com.example.cultuurkompas.viewmodel.OpenRouteServiceConnection;
 import com.example.cultuurkompas.viewmodel.orsdata.Route;
 import com.example.cultuurkompas.viewmodel.orsdata.TravelType;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +50,7 @@ import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +64,7 @@ public class MapScreenActivity extends AppCompatActivity {
     private IMapController mapController;
     private GeoPoint cityGeoPoint;
     private Route route;
-    private LocationListener locationListener;
+    private LocationService locationService;
     private LocationManager locationManager;
     private Marker marker;
     private boolean finished = false;
@@ -68,19 +73,48 @@ public class MapScreenActivity extends AppCompatActivity {
     private com.example.cultuurkompas.data.datamodel.Route selectedRoute;
     private Polyline line;
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLocationEvent(LocationService.LocationEvent event) {
+        myLocation = event.getGeoPoint();
+        marker.setPosition(myLocation);
+        Log.d("LOCATION_CHANGED:", myLocation.getLatitude() + "," + myLocation.getLongitude());
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onWaypointEvent(LocationService.WayPointEvent event) {
+        Intent intent = new Intent(this,BuildingDetailScreenActivity.class);
+        intent.putExtra("waypoint",event.getWaypoint());
+        startActivity(intent);
+        Log.d("Waypoint Event:", "Waypoint Reached");
+    }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
-
+        
         Configuration.getInstance().setUserAgentValue("com.example.cultuurkompas");
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new MyLocationListener(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, (LocationListener) locationService);
 
         DataConnector.getInstance().getAllData(this);
         // Enable this to reset all progress
@@ -108,6 +142,9 @@ public class MapScreenActivity extends AppCompatActivity {
 //            getDirectionsToNextWaypoint(selectedRoute.get(0));
 //        }
 //        mapView.invalidate();
+        Intent intent = new Intent(this,LocationService.class);
+        intent.putExtra("geoFenceRoute", DataConnector.getInstance().getRoutes().get(0));
+        startForegroundService(intent);
 
         for(Waypoint waypoint : DataConnector.getInstance().getWaypoints()){
 //        mapView.getOverlays().remove(mapView.getOverlays().indexOf(marker.getPosition().equals(waypoint.getGeoPoint())));
