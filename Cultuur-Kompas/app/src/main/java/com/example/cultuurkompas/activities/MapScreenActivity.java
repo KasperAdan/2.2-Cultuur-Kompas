@@ -47,6 +47,7 @@ import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,8 +98,7 @@ public class MapScreenActivity extends AppCompatActivity{
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Intent intent = new Intent(this,LocationService.class);
-        startService(intent);
+
 //        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, (LocationListener) locationService);
 
         DataConnector.getInstance().getAllData(this);
@@ -127,6 +127,9 @@ public class MapScreenActivity extends AppCompatActivity{
 //            getDirectionsToNextWaypoint(selectedRoute.get(0));
 //        }
 //        mapView.invalidate();
+        Intent intent = new Intent(this,LocationService.class);
+        intent.putExtra("geoFenceRoute", DataConnector.getInstance().getRoutes().get(0));
+        startService(intent);
 
         for(Waypoint waypoint : DataConnector.getInstance().getWaypoints()){
 //        mapView.getOverlays().remove(mapView.getOverlays().indexOf(marker.getPosition().equals(waypoint.getGeoPoint())));

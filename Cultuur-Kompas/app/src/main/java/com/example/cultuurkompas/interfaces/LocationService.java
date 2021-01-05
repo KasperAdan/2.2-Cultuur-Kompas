@@ -1,5 +1,8 @@
 package com.example.cultuurkompas.interfaces;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +12,17 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.data.datamodel.Route;
+import com.example.cultuurkompas.data.datamodel.Waypoint;
+
 import org.greenrobot.eventbus.EventBus;
 import org.osmdroid.util.GeoPoint;
+
+import java.util.ArrayList;
 
 public class LocationService extends Service {
 
@@ -18,6 +30,7 @@ public class LocationService extends Service {
     private LocationManager mLocationManager = null;
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 10f;
+    private Route route;
 
     public static class LocationEvent{
         GeoPoint geoPoint;
@@ -48,6 +61,20 @@ public class LocationService extends Service {
             Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
             EventBus.getDefault().post(new LocationEvent(new GeoPoint(location.getLatitude(),location.getLongitude())));
+            for (Waypoint wp : route.getWaypoints()){
+                double distance = (wp.getGeoPoint().distanceToAsDouble(new GeoPoint(location.getLatitude(),location.getLongitude())));
+                if ( distance <= 25){
+                    Log.e("DISTANCE","" + distance);
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "notifychannelid")
+                            .setSmallIcon(R.mipmap.app_icon)
+                            .setContentTitle(getString(R.string.app_name))
+                            .setContentText("Waypoint " + wp.getName() + " reached!")
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+                    // notificationId is a unique int for each notification that you must define
+                    notificationManager.notify(0, builder.build());
+                }
+            }
         }
 
         @Override
@@ -80,6 +107,7 @@ public class LocationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
         super.onStartCommand(intent, flags, startId);
+        this.route = (Route) intent.getSerializableExtra("geoFenceRoute");
         return START_STICKY;
     }
 
