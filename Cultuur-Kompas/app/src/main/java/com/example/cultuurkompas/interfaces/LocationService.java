@@ -113,6 +113,12 @@ public class LocationService extends Service {
 
     @Override
     public void onCreate() {
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), "notifychannelid")
+                .setSmallIcon(R.mipmap.app_icon)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText("CultuurKompas Service Running ")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build();
+        startForeground(1,notification);
         Log.e(TAG, "onCreate");
         initializeLocationManager();
         try {

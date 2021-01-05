@@ -8,11 +8,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
@@ -88,6 +90,7 @@ public class MapScreenActivity extends AppCompatActivity{
         super.onStop();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +132,7 @@ public class MapScreenActivity extends AppCompatActivity{
 //        mapView.invalidate();
         Intent intent = new Intent(this,LocationService.class);
         intent.putExtra("geoFenceRoute", DataConnector.getInstance().getRoutes().get(0));
-        startService(intent);
+        startForegroundService(intent);
 
         for(Waypoint waypoint : DataConnector.getInstance().getWaypoints()){
 //        mapView.getOverlays().remove(mapView.getOverlays().indexOf(marker.getPosition().equals(waypoint.getGeoPoint())));

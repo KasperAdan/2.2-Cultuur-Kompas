@@ -21,9 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CultuurKompas">
         <service android:name=".interfaces.LocationService">
-            <intent-filter>
-                <action android:name=""
-            </intent-filter>
         </service>
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
