@@ -188,8 +188,6 @@ public class MapScreenActivity extends AppCompatActivity {
 
         mapView.onResume();
 
-        Intent intent = getIntent();
-
         if(intent.getStringExtra("routestart") != null) {
             DataConnector.getInstance().EndActiveRoute();
             startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestart")));
@@ -255,13 +253,12 @@ public class MapScreenActivity extends AppCompatActivity {
                             } else {
                                 DataConnector.getInstance().resetRoute(route);
                             }
-                        });
+                        }});
                         routeAlertDialog.show();
                     }
                 }
             }
         }
-    }
 
     public void startRoute(com.example.cultuurkompas.data.datamodel.Route route) {
         if(selectedRoute != null) {
