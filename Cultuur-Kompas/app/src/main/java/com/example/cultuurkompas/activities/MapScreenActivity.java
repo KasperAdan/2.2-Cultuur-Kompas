@@ -181,13 +181,19 @@ public class MapScreenActivity extends AppCompatActivity{
         Intent intent = getIntent();
 
         if(intent.getStringExtra("routestart") != null) {
+            DataConnector.getInstance().EndActiveRoute();
             startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestart")));
+            intent.removeExtra("routestart");
         } else if (intent.getStringExtra("routestop") != null) {
             DataConnector.getInstance().resetRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestop")));
+            intent.removeExtra("routestop");
         } else if (intent.getStringExtra("routerestart") != null) {
+            DataConnector.getInstance().EndActiveRoute();
             DataConnector.getInstance().resetRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routerestart")));
             startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routerestart")));
+            intent.removeExtra("routerestart");
         }
+
     }
 
     @Override
@@ -231,7 +237,7 @@ public class MapScreenActivity extends AppCompatActivity{
             // Checks if there is an ongoing route and resumes it
             for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
                 if(route.getProgressionCounter() >= 0) {
-                    AlertDialog routeAlertDialog = new AlertDialog(this, "Route", "Wilt u de gestarte route hervatten?", new DialogListener() {
+                    AlertDialog routeAlertDialog = new AlertDialog(this, "Route", getResources().getText(R.string.routeContinueText).toString(), new DialogListener() {
                         @Override
                         public void DialogCallback(boolean okPressed) {
                             if(okPressed) {
@@ -263,7 +269,6 @@ public class MapScreenActivity extends AppCompatActivity{
     }
 
     public void stopCurrentRoute(){
-        DataConnector.getInstance().resetRoute(selectedRoute);
         selectedRoute = null;
         if(line != null) {
             mapView.getOverlayManager().remove(line);

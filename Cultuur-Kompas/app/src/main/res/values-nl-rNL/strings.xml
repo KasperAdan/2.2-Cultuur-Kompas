@@ -22,4 +22,7 @@
     <string name="routeRestartText">Weet je zeker dat je de route opnieuw wilt lopen?</string>
     <string name="routeStartText">Weet je zeker dat je deze route wilt starten?</string>
     <string name="routeStopText">Weet je zeker dat je deze route wil stoppen?</string>
+    <string name="routeContinueText">Wilt u de gestarte route hervatten?</string>
+    <string name="no">Nee</string>
+    <string name="yes">Ja</string>
 </resources>

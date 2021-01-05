@@ -151,7 +151,7 @@ public class DataConnector {
     }
 
     public Route getRouteWithName(String name) {
-        for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()) {
+        for(Route route : routes) {
             if(route.getName().equals(name)) {
                 return route;
             }
@@ -167,5 +167,13 @@ public class DataConnector {
 
         builder.putInt(route.getName() + "progression", route.getProgressionCounter());
         builder.apply();
+    }
+
+    public void EndActiveRoute() {
+        for(Route route : routes){
+            if(!route.isFinished()){
+                resetRoute(route);
+            }
+        }
     }
 }
