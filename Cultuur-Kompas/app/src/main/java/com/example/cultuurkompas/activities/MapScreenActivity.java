@@ -221,24 +221,25 @@ public class MapScreenActivity extends AppCompatActivity {
             //TESTING
             startRoute(DataConnector.getInstance().getRoutes().get(0));
 
-        if(selectedRoute == null){
-            // TESTING
+            if (selectedRoute == null) {
+                // TESTING
 //            startRoute(DataConnector.getInstance().getRoutes().get(0));
 
-            // Checks if there is an ongoing route and resumes it
-            for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
-                if(route.getProgressionCounter() > 0) {
-                    AlertDialog routeAlertDialog = new AlertDialog(this, "Route", "Wilt u de gestarte route hervatten?", new DialogListener() {
-                        @Override
-                        public void DialogCallback(boolean okPressed) {
-                            if(okPressed) {
-                                startRoute(route);
-                            } else {
-                                DataConnector.getInstance().resetRoute(route);
+                // Checks if there is an ongoing route and resumes it
+                for (com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()) {
+                    if (route.getProgressionCounter() > 0) {
+                        AlertDialog routeAlertDialog = new AlertDialog(this, "Route", "Wilt u de gestarte route hervatten?", new DialogListener() {
+                            @Override
+                            public void DialogCallback(boolean okPressed) {
+                                if (okPressed) {
+                                    startRoute(route);
+                                } else {
+                                    DataConnector.getInstance().resetRoute(route);
+                                }
                             }
-                        }
-                    });
-                    routeAlertDialog.show();
+                        });
+                        routeAlertDialog.show();
+                    }
                 }
             }
         }
