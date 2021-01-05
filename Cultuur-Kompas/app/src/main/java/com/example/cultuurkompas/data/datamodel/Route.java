@@ -56,7 +56,7 @@ public class Route implements Serializable {
     public int getProgressionCounter() { return progressionCounter; }
 
     public void resetRouteProgression() {
-        progressionCounter = 0;
+        progressionCounter = -1;
     }
 
     public boolean incrementProgressionCounter() {

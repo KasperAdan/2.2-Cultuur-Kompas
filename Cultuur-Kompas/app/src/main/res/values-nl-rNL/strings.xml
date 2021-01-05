@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cultuur Kompas</string>
+    <string name="buildingDetailsScreenPlaceholder">Placeholder</string>
     <string name="buildingDetailScreenBezocht">Bezocht</string>
     <string name="buildingScreenBuildingScreen">Bouwscherm</string>
     <string name="buildingScreenAll">ALLE</string>
@@ -48,4 +49,10 @@
     <string name="GroteMarktInfo">Zuidpunt grote markt\nTel: -\nOpeningstijden: Tijden verschillen\nWebsite: https://www.breda.nl/markten\n</string>
     <string name="BevrijdingsmonumentInfo">Laatste waypoint van de route\nTel: -\nOpeningstijden: Altijd zichtbaar\nWebsite: -\n</string>
     <string name="reachedwaypoint_toast">Je bent bij locatie aangekomen</string>
+    <string name="routeRestartText">Weet je zeker dat je de route opnieuw wilt lopen?</string>
+    <string name="routeStartText">Weet je zeker dat je deze route wilt starten?</string>
+    <string name="routeStopText">Weet je zeker dat je deze route wil stoppen?</string>
+    <string name="routeContinueText">Wilt u de gestarte route hervatten?</string>
+    <string name="no">Nee</string>
+    <string name="yes">Ja</string>
 </resources>

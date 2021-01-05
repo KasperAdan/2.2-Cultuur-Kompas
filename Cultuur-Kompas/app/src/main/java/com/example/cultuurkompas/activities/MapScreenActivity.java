@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -147,10 +148,10 @@ public class MapScreenActivity extends AppCompatActivity {
         }
 
         // TESTING
-//        if(selectedRoute != null) {
-//            reachedWaypoint();
+        if(selectedRoute != null) {
+            reachedWaypoint();
 //            stopCurrentRoute();
-//        }
+        }
     }
 
     public void onButtonHelpMapClick(View view){
@@ -186,6 +187,23 @@ public class MapScreenActivity extends AppCompatActivity {
         }
 
         mapView.onResume();
+
+        Intent intent = getIntent();
+
+        if(intent.getStringExtra("routestart") != null) {
+            DataConnector.getInstance().EndActiveRoute();
+            startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestart")));
+            intent.removeExtra("routestart");
+        } else if (intent.getStringExtra("routestop") != null) {
+            DataConnector.getInstance().resetRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestop")));
+            intent.removeExtra("routestop");
+        } else if (intent.getStringExtra("routerestart") != null) {
+            DataConnector.getInstance().EndActiveRoute();
+            DataConnector.getInstance().resetRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routerestart")));
+            startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routerestart")));
+            intent.removeExtra("routerestart");
+        }
+
     }
 
     @Override
@@ -216,26 +234,26 @@ public class MapScreenActivity extends AppCompatActivity {
         return line;
     }
 
-    public void locationChanged(GeoPoint geoPoint) {
-        if (selectedRoute == null) {
-            //TESTING
-            startRoute(DataConnector.getInstance().getRoutes().get(0));
+    public void locationChanged(GeoPoint geoPoint){
+        myLocation = geoPoint;
+        marker.setPosition(geoPoint);
+        mapView.invalidate();
+        DataConnector.getInstance().setLastKnownLocation(geoPoint);
 
             if (selectedRoute == null) {
                 // TESTING
 //            startRoute(DataConnector.getInstance().getRoutes().get(0));
 
-                // Checks if there is an ongoing route and resumes it
-                for (com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()) {
-                    if (route.getProgressionCounter() > 0) {
-                        AlertDialog routeAlertDialog = new AlertDialog(this, "Route", "Wilt u de gestarte route hervatten?", new DialogListener() {
-                            @Override
-                            public void DialogCallback(boolean okPressed) {
-                                if (okPressed) {
-                                    startRoute(route);
-                                } else {
-                                    DataConnector.getInstance().resetRoute(route);
-                                }
+            // Checks if there is an ongoing route and resumes it
+            for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
+                if(route.getProgressionCounter() >= 0) {
+                    AlertDialog routeAlertDialog = new AlertDialog(this, "Route", getResources().getText(R.string.routeContinueText).toString(), new DialogListener() {
+                        @Override
+                        public void DialogCallback(boolean okPressed) {
+                            if(okPressed) {
+                                startRoute(route);
+                            } else {
+                                DataConnector.getInstance().resetRoute(route);
                             }
                         });
                         routeAlertDialog.show();
@@ -245,21 +263,22 @@ public class MapScreenActivity extends AppCompatActivity {
         }
     }
 
-    public boolean startRoute(com.example.cultuurkompas.data.datamodel.Route route) {
-        if (selectedRoute != null) {
-            return false;
+    public void startRoute(com.example.cultuurkompas.data.datamodel.Route route) {
+        if(selectedRoute != null) {
+            return;
         }
         selectedRoute = route;
+        if(selectedRoute.getProgressionCounter() < 0) {
+            DataConnector.getInstance().routeSetup(selectedRoute);
+        }
 
-        if (myLocation != null) {
+        if(DataConnector.getInstance().getLastKnownLocation() != null) {
             getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
         }
         Toast.makeText(this, getResources().getText(R.string.routeBeginMessage), Toast.LENGTH_LONG).show();
-        return true;
     }
 
-    public void stopCurrentRoute() {
-        DataConnector.getInstance().resetRoute(selectedRoute);
+    public void stopCurrentRoute(){
         selectedRoute = null;
         if (line != null) {
             mapView.getOverlayManager().remove(line);
@@ -290,7 +309,8 @@ public class MapScreenActivity extends AppCompatActivity {
     private void getDirectionsToNextWaypoint(Waypoint waypoint) {
         routeGeoPoints = new ArrayList<>();
 
-        OpenRouteServiceConnection.getInstance().getRouteInfo("5b3ce3597851110001cf62488c97c6c701f64827afad2deda82ec4da", myLocation, waypoint.getGeoPoint(), TravelType.FOOT_WALKING, new Callback() {
+        GeoPoint myGeoPoint = myLocation != null? myLocation : DataConnector.getInstance().getLastKnownLocation();
+        OpenRouteServiceConnection.getInstance().getRouteInfo("5b3ce3597851110001cf62488c97c6c701f64827afad2deda82ec4da", myGeoPoint, waypoint.getGeoPoint(), TravelType.FOOT_WALKING, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 //TODO handle error

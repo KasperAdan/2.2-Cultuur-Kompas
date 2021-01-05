@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/btn_left_bottom_rounded"
-            android:text="No" />
+            android:text="@string/no" />
 
         <Button
             android:id="@+id/alertDialog_positive"
@@ -47,7 +47,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/btn_right_bottom_rounded"
-            android:text="Yes" />
+            android:text="@string/yes" />
 
     </LinearLayout>
 
