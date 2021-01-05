@@ -27,10 +27,6 @@
     <string name="routeMidMessage">Half-way point has been reached</string>
 
     <string name="helpTextMap">This screen contains all the sights and the closest route towards these places.\n\nThe Buttons:\n        left - a list of all the sights\n        middel - recenter the map\n        right - a list of all the routes</string>
-    <string name="helpTextRoute">" This screen contains all the routes you can follow \n \n The buttons:         \n        You got 3 filter buttons:         \n        - all: all the routes avalible         \n        - complete: the routes you have already completed         \n        - incomplete: the routes you have yet to complete"</string>
-    <string name="helpTextBuilding">" This screen contains all the sights you can visit\n \n The buttons:         \n        You got 3 filter buttons:         \n        - all: all the sights that are avalible     \n        - visited: the sights you have visited before  \n        - unvisited: the sights you have yet to visit"</string>
-    <string name="helpTextBuildingDetail">" This screen shows you information about the selected sight\n \n It contains tags if you want some additional information.\n \n It also sad a checkbox if you have seen this sight already.\n \n You can press the globe if you want to see this sight on the map.\n \n The compas will take you to the routes."</string>
-    <string name="helpTextRouteDetail">" This screen contains information about the selected route\n \n It has tags for additinal information.\n \n A description about the route.\n \n And a list of all the points in this route,\n you can click on a point for detailed information."</string>
     <string name="StadHuisInfo">VVV StartPoint from 2020\nPhone: -\nOpen hours: - \nWebsite: https://www.Breda.nl</string>
     <string name="AntoniusVanPaduakerkInfo">St Janstraat \nPhone: 076 521 5764\nOpen hours: - \nWebsite: https://parochiebredacentrum.bisdomvanbreda.nl/\"</string>
     <string name="BibliotheekNieuweVesteInfo">Phone: 076 200 3200 Open hours:  Mon 8:30–22:00 Tue 8:30–22:00 Wed 8:30–22:00 Thu 8:30–22:00 Fri 8:30–22:00 Sat 9:00–17:00 Sun 12:00–17:00 Website: https://www.bibliotheekbreda.nl/iguana/www.main.cls</string>
@@ -55,5 +51,9 @@
     <string name="HetPoortjeInfo">Phone: -\nOpen hours: -\nWebsite: -\n</string>
     <string name="GroteMarktInfo">South of the market\nPhone: -\nOpen hours: Tijden verschillen\nWebsite: https://www.breda.nl/markten\n</string>
     <string name="BevrijdingsmonumentInfo">Last waypoint of the route\nPhone: -\nOpen hours: Always available\nWebsite: -\n</string>
+    <string name="helpTextRoute">" This screen contains all the routes you can follow \n \n The buttons:         \n        You got 3 filter buttons:         \n        - all: all the routes available         \n        - complete: the routes you have already completed         \n        - incomplete: the routes you have yet to complete"</string>
+    <string name="helpTextBuilding">" This screen contains all the sights you can visit\n \n The buttons:         \n        You got 3 filter buttons:         \n        - all: all the sights that are available     \n        - visited: the sights you have visited before  \n        - unvisited: the sights you have yet to visit"</string>
+    <string name="helpTextBuildingDetail">" This screen shows you information about the selected sight\n \n It contains tags if you want some additional information.\n \n It also has a checkbox if you have seen this sight already.\n \n You can press the globe if you want to see this sight on the map.\n \n The compass will take you to the routes."</string>
+    <string name="helpTextRouteDetail">" This screen contains information about the selected route\n \n It has tags for additional information.\n \n A description about the route.\n \n And a list of all the points in this route,\n you can click on a point for detailed information."</string>
 
 </resources>
