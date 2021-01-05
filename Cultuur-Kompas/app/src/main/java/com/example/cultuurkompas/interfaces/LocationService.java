@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.cultuurkompas.R;
+import com.example.cultuurkompas.activities.detail.BuildingDetailScreenActivity;
 import com.example.cultuurkompas.data.datamodel.Route;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 
@@ -39,12 +40,29 @@ public class LocationService extends Service {
             this.geoPoint = geoPoint;
         }
 
+
         public GeoPoint getGeoPoint() {
             return geoPoint;
         }
 
         public void setGeoPoint(GeoPoint geoPoint) {
             this.geoPoint = geoPoint;
+        }
+    }
+
+    public static class WayPointEvent{
+        Waypoint waypoint;
+
+        public WayPointEvent(Waypoint waypoint) {
+            this.waypoint = waypoint;
+        }
+
+        public Waypoint getWaypoint() {
+            return waypoint;
+        }
+
+        public void setWaypoint(Waypoint waypoint) {
+            this.waypoint = waypoint;
         }
     }
 
@@ -65,14 +83,21 @@ public class LocationService extends Service {
                 double distance = (wp.getGeoPoint().distanceToAsDouble(new GeoPoint(location.getLatitude(),location.getLongitude())));
                 if ( distance <= 25){
                     Log.e("DISTANCE","" + distance);
+                    Intent intent = new Intent(getApplicationContext(), BuildingDetailScreenActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("waypoint",wp);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "notifychannelid")
                             .setSmallIcon(R.mipmap.app_icon)
                             .setContentTitle(getString(R.string.app_name))
                             .setContentText("Waypoint " + wp.getName() + " reached!")
-                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                            .setContentIntent(pendingIntent);
                     NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
                     // notificationId is a unique int for each notification that you must define
                     notificationManager.notify(0, builder.build());
+                    EventBus.getDefault().post(new WayPointEvent(wp));
                 }
             }
         }

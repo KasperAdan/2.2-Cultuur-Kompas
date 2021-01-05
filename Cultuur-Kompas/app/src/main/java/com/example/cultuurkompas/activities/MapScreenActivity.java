@@ -73,10 +73,21 @@ public class MapScreenActivity extends AppCompatActivity{
     private Polyline line;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(LocationService.LocationEvent event) {
+    public void onLocationEvent(LocationService.LocationEvent event) {
         myLocation = event.getGeoPoint();
+        marker.setPosition(myLocation);
         Log.d("LOCATION_CHANGED:", myLocation.getLatitude() + "," + myLocation.getLongitude());
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onWaypointEvent(LocationService.WayPointEvent event) {
+        Intent intent = new Intent(this,BuildingDetailScreenActivity.class);
+        intent.putExtra("waypoint",event.getWaypoint());
+        startActivity(intent);
+        Log.d("Waypoint Event:", "Waypoint Reached");
+    }
+
+
 
     @Override
     protected void onStart() {
