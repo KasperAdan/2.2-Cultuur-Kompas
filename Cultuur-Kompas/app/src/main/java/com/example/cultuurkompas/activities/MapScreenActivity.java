@@ -155,7 +155,7 @@ public class MapScreenActivity extends AppCompatActivity{
     }
 
     public void onButtonHelpMapClick(View view){
-        HelpDialog dialog = new HelpDialog(this, "Description");
+        HelpDialog dialog = new HelpDialog(this, getResources().getString(R.string.helpTextMap));
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }

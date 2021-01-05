@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,6 +14,7 @@ import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.adapters.BuildingRVAdapter;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 import com.example.cultuurkompas.interfaces.DataConnector;
+import com.example.cultuurkompas.activities.popup.HelpDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,5 +103,11 @@ public class BuildingScreenActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    public void onButtonHelpBuildingClick(View view){
+        HelpDialog dialog = new HelpDialog(this, getResources().getString(R.string.helpTextBuilding));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 }
