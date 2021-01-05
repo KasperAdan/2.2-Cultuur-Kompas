@@ -52,7 +52,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class MapScreenActivity extends AppCompatActivity{
+public class MapScreenActivity extends AppCompatActivity {
 
     private MapView mapView = null;
     private IMapController mapController;
@@ -67,7 +67,6 @@ public class MapScreenActivity extends AppCompatActivity{
     private com.example.cultuurkompas.data.datamodel.Route selectedRoute;
     private Polyline line;
 
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,9 +171,20 @@ public class MapScreenActivity extends AppCompatActivity{
         startActivity(i);
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
+
+        Intent intent = getIntent();
+
+        if(intent.getSerializableExtra("waypoint")!=null){
+            Waypoint waypoint = (Waypoint)intent.getSerializableExtra("waypoint");
+            mapController.setCenter(waypoint.getGeoPoint());
+            mapController.setZoom(20);
+        }
+
         mapView.onResume();
     }
 
@@ -185,7 +195,7 @@ public class MapScreenActivity extends AppCompatActivity{
     }
 
 
-    public Polyline drawLine(List<GeoPoint> geoPoints){
+    public Polyline drawLine(List<GeoPoint> geoPoints) {
         Polyline line = new Polyline();
         line.setTitle("Road back home");
         line.setSubDescription(Polyline.class.getCanonicalName());
@@ -206,10 +216,10 @@ public class MapScreenActivity extends AppCompatActivity{
         return line;
     }
 
-    public void locationChanged(GeoPoint geoPoint){
-        myLocation = geoPoint;
-        marker.setPosition(geoPoint);
-        mapView.invalidate();
+    public void locationChanged(GeoPoint geoPoint) {
+        if (selectedRoute == null) {
+            //TESTING
+            startRoute(DataConnector.getInstance().getRoutes().get(0));
 
         if(selectedRoute == null){
             // TESTING
@@ -234,35 +244,35 @@ public class MapScreenActivity extends AppCompatActivity{
         }
     }
 
-    public boolean startRoute(com.example.cultuurkompas.data.datamodel.Route route){
-        if(selectedRoute != null) {
+    public boolean startRoute(com.example.cultuurkompas.data.datamodel.Route route) {
+        if (selectedRoute != null) {
             return false;
         }
         selectedRoute = route;
 
-        if(myLocation != null) {
+        if (myLocation != null) {
             getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
         }
         Toast.makeText(this, getResources().getText(R.string.routeBeginMessage), Toast.LENGTH_LONG).show();
         return true;
     }
 
-    public void stopCurrentRoute(){
+    public void stopCurrentRoute() {
         DataConnector.getInstance().resetRoute(selectedRoute);
         selectedRoute = null;
-        if(line != null) {
+        if (line != null) {
             mapView.getOverlayManager().remove(line);
             line = null;
             mapView.invalidate();
         }
     }
 
-    private void reachedWaypoint(){
-        if(line != null) {
+    private void reachedWaypoint() {
+        if (line != null) {
             mapView.getOverlayManager().remove(line);
             mapView.invalidate();
         }
-        if(selectedRoute != null){
+        if (selectedRoute != null) {
             DataConnector.getInstance().reachedNewWaypoint(selectedRoute);
             if(!selectedRoute.isFinished()){
                 if(selectedRoute.getProgressionCounter() == selectedRoute.getWaypoints().size() / 2){
@@ -285,6 +295,7 @@ public class MapScreenActivity extends AppCompatActivity{
                 //TODO handle error
                 Log.e("MAP", "ERROR on route response");
             }
+
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 Log.d("MAP", response.toString());
@@ -308,7 +319,7 @@ public class MapScreenActivity extends AppCompatActivity{
         });
 
         // Wait for the API to respond
-        while(!finished) {
+        while (!finished) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -317,7 +328,7 @@ public class MapScreenActivity extends AppCompatActivity{
         }
         finished = false;
         line = drawLine(routeGeoPoints);
-        if (line != null){
+        if (line != null) {
             mapView.getOverlayManager().add(line);
             mapView.invalidate();
         }

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cultuurkompas.R;
 import com.example.cultuurkompas.activities.popup.HelpDialog;
+import com.example.cultuurkompas.activities.MapScreenActivity;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 import com.example.cultuurkompas.interfaces.DataConnector;
 import com.squareup.picasso.Picasso;
@@ -51,12 +52,14 @@ public class BuildingDetailScreenActivity extends AppCompatActivity {
         ((CheckBox) findViewById(R.id.cb_buildingdetail_visited)).setChecked(waypoint.isVisited());
 
         ImageButton backButton = findViewById(R.id.ib_buildingdetail_back);
-        backButton.setOnClickListener(v -> {
+        backButton.setOnClickListener(view -> super.onBackPressed());
 
-            boolean ischecked = ((CheckBox)findViewById(R.id.cb_buildingdetail_visited)).isChecked();
-
-            waypoint.setVisited(ischecked);
-            super.onBackPressed();
+        ImageButton mapDetailButton = findViewById(R.id.ib_buildingdetail_map);
+        mapDetailButton.setOnClickListener(view -> {
+            //TODO
+            Intent mapIntent = new Intent(BuildingDetailScreenActivity.this, MapScreenActivity.class);
+            mapIntent.putExtra("waypoint",waypoint);
+            startActivity(mapIntent);
         });
     }
 

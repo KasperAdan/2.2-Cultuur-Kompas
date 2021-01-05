@@ -47,4 +47,5 @@
     <string name="HetPoortjeInfo">Tel: -\nOpeningstijden: -\nWebsite: -\n</string>
     <string name="GroteMarktInfo">Zuidpunt grote markt\nTel: -\nOpeningstijden: Tijden verschillen\nWebsite: https://www.breda.nl/markten\n</string>
     <string name="BevrijdingsmonumentInfo">Laatste waypoint van de route\nTel: -\nOpeningstijden: Altijd zichtbaar\nWebsite: -\n</string>
+    <string name="reachedwaypoint_toast">Je bent bij locatie aangekomen</string>
 </resources>
