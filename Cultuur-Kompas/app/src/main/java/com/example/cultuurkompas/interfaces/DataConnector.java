@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import com.example.cultuurkompas.data.datamodel.Route;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 
+import org.osmdroid.util.GeoPoint;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +19,7 @@ public class DataConnector {
     private List<Waypoint> waypoints;
     private List<Route> routes;
     private Activity myActivity;
+    private GeoPoint lastKnownLocation;
 
     public static DataConnector getInstance()
     {
@@ -27,8 +30,10 @@ public class DataConnector {
     }
 
     private DataConnector() {
-
     }
+
+    public GeoPoint getLastKnownLocation() { return this.lastKnownLocation; }
+    public void setLastKnownLocation(GeoPoint location) { this.lastKnownLocation = location; }
 
     public void getAllData(Activity activity) {
         myActivity = activity;
@@ -61,16 +66,16 @@ public class DataConnector {
         waypoints.add(new Waypoint(24,"Bevrijdingsmonument",51.588028,4.776333, "", null, null,sharedPref.getBoolean("waypoint" + 24, false)));
 
         String normalRouteName = "Normal route";
-        Route routeNormal = new Route(normalRouteName, new ArrayList<>(waypoints), sharedPref.getBoolean(normalRouteName, false), sharedPref.getInt(normalRouteName + "progression", 0));
+        Route routeNormal = new Route(normalRouteName, new ArrayList<>(waypoints), sharedPref.getBoolean(normalRouteName, false), sharedPref.getInt(normalRouteName + "progression", -1));
 
         String shortRouteName = "Short route";
         List<Waypoint> waypointsShort = waypoints.subList(0, waypoints.size() / 2);
-        Route routeShort = new Route(shortRouteName, waypointsShort, sharedPref.getBoolean(shortRouteName, false), sharedPref.getInt(shortRouteName + "progression", 0));
+        Route routeShort = new Route(shortRouteName, waypointsShort, sharedPref.getBoolean(shortRouteName, false), sharedPref.getInt(shortRouteName + "progression", -1));
 
         String longRouteName = "Long route";
         List<Waypoint> waypointsLong = new ArrayList<>(waypoints);
         waypointsLong.addAll(waypoints);
-        Route routeLong = new Route(longRouteName, waypointsLong, sharedPref.getBoolean(longRouteName, false), sharedPref.getInt(longRouteName + "progression", 0));
+        Route routeLong = new Route(longRouteName, waypointsLong, sharedPref.getBoolean(longRouteName, false), sharedPref.getInt(longRouteName + "progression", -1));
 
 
         routes = new ArrayList<>();
@@ -105,11 +110,13 @@ public class DataConnector {
 
     public void resetRoute(Route route){
         route.resetRouteProgression();
+        route.setFinished(false);
 
         SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor builder = sharedPref.edit();
 
         builder.putInt(route.getName() + "progression", route.getProgressionCounter());
+        builder.putBoolean(route.getName(), false);
         builder.apply();
     }
 
@@ -127,7 +134,7 @@ public class DataConnector {
             route.setFinished(false);
             route.resetRouteProgression();
             builder.putBoolean(route.getName(), false);
-            builder.putInt(route.getName() + "progression", 0);
+            builder.putInt(route.getName() + "progression", -1);
         }
 
         builder.apply();
@@ -140,6 +147,25 @@ public class DataConnector {
         waypoints.get(waypointNumber).setVisited(!waypoints.get(waypointNumber).isVisited());
         builder.putBoolean("waypoint" + (waypointNumber + 1), waypoints.get(waypointNumber).isVisited());
 
+        builder.apply();
+    }
+
+    public Route getRouteWithName(String name) {
+        for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()) {
+            if(route.getName().equals(name)) {
+                return route;
+            }
+        }
+        return null;
+    }
+
+    public void routeSetup(Route route) {
+        route.incrementProgressionCounter();
+
+        SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor builder = sharedPref.edit();
+
+        builder.putInt(route.getName() + "progression", route.getProgressionCounter());
         builder.apply();
     }
 }

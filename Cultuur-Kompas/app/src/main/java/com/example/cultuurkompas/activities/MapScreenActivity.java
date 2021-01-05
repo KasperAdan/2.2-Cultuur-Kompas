@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -148,10 +149,10 @@ public class MapScreenActivity extends AppCompatActivity{
         }
 
         // TESTING
-//        if(selectedRoute != null) {
-//            reachedWaypoint();
+        if(selectedRoute != null) {
+            reachedWaypoint();
 //            stopCurrentRoute();
-//        }
+        }
     }
 
     public void onButtonHelpMapClick(View view){
@@ -176,6 +177,17 @@ public class MapScreenActivity extends AppCompatActivity{
     public void onResume() {
         super.onResume();
         mapView.onResume();
+
+        Intent intent = getIntent();
+
+        if(intent.getStringExtra("routestart") != null) {
+            startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestart")));
+        } else if (intent.getStringExtra("routestop") != null) {
+            DataConnector.getInstance().resetRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestop")));
+        } else if (intent.getStringExtra("routerestart") != null) {
+            DataConnector.getInstance().resetRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routerestart")));
+            startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routerestart")));
+        }
     }
 
     @Override
@@ -210,6 +222,7 @@ public class MapScreenActivity extends AppCompatActivity{
         myLocation = geoPoint;
         marker.setPosition(geoPoint);
         mapView.invalidate();
+        DataConnector.getInstance().setLastKnownLocation(geoPoint);
 
         if(selectedRoute == null){
             // TESTING
@@ -217,7 +230,7 @@ public class MapScreenActivity extends AppCompatActivity{
 
             // Checks if there is an ongoing route and resumes it
             for(com.example.cultuurkompas.data.datamodel.Route route : DataConnector.getInstance().getRoutes()){
-                if(route.getProgressionCounter() > 0) {
+                if(route.getProgressionCounter() >= 0) {
                     AlertDialog routeAlertDialog = new AlertDialog(this, "Route", "Wilt u de gestarte route hervatten?", new DialogListener() {
                         @Override
                         public void DialogCallback(boolean okPressed) {
@@ -234,17 +247,19 @@ public class MapScreenActivity extends AppCompatActivity{
         }
     }
 
-    public boolean startRoute(com.example.cultuurkompas.data.datamodel.Route route){
+    public void startRoute(com.example.cultuurkompas.data.datamodel.Route route) {
         if(selectedRoute != null) {
-            return false;
+            return;
         }
         selectedRoute = route;
+        if(selectedRoute.getProgressionCounter() < 0) {
+            DataConnector.getInstance().routeSetup(selectedRoute);
+        }
 
-        if(myLocation != null) {
+        if(DataConnector.getInstance().getLastKnownLocation() != null) {
             getDirectionsToNextWaypoint(selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()));
         }
         Toast.makeText(this, getResources().getText(R.string.routeBeginMessage), Toast.LENGTH_LONG).show();
-        return true;
     }
 
     public void stopCurrentRoute(){
@@ -279,7 +294,8 @@ public class MapScreenActivity extends AppCompatActivity{
     private void getDirectionsToNextWaypoint(Waypoint waypoint) {
         routeGeoPoints = new ArrayList<>();
 
-        OpenRouteServiceConnection.getInstance().getRouteInfo("5b3ce3597851110001cf62488c97c6c701f64827afad2deda82ec4da", myLocation, waypoint.getGeoPoint(), TravelType.FOOT_WALKING, new Callback() {
+        GeoPoint myGeoPoint = myLocation != null? myLocation : DataConnector.getInstance().getLastKnownLocation();
+        OpenRouteServiceConnection.getInstance().getRouteInfo("5b3ce3597851110001cf62488c97c6c701f64827afad2deda82ec4da", myGeoPoint, waypoint.getGeoPoint(), TravelType.FOOT_WALKING, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 //TODO handle error

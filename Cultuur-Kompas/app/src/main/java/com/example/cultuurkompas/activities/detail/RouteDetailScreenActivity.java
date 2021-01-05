@@ -28,7 +28,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RouteDetailScreenActivity extends AppCompatActivity implements DialogListener {
+public class RouteDetailScreenActivity extends AppCompatActivity {
 
     private Route route;
 
@@ -44,9 +44,13 @@ public class RouteDetailScreenActivity extends AppCompatActivity implements Dial
             @Override
             public void onClick(View view) {
                 if(route.isFinished()){
-                    showAlertDialog(view, getResources().getText(R.string.routeRestartText).toString());
-                } else {
-                    showAlertDialog(view, getResources().getText(R.string.routeStartText).toString());
+                    showRestartAlertDialog(view);
+                }
+                else if(route.getProgressionCounter() >= 0){
+                    showStopAlertDialog(view);
+                }
+                else {
+                    showStartAlertDialog(view);
                 }
             }
         });
@@ -75,20 +79,47 @@ public class RouteDetailScreenActivity extends AppCompatActivity implements Dial
 
         ImageButton backButton = findViewById(R.id.btn_routedetailscreen_back);
         backButton.setOnClickListener(view -> super.onBackPressed());
+
+        if(route.getProgressionCounter() >= 0){
+            startButton.setText("Stop Route");
+        }
     }
 
 
-    public void showAlertDialog(View view, String dialogText){
-        new AlertDialog(this, "ALERT", dialogText, this).show();
+    public void showRestartAlertDialog(View view){
+        new AlertDialog(this, "ALERT", getResources().getText(R.string.routeRestartText).toString(), new DialogListener() {
+            @Override
+            public void DialogCallback(boolean okPressed) {
+                if(okPressed) {
+                    Intent mapIntent = new Intent(RouteDetailScreenActivity.this, MapScreenActivity.class);
+                    mapIntent.putExtra("routerestart", route.getName());
+                    startActivity(mapIntent);
+                }
+            }
+        }).show();
     }
-
-    @Override
-    public void DialogCallback(boolean okPressed) {
-        if (okPressed) {
-            Toast.makeText(this,"Yes pressed!", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(this,"No pressed!", Toast.LENGTH_SHORT).show();
-        }
+    public void showStartAlertDialog(View view){
+        new AlertDialog(this, "ALERT", getResources().getText(R.string.routeStartText).toString(), new DialogListener() {
+            @Override
+            public void DialogCallback(boolean okPressed) {
+                if(okPressed) {
+                    Intent mapIntent = new Intent(RouteDetailScreenActivity.this, MapScreenActivity.class);
+                    mapIntent.putExtra("routestart", route.getName());
+                    startActivity(mapIntent);
+                }
+            }
+        }).show();
+    }
+    public void showStopAlertDialog(View view){
+        new AlertDialog(this, "ALERT", getResources().getText(R.string.routeStopText).toString(), new DialogListener() {
+            @Override
+            public void DialogCallback(boolean okPressed) {
+                if(okPressed) {
+                    Intent mapIntent = new Intent(RouteDetailScreenActivity.this, MapScreenActivity.class);
+                    mapIntent.putExtra("routestop", route.getName());
+                    startActivity(mapIntent);
+                }
+            }
+        }).show();
     }
 }

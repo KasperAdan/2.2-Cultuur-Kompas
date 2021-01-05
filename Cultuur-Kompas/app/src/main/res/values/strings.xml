@@ -28,5 +28,6 @@
 
     <string name="routeRestartText">Are you sure you want to walk this route again?</string>
     <string name="routeStartText">Are you sure you want to start this route?</string>
+    <string name="routeStopText">Are you sure you want to stop this route?</string>
 
 </resources>
