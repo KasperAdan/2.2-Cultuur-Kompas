@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cultuur Kompas</string>
-    <string name="buildingDetailsScreenPlaceholder">Placeholder</string>
     <string name="buildingDetailScreenBezocht">Bezocht</string>
     <string name="buildingScreenBuildingScreen">Bouwscherm</string>
     <string name="buildingScreenAll">ALLE</string>
