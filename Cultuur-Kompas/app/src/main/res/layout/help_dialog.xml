@@ -28,6 +28,7 @@
         android:background="@drawable/help_speech_bubble"
         android:padding="25dp"
         android:text="Help Text"
+        android:textSize="18dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

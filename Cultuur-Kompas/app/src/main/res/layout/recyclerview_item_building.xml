@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/itemBuildingPlaceholder"
+        android:textSize="24dp"
         android:layout_alignStart="@id/iv_buildingscreen_item"
         android:layout_alignEnd="@id/iv_buildingscreen_item"
         android:layout_below="@id/iv_buildingscreen_item"/>
