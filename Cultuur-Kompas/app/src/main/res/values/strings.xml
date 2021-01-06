@@ -12,7 +12,7 @@
     <string name="routeDetailScreenTitle">Title</string>
     <string name="routeDetailScreenStartButton">Start Route</string>
 
-    <string name="routeScreenTitle">Title</string>;
+    <string name="routeScreenTitle">Routes</string>;
     <string name="routeScreenAll">ALL</string>
     <string name="routeScreenComplete">COMPLETE</string>
     <string name="routeScreenIncomplete">INCOMPLETE</string>

@@ -9,7 +9,7 @@
     <string name="buildingScreenUnvisited">ONBEZOCHT</string>
     <string name="routeDetailScreenTitle">Titel</string>
     <string name="routeDetailScreenStartButton">Start Route</string>
-    <string name="routeScreenTitle">Title</string>
+    <string name="routeScreenTitle">Routes</string>
     <string name="routeScreenAll">ALLE</string>
     <string name="routeScreenComplete">AFGEROND</string>
     <string name="routeScreenIncomplete">NIET AFGEROND</string>
