@@ -85,7 +85,7 @@ public class DataConnector {
 
         String shortRouteName = "Short route";
         List<Waypoint> waypointsShort = waypoints;
-        Route routeShort = new Route(shortRouteName, waypointsShort, sharedPref.getBoolean(shortRouteName, false), sharedPref.getInt(shortRouteName + "progression", 0));
+        Route routeShort = new Route(shortRouteName, waypointsShort, sharedPref.getBoolean(shortRouteName, false), sharedPref.getInt(shortRouteName + "progression", -1));
 
         String longRouteName = "Long route";
         List<Waypoint> waypointsLong = new ArrayList<>(waypoints);
