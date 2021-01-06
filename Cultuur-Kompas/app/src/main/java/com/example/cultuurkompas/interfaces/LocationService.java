@@ -21,6 +21,8 @@ import com.example.cultuurkompas.data.datamodel.Route;
 import com.example.cultuurkompas.data.datamodel.Waypoint;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class LocationService extends Service {
     private static final float LOCATION_DISTANCE = 10f;
     private Route route;
 
-    public static class LocationEvent{
+    public static class LocationEvent {
         GeoPoint geoPoint;
 
         public LocationEvent(GeoPoint geoPoint) {
@@ -50,7 +52,7 @@ public class LocationService extends Service {
         }
     }
 
-    public static class WayPointEvent{
+    public static class WayPointEvent {
         Waypoint waypoint;
 
         public WayPointEvent(Waypoint waypoint) {
@@ -66,38 +68,66 @@ public class LocationService extends Service {
         }
     }
 
+    public static class RouteEvent {
+        Route route;
+
+        public RouteEvent(Route route) {
+            this.route = route;
+        }
+
+        public Route getRoute() {
+            return route;
+        }
+
+        public void setRoute(Route route) {
+            this.route = route;
+        }
+    }
+
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
+        Route route;
 
         public LocationListener(String provider) {
             Log.e(TAG, "LocationListener " + provider);
             mLastLocation = new Location(provider);
+            EventBus.getDefault().register(this);
+        }
+
+        @Subscribe(threadMode = ThreadMode.MAIN)
+        public void onRouteEvent(RouteEvent event) {
+            Log.d("Route event:", "Selected route");
+
+            this.route = event.getRoute();
+
         }
 
         @Override
         public void onLocationChanged(Location location) {
             Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
-            EventBus.getDefault().post(new LocationEvent(new GeoPoint(location.getLatitude(),location.getLongitude())));
-            for (Waypoint wp : route.getWaypoints()){
-                double distance = (wp.getGeoPoint().distanceToAsDouble(new GeoPoint(location.getLatitude(),location.getLongitude())));
-                if ( distance <= 25){
-                    Log.e("DISTANCE","" + distance);
-                    Intent intent = new Intent(getApplicationContext(), BuildingDetailScreenActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("waypoint",wp);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+            EventBus.getDefault().post(new LocationEvent(new GeoPoint(location.getLatitude(), location.getLongitude())));
+            if (route != null) {
+                for (Waypoint wp : route.getWaypoints()) {
+                    double distance = (wp.getGeoPoint().distanceToAsDouble(new GeoPoint(location.getLatitude(), location.getLongitude())));
+                    if (distance <= 25 && this.route.getWaypoints().get(this.route.getProgressionCounter()) == wp) {
+                        Log.e("DISTANCE", "" + distance);
+                        Intent intent = new Intent(getApplicationContext(), BuildingDetailScreenActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra("waypoint", wp);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "notifychannelid")
-                            .setSmallIcon(R.mipmap.app_icon)
-                            .setContentTitle(getString(R.string.app_name))
-                            .setContentText("Waypoint " + wp.getName() + " reached!")
-                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                            .setContentIntent(pendingIntent);
-                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-                    // notificationId is a unique int for each notification that you must define
-                    notificationManager.notify(0, builder.build());
-                    EventBus.getDefault().post(new WayPointEvent(wp));
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "notifychannelid")
+                                .setSmallIcon(R.mipmap.app_icon)
+                                .setContentTitle(getString(R.string.app_name))
+                                .setContentText("Waypoint " + wp.getName() + " reached!")
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .setContentIntent(pendingIntent);
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+                        // notificationId is a unique int for each notification that you must define
+                        notificationManager.notify(0, builder.build());
+                        EventBus.getDefault().post(new WayPointEvent(wp));
+                    }
                 }
             }
         }
@@ -143,7 +173,7 @@ public class LocationService extends Service {
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText("CultuurKompas Service Running ")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT).build();
-        startForeground(1,notification);
+        startForeground(1, notification);
         Log.e(TAG, "onCreate");
         initializeLocationManager();
         try {
