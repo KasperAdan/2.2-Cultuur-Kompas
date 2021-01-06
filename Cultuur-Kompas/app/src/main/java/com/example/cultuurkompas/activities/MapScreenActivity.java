@@ -148,6 +148,7 @@ public class MapScreenActivity extends AppCompatActivity {
                             public void DialogCallback(boolean okPressed) {
                                 if (okPressed) {
                                     startRoute(route);
+                                    drawMarkers();
                                 } else {
                                     DataConnector.getInstance().resetRoute(route);
                                 }
@@ -257,44 +258,7 @@ public class MapScreenActivity extends AppCompatActivity {
             mapController.setZoom(20);
         }
 
-        if(!markers.isEmpty()){
-            for(Marker marker : markers){
-                mapView.getOverlays().remove(marker);
-            }
-
-        }
-
-        if (selectedRoute != null) {
-            for (Waypoint waypoint : selectedRoute.getWaypoints()) {
-//        mapView.getOverlays().remove(mapView.getOverlays().indexOf(marker.getPosition().equals(waypoint.getGeoPoint())));
-                Marker marker = new Marker(mapView);
-                marker.setPosition(waypoint.getGeoPoint());
-                markers.add(marker);
-                if (!waypoint.isVisited()) {
-                    Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
-                    Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                    DrawableCompat.setTint(wrappedDrawable, Color.GRAY);
-                    marker.setIcon(wrappedDrawable);
-                } else {
-                    Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
-                    Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                    DrawableCompat.setTint(wrappedDrawable, Color.GREEN);
-                    marker.setIcon(wrappedDrawable);
-                }
-                marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker, MapView mapView) {
-                        Intent intent = new Intent(MapScreenActivity.this, BuildingDetailScreenActivity.class);
-                        intent.putExtra("waypoint", waypoint);
-                        startActivity(intent);
-                        return false;
-                    }
-                });
-                mapView.getOverlays().add(marker);
-
-                mapView.invalidate();
-            }
-        }
+        drawMarkers();
 
         mapView.onResume();
     }
@@ -416,6 +380,47 @@ public class MapScreenActivity extends AppCompatActivity {
         if (line != null) {
             mapView.getOverlayManager().add(line);
             mapView.invalidate();
+        }
+    }
+
+    private void drawMarkers(){
+        if(!markers.isEmpty()){
+            for(Marker marker : markers){
+                mapView.getOverlays().remove(marker);
+            }
+
+        }
+
+        if (selectedRoute != null) {
+            for (Waypoint waypoint : selectedRoute.getWaypoints()) {
+//        mapView.getOverlays().remove(mapView.getOverlays().indexOf(marker.getPosition().equals(waypoint.getGeoPoint())));
+                Marker marker = new Marker(mapView);
+                marker.setPosition(waypoint.getGeoPoint());
+                markers.add(marker);
+                if (!waypoint.isVisited()) {
+                    Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
+                    Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+                    DrawableCompat.setTint(wrappedDrawable, Color.GRAY);
+                    marker.setIcon(wrappedDrawable);
+                } else {
+                    Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
+                    Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+                    DrawableCompat.setTint(wrappedDrawable, Color.GREEN);
+                    marker.setIcon(wrappedDrawable);
+                }
+                marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker, MapView mapView) {
+                        Intent intent = new Intent(MapScreenActivity.this, BuildingDetailScreenActivity.class);
+                        intent.putExtra("waypoint", waypoint);
+                        startActivity(intent);
+                        return false;
+                    }
+                });
+                mapView.getOverlays().add(marker);
+
+                mapView.invalidate();
+            }
         }
     }
 }
