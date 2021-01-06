@@ -119,6 +119,7 @@ public class MapScreenActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent.getStringExtra("routestart") != null) {
+
             DataConnector.getInstance().EndActiveRoute();
             startRoute(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestart")));
             EventBus.getDefault().post(new LocationService.RouteEvent(DataConnector.getInstance().getRouteWithName(intent.getStringExtra("routestart"))));
@@ -146,7 +147,9 @@ public class MapScreenActivity extends AppCompatActivity {
                         AlertDialog routeAlertDialog = new AlertDialog(this, "Route", getResources().getText(R.string.routeContinueText).toString(), new DialogListener() {
                             @Override
                             public void DialogCallback(boolean okPressed) {
+                                Log.d("DIalog","Yeet");
                                 if (okPressed) {
+                                    Log.d("DIalog","Yes");
                                     startRoute(route);
                                     drawMarkers();
                                 } else {
@@ -280,13 +283,6 @@ public class MapScreenActivity extends AppCompatActivity {
         line.setPoints(geoPoints);
         line.setGeodesic(true);
         line.setInfoWindow(new BasicInfoWindow(R.layout.bonuspack_bubble, mapView));
-        line.setOnClickListener(new Polyline.OnClickListener() {
-            @Override
-            public boolean onClick(Polyline polyline, MapView mapView, GeoPoint eventPos) {
-                Toast.makeText(getApplicationContext(), "WAT KLIK JE", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
 
         return line;
     }
