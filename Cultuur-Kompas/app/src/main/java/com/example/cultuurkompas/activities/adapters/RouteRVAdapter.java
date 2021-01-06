@@ -27,6 +27,10 @@ public class RouteRVAdapter extends RecyclerView.Adapter<RouteRVAdapter.ViewHold
         this.routes = DataConnector.getInstance().getRoutes();
     }
 
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
