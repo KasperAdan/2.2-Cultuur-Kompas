@@ -198,6 +198,7 @@ public class MapScreenActivity extends AppCompatActivity {
         mapView.setTag("mapView");
         mapView.setMultiTouchControls(true);
         marker = new Marker(mapView);
+        marker.setOnMarkerClickListener((marker, mapView) -> false);
 //        marker.setPosition(cityGeoPoint);
         marker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_my_location, null));
         mapView.getOverlays().add(marker);
@@ -217,16 +218,15 @@ public class MapScreenActivity extends AppCompatActivity {
 
 
     public void onButtonCurrentLocationClick(View view) {
-        Toast.makeText(this, "CURRENT LOCATION", Toast.LENGTH_SHORT).show();
         if (myLocation != null) {
             mapController.setCenter(myLocation);
         }
 
         // TESTING
-        if (selectedRoute != null) {
-            reachedWaypoint();
+//        if (selectedRoute != null) {
+//            reachedWaypoint();
 //            stopCurrentRoute();
-        }
+//        }
     }
 
     public void onButtonHelpMapClick(View view) {
@@ -337,7 +337,6 @@ public class MapScreenActivity extends AppCompatActivity {
         OpenRouteServiceConnection.getInstance().getRouteInfo("5b3ce3597851110001cf62488c97c6c701f64827afad2deda82ec4da", myGeoPoint, waypoint.getGeoPoint(), TravelType.FOOT_WALKING, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                //TODO handle error
                 Log.e("MAP", "ERROR on route response");
             }
 
