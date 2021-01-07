@@ -42,7 +42,7 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Waypoint building = buildings.get(position);
-        Picasso.get().load(building.getImgLink()).into(holder.image);
+        Picasso.get().load(building.getImgLink()).fit().into(holder.image);
         holder.name.setText(building.getName());
     }
 

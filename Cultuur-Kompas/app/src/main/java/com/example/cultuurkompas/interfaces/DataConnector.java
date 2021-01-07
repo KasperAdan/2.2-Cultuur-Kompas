@@ -94,8 +94,8 @@ public class DataConnector {
 
 
         routes = new ArrayList<>();
-        routes.add(routeNormal);
         routes.add(routeShort);
+        routes.add(routeNormal);
         routes.add(routeLong);
     }
 

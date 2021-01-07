@@ -20,7 +20,7 @@ public class Waypoint implements Serializable {
         this.name = name;
         this.geoPoint = new GeoPoint(longitude, latitude);
         this.description = description;
-        this.imgLink = "https://photoeditor.polarr.co/img/onboarding/02_01_preview_2x.jpg";
+        this.imgLink = "https://images.unsplash.com/photo-1470219556762-1771e7f9427d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80";
         this.tags = new ArrayList<>();
         this.tags.add("tag 1");
         this.tags.add("tag 2");

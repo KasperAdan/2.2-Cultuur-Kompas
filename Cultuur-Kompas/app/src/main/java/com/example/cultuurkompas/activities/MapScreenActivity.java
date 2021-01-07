@@ -67,6 +67,7 @@ public class MapScreenActivity extends AppCompatActivity {
     private LocationService locationService;
     private LocationManager locationManager;
     private Marker marker;
+    private Intent serviceIntent;
     private ArrayList<Marker> markers;
     private boolean finished = false;
     private List<GeoPoint> routeGeoPoints;
@@ -110,6 +111,11 @@ public class MapScreenActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(serviceIntent);
+    }
 
     @Override
     protected void onStart() {
@@ -207,9 +213,9 @@ public class MapScreenActivity extends AppCompatActivity {
         mapController.setZoom(17.5);
         mapController.setCenter(cityGeoPoint);
 
-        Intent intent = new Intent(this, LocationService.class);
+        serviceIntent = new Intent(this, LocationService.class);
 //        intent.putExtra("geoFenceRoute", DataConnector.getInstance().getRoutes().get(0));
-        startForegroundService(intent);
+        startForegroundService(serviceIntent);
 
         if (DataConnector.getInstance().getLastKnownLocation() != null) {
             onLocationEvent(new LocationService.LocationEvent(DataConnector.getInstance().getLastKnownLocation()));
