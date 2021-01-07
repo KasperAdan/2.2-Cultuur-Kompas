@@ -42,6 +42,19 @@ public class Route implements Serializable {
 
     public void setFinished(boolean state) { finished = state; }
 
+    public void checkFinished(){
+        int finishedCounter = 0;
+        for (Waypoint waypoint: waypoints){
+            if (waypoint.isVisited()){
+                finishedCounter ++;
+            }
+        }
+
+        if (progressionCounter == finishedCounter){
+            finished = true;
+        }
+    }
+
     public int getProgressionCounter() { return progressionCounter; }
 
     public void resetRouteProgression() {
