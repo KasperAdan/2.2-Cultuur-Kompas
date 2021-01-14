@@ -12,7 +12,7 @@
     <string name="routeDetailScreenTitle">Title</string>
     <string name="routeDetailScreenStartButton">Start Route</string>
 
-    <string name="routeScreenTitle">Title</string>;
+    <string name="routeScreenTitle">Routes</string>;
     <string name="routeScreenAll">ALL</string>
     <string name="routeScreenComplete">COMPLETE</string>
     <string name="routeScreenIncomplete">INCOMPLETE</string>
@@ -63,5 +63,15 @@
     <string name="routeContinueText">Would you like to continue the route?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="ShortRouteInfo">Short route through Breda</string>
+    <string name="NormalRouteInfo">The historical kilometer</string>
+    <string name="LongRouteInfo">Two times the historical kilometer</string>
+    <string name="ShortRoute">Short route</string>
+    <string name="NormalRoute">Normal route</string>
+    <string name="LongRoute">Long route</string>
+    <string name="Reached">Reached</string>
+    <string name="Started">Started</string>
+    <string name="Halfway">Halfway</string>
+    <string name="Finished">Finished</string>
 
 </resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cultuur Kompas</string>
-    <string name="buildingDetailsScreenPlaceholder">Placeholder</string>
     <string name="buildingDetailScreenBezocht">Bezocht</string>
     <string name="buildingScreenBuildingScreen">Bouwscherm</string>
     <string name="buildingScreenAll">ALLE</string>
@@ -9,7 +8,7 @@
     <string name="buildingScreenUnvisited">ONBEZOCHT</string>
     <string name="routeDetailScreenTitle">Titel</string>
     <string name="routeDetailScreenStartButton">Start Route</string>
-    <string name="routeScreenTitle">Title</string>
+    <string name="routeScreenTitle">Routes</string>
     <string name="routeScreenAll">ALLE</string>
     <string name="routeScreenComplete">AFGEROND</string>
     <string name="routeScreenIncomplete">NIET AFGEROND</string>
@@ -55,4 +54,14 @@
     <string name="routeContinueText">Wilt u de gestarte route hervatten?</string>
     <string name="no">Nee</string>
     <string name="yes">Ja</string>
+    <string name="ShortRouteInfo">Korte route door Breda</string>
+    <string name="NormalRouteInfo">De historische kilometer</string>
+    <string name="LongRouteInfo">Twee keer de historische kilometer</string>
+    <string name="ShortRoute">Korte route</string>
+    <string name="NormalRoute">Normale route</string>
+    <string name="LongRoute">Lange route</string>
+    <string name="Reached">Aangekomen bij</string>
+    <string name="Started">Gestart</string>
+    <string name="Halfway">Halverwege</string>
+    <string name="Finished">Afgerond</string>
 </resources>

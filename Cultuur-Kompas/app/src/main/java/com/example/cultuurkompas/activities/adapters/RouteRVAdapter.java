@@ -1,6 +1,8 @@
 package com.example.cultuurkompas.activities.adapters;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cultuurkompas.R;
@@ -22,9 +25,14 @@ import java.util.List;
 public class RouteRVAdapter extends RecyclerView.Adapter<RouteRVAdapter.ViewHolder> {
 
     private List<Route> routes;
-
-    public RouteRVAdapter() {
+    private Context context;
+    public RouteRVAdapter(Context context) {
         this.routes = DataConnector.getInstance().getRoutes();
+        this.context=context;
+    }
+
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
     }
 
     @NonNull
@@ -40,6 +48,10 @@ public class RouteRVAdapter extends RecyclerView.Adapter<RouteRVAdapter.ViewHold
         Picasso.get().load(route.getImgLink()).into(holder.image);
         holder.name.setText(route.getName());
         holder.info.setText(route.getInfo());
+        if(route.isStarted()){
+            holder.name.setTextColor(ContextCompat.getColor(context, R.color.gold_tips));
+            holder.info.setTextColor(ContextCompat.getColor(context,R.color.gold_tips));
+        }
     }
 
     @Override
@@ -48,7 +60,6 @@ public class RouteRVAdapter extends RecyclerView.Adapter<RouteRVAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
-
         ImageView image;
         TextView name;
         TextView info;

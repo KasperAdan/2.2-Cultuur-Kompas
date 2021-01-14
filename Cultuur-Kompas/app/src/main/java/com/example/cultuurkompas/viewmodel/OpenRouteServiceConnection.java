@@ -55,7 +55,6 @@ public class OpenRouteServiceConnection {
         bodyString += "]}";
 
         RequestBody requestBody = RequestBody.create(bodyString, JSON);
-       /* RequestBody body = RequestBody.create(geoPoints.toString(), MediaType.parse("text/plain"));//MediaType.parse("application/json; charset=utf-8"));*/
         Log.d(TAG, requestBody.toString());
         final Request request = new Request.Builder().url(url).post(requestBody).build();
         Call call = client.newCall(request);
@@ -82,7 +81,6 @@ public class OpenRouteServiceConnection {
                 "api_key=" + key +
                 "&address=" + address +
                 "&locality=" + city;
-        //final String url = "https://api.openrouteservice.org/geocode/search/structured?api_key=5b3ce3597851110001cf62487e88103431e54b0a846066f367b0b015&address=Reigerstraat26&locality=Bleskensgraaf";
         final Request request = new Request.Builder().url(url).build();
         Call call = client.newCall(request);
         call.enqueue(callback);

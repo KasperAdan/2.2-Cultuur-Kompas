@@ -20,13 +20,24 @@ public class Waypoint implements Serializable {
         this.name = name;
         this.geoPoint = new GeoPoint(longitude, latitude);
         this.description = description;
-        this.imgLink = "https://photoeditor.polarr.co/img/onboarding/02_01_preview_2x.jpg";
+        this.imgLink = checkImageLink(imgLink);
         this.tags = new ArrayList<>();
         this.tags.add("tag 1");
         this.tags.add("tag 2");
         this.tags.add("tag 3");
         visited = false;
         visited = isVisited;
+    }
+
+    private String checkImageLink(String imgLink){
+        if (imgLink == null){
+            return "https://images.unsplash.com/photo-1470219556762-1771e7f9427d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80";
+        }else if(imgLink != null && imgLink.equals("")){
+            return "https://images.unsplash.com/photo-1470219556762-1771e7f9427d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80";
+
+        }else {
+            return imgLink;
+        }
     }
 
     public int getNumber() {

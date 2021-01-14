@@ -1,6 +1,7 @@
 package com.example.cultuurkompas.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +40,7 @@ public class BuildingScreenActivity extends AppCompatActivity {
         adapter = new BuildingRVAdapter();
         rc = findViewById(R.id.rv_building_items);
         rc.setAdapter(adapter);
-        rc.setLayoutManager(new LinearLayoutManager(this));
+        rc.setLayoutManager(new GridLayoutManager(this, 2));
 
         ImageButton backButton = findViewById(R.id.btn_building_back);
         backButton.setOnClickListener(view -> super.onBackPressed());
