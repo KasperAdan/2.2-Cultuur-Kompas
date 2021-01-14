@@ -44,7 +44,6 @@ public class WaypointRVAdapter extends RecyclerView.Adapter<WaypointRVAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
-
         TextView name;
 
         public ViewHolder(@NonNull View itemView) {
@@ -52,6 +51,7 @@ public class WaypointRVAdapter extends RecyclerView.Adapter<WaypointRVAdapter.Vi
             name = itemView.findViewById(R.id.tv_waypoint_item_name);
             itemView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View view) {
             Waypoint waypoint = waypoints.get(getLayoutPosition());

@@ -43,18 +43,15 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_route_detail_screen);
         this.startButton = findViewById(R.id.btn_routedetailscreen_start);
 
-        this.startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(route.isFinished()){
-                    showRestartAlertDialog(view);
-                }
-                else if(route.isStarted()){
-                    showStopAlertDialog(view);
-                }
-                else {
-                    showStartAlertDialog(view);
-                }
+        this.startButton.setOnClickListener(view -> {
+            if(route.isFinished()){
+                showRestartAlertDialog(view);
+            }
+            else if(route.isStarted()){
+                showStopAlertDialog(view);
+            }
+            else {
+                showStartAlertDialog(view);
             }
         });
 
@@ -82,12 +79,7 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
 
         ImageButton backButton = findViewById(R.id.btn_routedetailscreen_back);
         backButton.setOnClickListener(view -> super.onBackPressed());
-        findViewById(R.id.ib_routedetailscreen_help).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onButtonHelpRouteDetailClick(view);
-            }
-        });
+        findViewById(R.id.ib_routedetailscreen_help).setOnClickListener(view -> onButtonHelpRouteDetailClick(view));
 
         if(route.isStarted()){
             startButton.setText("Stop Route");
@@ -96,26 +88,20 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
 
 
     public void showRestartAlertDialog(View view){
-        new AlertDialog(this, "ALERT", getResources().getText(R.string.routeRestartText).toString(), new DialogListener() {
-            @Override
-            public void DialogCallback(boolean okPressed) {
-                if(okPressed) {
-                    Intent mapIntent = new Intent(RouteDetailScreenActivity.this, MapScreenActivity.class);
-                    mapIntent.putExtra("routerestart", route.getName());
-                    startActivity(mapIntent);
-                }
+        new AlertDialog(this, "ALERT", getResources().getText(R.string.routeRestartText).toString(), okPressed -> {
+            if(okPressed) {
+                Intent mapIntent = new Intent(RouteDetailScreenActivity.this, MapScreenActivity.class);
+                mapIntent.putExtra("routerestart", route.getName());
+                startActivity(mapIntent);
             }
         }).show();
     }
     public void showStartAlertDialog(View view){
-        new AlertDialog(this, "ALERT", getResources().getText(R.string.routeStartText).toString(), new DialogListener() {
-            @Override
-            public void DialogCallback(boolean okPressed) {
-                if(okPressed) {
-                    Intent mapIntent = new Intent(RouteDetailScreenActivity.this, MapScreenActivity.class);
-                    mapIntent.putExtra("routestart", route.getName());
-                    startActivity(mapIntent);
-                }
+        new AlertDialog(this, "ALERT", getResources().getText(R.string.routeStartText).toString(), okPressed -> {
+            if(okPressed) {
+                Intent mapIntent = new Intent(RouteDetailScreenActivity.this, MapScreenActivity.class);
+                mapIntent.putExtra("routestart", route.getName());
+                startActivity(mapIntent);
             }
         }).show();
     }
@@ -126,14 +112,11 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
         dialog.show();
     }
     public void showStopAlertDialog(View view){
-        new AlertDialog(this, "ALERT", getResources().getText(R.string.routeStopText).toString(), new DialogListener() {
-            @Override
-            public void DialogCallback(boolean okPressed) {
-                if(okPressed) {
-                    Intent mapIntent = new Intent(RouteDetailScreenActivity.this, MapScreenActivity.class);
-                    mapIntent.putExtra("routestop", route.getName());
-                    startActivity(mapIntent);
-                }
+        new AlertDialog(this, "ALERT", getResources().getText(R.string.routeStopText).toString(), okPressed -> {
+            if(okPressed) {
+                Intent mapIntent = new Intent(RouteDetailScreenActivity.this, MapScreenActivity.class);
+                mapIntent.putExtra("routestop", route.getName());
+                startActivity(mapIntent);
             }
         }).show();
     }

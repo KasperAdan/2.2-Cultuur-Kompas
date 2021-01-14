@@ -97,20 +97,8 @@ public class MapScreenActivity extends AppCompatActivity {
                 intent.putExtra("waypoint", event.getWaypoint());
                 startActivity(intent);
 
-                /*mapView.getOverlays().remove(markers.get(selectedRoute.getProgressionCounter()-1));
-                mapView.invalidate();
-                Marker marker = new Marker(mapView);
-
-                marker.setPosition(event.getWaypoint().getGeoPoint());
-                Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
-                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                DrawableCompat.setTint(wrappedDrawable, Color.GREEN);
-                marker.setIcon(wrappedDrawable);
-                mapView.invalidate();*/
-
             }
         }
-
     }
 
     @Override
@@ -186,11 +174,7 @@ public class MapScreenActivity extends AppCompatActivity {
             return;
         }
 
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, (LocationListener) locationService);
-
         DataConnector.getInstance().getAllData(this);
-        // Enable this to reset all progress
-//        DataConnector.getInstance().resetProgression();
 
         cityGeoPoint = new GeoPoint(51.589457, 4.777006);
 
@@ -203,7 +187,6 @@ public class MapScreenActivity extends AppCompatActivity {
         mapView.setMultiTouchControls(true);
         marker = new Marker(mapView);
         marker.setOnMarkerClickListener((marker, mapView) -> false);
-//        marker.setPosition(cityGeoPoint);
         marker.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_my_location, null));
         mapView.getOverlays().add(marker);
         mapView.setBuiltInZoomControls(false);
@@ -212,13 +195,11 @@ public class MapScreenActivity extends AppCompatActivity {
         mapController.setCenter(cityGeoPoint);
 
         serviceIntent = new Intent(this, LocationService.class);
-//        intent.putExtra("geoFenceRoute", DataConnector.getInstance().getRoutes().get(0));
         startForegroundService(serviceIntent);
 
         if (DataConnector.getInstance().getLastKnownLocation() != null) {
             onLocationEvent(new LocationService.LocationEvent(DataConnector.getInstance().getLastKnownLocation()));
         }
-
     }
 
 
@@ -226,12 +207,6 @@ public class MapScreenActivity extends AppCompatActivity {
         if (myLocation != null) {
             mapController.setCenter(myLocation);
         }
-
-        // TESTING
-//        if (selectedRoute != null) {
-//            reachedWaypoint();
-//            stopCurrentRoute();
-//        }
     }
 
     public void onButtonHelpMapClick(View view) {
@@ -241,13 +216,11 @@ public class MapScreenActivity extends AppCompatActivity {
     }
 
     public void onButtonBuildingMapClick(View view) {
-        Toast.makeText(this, "BUILDINGS", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(MapScreenActivity.this, BuildingScreenActivity.class);
         startActivity(i);
     }
 
     public void onButtonRouteMapClick(View view) {
-        Toast.makeText(this, "ROUTES", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(MapScreenActivity.this, RouteScreenActivity.class);
         startActivity(i);
     }
@@ -257,8 +230,6 @@ public class MapScreenActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        Log.e("Onresume", "resume");
-
         Intent intent = getIntent();
 
         if (intent.getSerializableExtra("waypoint") != null) {
@@ -267,10 +238,7 @@ public class MapScreenActivity extends AppCompatActivity {
             mapController.setZoom(20);
         }
 
-
         drawMarkers();
-
-
         mapView.onResume();
     }
 
@@ -285,7 +253,6 @@ public class MapScreenActivity extends AppCompatActivity {
         Polyline line = new Polyline();
         line.setTitle("Road back home");
         line.setSubDescription(Polyline.class.getCanonicalName());
-        //line.setWidth(20f);
         line.getOutlinePaint().setStrokeWidth(10f);
         line.getOutlinePaint().setColor(Color.RED);
         line.setPoints(geoPoints);
@@ -393,7 +360,6 @@ public class MapScreenActivity extends AppCompatActivity {
 
         if (selectedRoute != null) {
             for (Waypoint waypoint : selectedRoute.getWaypoints()) {
-//        mapView.getOverlays().remove(mapView.getOverlays().indexOf(marker.getPosition().equals(waypoint.getGeoPoint())));
                 Marker marker = new Marker(mapView);
                 marker.setPosition(waypoint.getGeoPoint());
                 markers.add(marker);
@@ -408,14 +374,11 @@ public class MapScreenActivity extends AppCompatActivity {
                     DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(this,R.color.donker_bos_groen));
                     marker.setIcon(wrappedDrawable);
                 }
-                marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker, MapView mapView) {
-                        Intent intent = new Intent(MapScreenActivity.this, BuildingDetailScreenActivity.class);
-                        intent.putExtra("waypoint", waypoint);
-                        startActivity(intent);
-                        return false;
-                    }
+                marker.setOnMarkerClickListener((marker1, mapView) -> {
+                    Intent intent = new Intent(MapScreenActivity.this, BuildingDetailScreenActivity.class);
+                    intent.putExtra("waypoint", waypoint);
+                    startActivity(intent);
+                    return false;
                 });
                 mapView.getOverlays().add(marker);
 
@@ -437,14 +400,11 @@ public class MapScreenActivity extends AppCompatActivity {
                 }
                 marker.setIcon(wrappedDrawable);
 
-                marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker, MapView mapView) {
-                        Intent intent = new Intent(MapScreenActivity.this, BuildingDetailScreenActivity.class);
-                        intent.putExtra("waypoint", waypoint);
-                        startActivity(intent);
-                        return false;
-                    }
+                marker.setOnMarkerClickListener((marker12, mapView) -> {
+                    Intent intent = new Intent(MapScreenActivity.this, BuildingDetailScreenActivity.class);
+                    intent.putExtra("waypoint", waypoint);
+                    startActivity(intent);
+                    return false;
                 });
                 markers.add(marker);
             }

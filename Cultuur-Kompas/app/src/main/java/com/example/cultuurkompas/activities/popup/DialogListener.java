@@ -1,5 +1,5 @@
 package com.example.cultuurkompas.activities.popup;
 
 public interface DialogListener {
-    public void DialogCallback(boolean okPressed);
+    void DialogCallback(boolean okPressed);
 }

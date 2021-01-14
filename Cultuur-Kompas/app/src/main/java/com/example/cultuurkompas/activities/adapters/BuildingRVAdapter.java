@@ -24,8 +24,6 @@ public class BuildingRVAdapter extends RecyclerView.Adapter<BuildingRVAdapter.Vi
 
     private List<Waypoint> buildings;
 
-    //TODO Checkbox turns invisible when checked
-
     public BuildingRVAdapter() {
         this.buildings = DataConnector.getInstance().getWaypoints();
     }

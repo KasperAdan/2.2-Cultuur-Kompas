@@ -60,7 +60,6 @@ public class RouteRVAdapter extends RecyclerView.Adapter<RouteRVAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
-
         ImageView image;
         TextView name;
         TextView info;

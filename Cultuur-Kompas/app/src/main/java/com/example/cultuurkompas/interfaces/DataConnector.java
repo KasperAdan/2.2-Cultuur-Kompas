@@ -46,10 +46,6 @@ public class DataConnector {
     public void getAllData(Activity activity) {
         myActivity = activity;
         SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
-        /*"VVV beginpunt vanaf 2020 \r\n" +
-                "Tel: - \r\n" +
-                "Openingstijden: - \r\n" +
-                "Website: https://www.Breda.nl \r\n"*/
 
         waypoints = new ArrayList<>();
         waypoints.add(new Waypoint(1,"Stadhuis",51.588750,4.776112, "" + myActivity.getString(R.string.StadHuisInfo), "https://upload.wikimedia.org/wikipedia/commons/0/08/RM10176_Breda_-_Grote_Markt_38.jpg", null,sharedPref.getBoolean("waypoint" + 1, false)));
@@ -80,7 +76,6 @@ public class DataConnector {
         String normalRouteName = myActivity.getString(R.string.NormalRoute);
         Route routeNormal = new Route(normalRouteName, new ArrayList<>(waypoints), sharedPref.getBoolean(normalRouteName, false), sharedPref.getInt(normalRouteName + "progression", 0),sharedPref.getBoolean(normalRouteName+"start", false),"https://2.bp.blogspot.com/-T84cLT0C0SA/U954Qf_026I/AAAAAAAAG5w/wZH1oQ-zPTs/s1600/collage+1.jpg");
         routeNormal.setDescriptionAndInfo(myActivity.getString(R.string.NormalRouteInfo));
-
 
         String shortRouteName = myActivity.getString(R.string.ShortRoute);
         List<Waypoint> waypointsShort = waypoints;
@@ -166,26 +161,6 @@ public class DataConnector {
         builder.putInt(route.getName() + "progression", route.getProgressionCounter());
         builder.putBoolean(route.getName(), false);
         builder.putBoolean(route.getName()+"start", false);
-        builder.apply();
-    }
-
-    // TESTING
-    public void resetProgression(){
-        SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor builder = sharedPref.edit();
-
-        for (int i = 1; i <= waypoints.size(); i++){
-            waypoints.get(i-1).setVisited(false);
-            builder.putBoolean("waypoint" + i, false);
-        }
-
-        for(Route route : routes){
-            route.setFinished(false);
-            route.resetRouteProgression();
-            builder.putBoolean(route.getName(), false);
-            builder.putInt(route.getName() + "progression", 0);
-        }
-
         builder.apply();
     }
 

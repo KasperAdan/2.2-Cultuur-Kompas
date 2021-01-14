@@ -42,7 +42,6 @@ public class LocationService extends Service {
             this.geoPoint = geoPoint;
         }
 
-
         public GeoPoint getGeoPoint() {
             return geoPoint;
         }
