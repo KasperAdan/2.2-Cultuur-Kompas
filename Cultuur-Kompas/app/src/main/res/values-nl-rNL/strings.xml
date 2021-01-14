@@ -60,4 +60,8 @@
     <string name="ShortRoute">Korte route</string>
     <string name="NormalRoute">Normale route</string>
     <string name="LongRoute">Lange route</string>
+    <string name="Reached">Aangekomen bij</string>
+    <string name="Started">Gestart</string>
+    <string name="Halfway">Halverwege</string>
+    <string name="Finished">Afgerond</string>
 </resources>

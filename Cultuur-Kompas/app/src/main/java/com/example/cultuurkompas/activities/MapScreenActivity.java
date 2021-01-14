@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
@@ -91,6 +92,7 @@ public class MapScreenActivity extends AppCompatActivity {
         if (selectedRoute != null) {
             if (selectedRoute.getWaypoints().get(selectedRoute.getProgressionCounter()) == event.getWaypoint()) {
                 reachedWaypoint();
+                Toast.makeText(this, getString(R.string.Reached)+": "+ event.getWaypoint().getName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, BuildingDetailScreenActivity.class);
                 intent.putExtra("waypoint", event.getWaypoint());
                 startActivity(intent);
@@ -398,12 +400,12 @@ public class MapScreenActivity extends AppCompatActivity {
                 if (!waypoint.isVisited()) {
                     Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
                     Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                    DrawableCompat.setTint(wrappedDrawable, Color.GRAY);
+                    DrawableCompat.setTint(wrappedDrawable, Color.BLACK);
                     marker.setIcon(wrappedDrawable);
                 } else {
                     Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
                     Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                    DrawableCompat.setTint(wrappedDrawable, Color.GREEN);
+                    DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(this,R.color.donker_bos_groen));
                     marker.setIcon(wrappedDrawable);
                 }
                 marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
@@ -428,10 +430,10 @@ public class MapScreenActivity extends AppCompatActivity {
                 Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
                 Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
                 if(waypoint.isVisited()){
-                    DrawableCompat.setTint(wrappedDrawable, Color.GREEN);
+                    DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(this,R.color.donker_bos_groen));
                 }
                 else {
-                    DrawableCompat.setTint(wrappedDrawable, Color.GRAY);
+                    DrawableCompat.setTint(wrappedDrawable, Color.BLACK);
                 }
                 marker.setIcon(wrappedDrawable);
 

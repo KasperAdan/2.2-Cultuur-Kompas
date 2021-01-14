@@ -69,5 +69,9 @@
     <string name="ShortRoute">Short route</string>
     <string name="NormalRoute">Normal route</string>
     <string name="LongRoute">Long route</string>
+    <string name="Reached">Reached</string>
+    <string name="Started">Started</string>
+    <string name="Halfway">Halfway</string>
+    <string name="Finished">Finished</string>
 
 </resources>
