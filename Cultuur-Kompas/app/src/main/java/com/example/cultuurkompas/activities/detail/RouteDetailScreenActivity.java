@@ -49,7 +49,7 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
                 if(route.isFinished()){
                     showRestartAlertDialog(view);
                 }
-                else if(route.getProgressionCounter() >= 0){
+                else if(route.isStarted()){
                     showStopAlertDialog(view);
                 }
                 else {
@@ -89,7 +89,7 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
             }
         });
 
-        if(route.getProgressionCounter() >= 0){
+        if(route.isStarted()){
             startButton.setText("Stop Route");
         }
     }

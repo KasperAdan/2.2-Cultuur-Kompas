@@ -13,8 +13,9 @@ public class Route implements Serializable {
     private int progressionCounter;
     private List<String> tags;
     private boolean finished;
+    private boolean started;
 
-    public Route(String name, List<Waypoint> waypoints, boolean isFinished, int progression) {
+    public Route(String name, List<Waypoint> waypoints, boolean isFinished, int progression, boolean hasStarted) {
         this.name = name;
         this.waypoints = waypoints;
         finished = isFinished;
@@ -26,6 +27,7 @@ public class Route implements Serializable {
         tags.add("tag 1");
         tags.add("tag 2");
         tags.add("tag 3");
+        started = hasStarted;
     }
     
     public String getName() {
@@ -58,7 +60,7 @@ public class Route implements Serializable {
     public int getProgressionCounter() { return progressionCounter; }
 
     public void resetRouteProgression() {
-        progressionCounter = -1;
+        progressionCounter = 0;
     }
 
     public boolean incrementProgressionCounter() {
@@ -83,5 +85,13 @@ public class Route implements Serializable {
 
     public List<String> getTags() {
         return tags;
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 }
