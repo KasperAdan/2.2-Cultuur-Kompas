@@ -22,8 +22,7 @@
         android:theme="@style/Theme.CultuurKompas"
         android:taskAffinity="">
 
-        <service android:name=".interfaces.LocationService">
-        </service>
+        <service android:name=".interfaces.LocationService" android:stopWithTask="true"/>
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

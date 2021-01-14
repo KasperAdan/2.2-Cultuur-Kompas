@@ -114,7 +114,6 @@ public class MapScreenActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(serviceIntent);
     }
 
     @Override
