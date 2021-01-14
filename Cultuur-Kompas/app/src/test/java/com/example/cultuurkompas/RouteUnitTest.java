@@ -26,7 +26,7 @@ public class RouteUnitTest {
         waypoints.add(new Waypoint(6,"Binding van Isaac",51.588612,4.780888, "", null, null,false));
         waypoints.add(new Waypoint(7,"Beyerd",51.589667,4.781000, "", null, null,false));
 
-        route = new Route("TestRoute",waypoints,false,0);
+        route = new Route("TestRoute",waypoints,false,0,null);
     }
 
     @Test
