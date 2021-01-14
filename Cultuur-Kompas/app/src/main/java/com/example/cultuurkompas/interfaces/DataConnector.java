@@ -81,18 +81,19 @@ public class DataConnector {
         waypoints.add(new Waypoint(24,"Bevrijdingsmonument",51.588028,4.776333, "" + myActivity.getString(R.string.BevrijdingsmonumentInfo), null, null,sharedPref.getBoolean("waypoint" + 24, false)));
 
         String normalRouteName = myActivity.getString(R.string.NormalRoute);
-        Route routeNormal = new Route(normalRouteName, new ArrayList<>(waypoints), sharedPref.getBoolean(normalRouteName, false), sharedPref.getInt(normalRouteName + "progression", -1));
+        Route routeNormal = new Route(normalRouteName, new ArrayList<>(waypoints), sharedPref.getBoolean(normalRouteName, false), sharedPref.getInt(normalRouteName + "progression", 0),sharedPref.getBoolean(normalRouteName+"start", false));
         routeNormal.setDescriptionAndInfo(myActivity.getString(R.string.NormalRouteInfo));
+
 
         String shortRouteName = myActivity.getString(R.string.ShortRoute);
         List<Waypoint> waypointsShort = waypoints;
-        Route routeShort = new Route(shortRouteName, waypointsShort, sharedPref.getBoolean(shortRouteName, false), sharedPref.getInt(shortRouteName + "progression", -1));
+        Route routeShort = new Route(shortRouteName, waypointsShort, sharedPref.getBoolean(shortRouteName, false), sharedPref.getInt(shortRouteName + "progression", 0),sharedPref.getBoolean(shortRouteName+"start", false));
         routeShort.setDescriptionAndInfo(myActivity.getString(R.string.ShortRouteInfo));
 
         String longRouteName = myActivity.getString(R.string.LongRoute);
         List<Waypoint> waypointsLong = new ArrayList<>(waypoints);
         waypointsLong.addAll(waypoints);
-        Route routeLong = new Route(longRouteName, waypointsLong, sharedPref.getBoolean(longRouteName, false), sharedPref.getInt(longRouteName + "progression", -1));
+        Route routeLong = new Route(longRouteName, waypointsLong, sharedPref.getBoolean(longRouteName, false), sharedPref.getInt(longRouteName + "progression", 0),sharedPref.getBoolean(longRouteName+"start", false));
         routeLong.setDescriptionAndInfo(myActivity.getString(R.string.LongRouteInfo));
 
         routes = new ArrayList<>();
@@ -116,7 +117,9 @@ public class DataConnector {
         // Update and save the route
         if(route.incrementProgressionCounter()) {
             route.setFinished(true);
+            route.setStarted(false);
             builder.putBoolean(route.getName(), true);
+            builder.putBoolean(route.getName()+"start", false);
             route.resetRouteProgression();
         }
         builder.putInt(route.getName() + "progression", route.getProgressionCounter());
@@ -125,15 +128,39 @@ public class DataConnector {
         builder.apply();
     }
 
+    public void stopRoute(Route route){
+        route.setStarted(false);
+
+        SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor builder = sharedPref.edit();
+
+        builder.putBoolean(route.getName()+"start", false);
+
+        builder.apply();
+    }
+
+    public void startRoute(Route route){
+        route.setStarted(true);
+
+        SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor builder = sharedPref.edit();
+
+        builder.putBoolean(route.getName()+"start", true);
+
+        builder.apply();
+    }
+
     public void resetRoute(Route route){
         route.resetRouteProgression();
         route.setFinished(false);
+        route.setStarted(false);
 
         SharedPreferences sharedPref = myActivity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor builder = sharedPref.edit();
 
         builder.putInt(route.getName() + "progression", route.getProgressionCounter());
         builder.putBoolean(route.getName(), false);
+        builder.putBoolean(route.getName()+"start", false);
         builder.apply();
     }
 
@@ -151,7 +178,7 @@ public class DataConnector {
             route.setFinished(false);
             route.resetRouteProgression();
             builder.putBoolean(route.getName(), false);
-            builder.putInt(route.getName() + "progression", -1);
+            builder.putInt(route.getName() + "progression", 0);
         }
 
         builder.apply();
@@ -186,13 +213,13 @@ public class DataConnector {
 
         builder.putInt(route.getName() + "progression", route.getProgressionCounter());
         builder.apply();
+
+        startRoute(route);
     }
 
     public void EndActiveRoute() {
         for(Route route : routes){
-            if(!route.isFinished()){
-                resetRoute(route);
-            }
+            stopRoute(route);
         }
     }
 }
