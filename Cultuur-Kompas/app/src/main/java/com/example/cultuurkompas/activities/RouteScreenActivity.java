@@ -31,7 +31,7 @@ public class RouteScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_screen);
 
-        adapter = new RouteRVAdapter();
+        adapter = new RouteRVAdapter(this);
         rc = findViewById(R.id.rv_route_items);
         rc.setAdapter(adapter);
         rc.setLayoutManager(new LinearLayoutManager(this));

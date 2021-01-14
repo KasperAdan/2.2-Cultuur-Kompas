@@ -80,18 +80,20 @@ public class DataConnector {
         waypoints.add(new Waypoint(23,"Grote Markt",51.587417,4.776555, "" + myActivity.getString(R.string.GroteMarktInfo), null, null,sharedPref.getBoolean("waypoint" + 23, false)));
         waypoints.add(new Waypoint(24,"Bevrijdingsmonument",51.588028,4.776333, "" + myActivity.getString(R.string.BevrijdingsmonumentInfo), null, null,sharedPref.getBoolean("waypoint" + 24, false)));
 
-        String normalRouteName = "Normal route";
+        String normalRouteName = myActivity.getString(R.string.NormalRoute);
         Route routeNormal = new Route(normalRouteName, new ArrayList<>(waypoints), sharedPref.getBoolean(normalRouteName, false), sharedPref.getInt(normalRouteName + "progression", -1));
+        routeNormal.setDescriptionAndInfo(myActivity.getString(R.string.NormalRouteInfo));
 
-        String shortRouteName = "Short route";
+        String shortRouteName = myActivity.getString(R.string.ShortRoute);
         List<Waypoint> waypointsShort = waypoints;
         Route routeShort = new Route(shortRouteName, waypointsShort, sharedPref.getBoolean(shortRouteName, false), sharedPref.getInt(shortRouteName + "progression", -1));
+        routeShort.setDescriptionAndInfo(myActivity.getString(R.string.ShortRouteInfo));
 
-        String longRouteName = "Long route";
+        String longRouteName = myActivity.getString(R.string.LongRoute);
         List<Waypoint> waypointsLong = new ArrayList<>(waypoints);
         waypointsLong.addAll(waypoints);
         Route routeLong = new Route(longRouteName, waypointsLong, sharedPref.getBoolean(longRouteName, false), sharedPref.getInt(longRouteName + "progression", -1));
-
+        routeLong.setDescriptionAndInfo(myActivity.getString(R.string.LongRouteInfo));
 
         routes = new ArrayList<>();
         routes.add(routeShort);

@@ -20,8 +20,8 @@ public class WaypointRVAdapter extends RecyclerView.Adapter<WaypointRVAdapter.Vi
 
     private List<Waypoint> waypoints;
 
-    public WaypointRVAdapter() {
-        this.waypoints = DataConnector.getInstance().getWaypoints();
+    public WaypointRVAdapter(List<Waypoint> waypoints) {
+        this.waypoints = waypoints;
     }
 
     @NonNull

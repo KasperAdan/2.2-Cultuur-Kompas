@@ -54,4 +54,10 @@
     <string name="routeContinueText">Wilt u de gestarte route hervatten?</string>
     <string name="no">Nee</string>
     <string name="yes">Ja</string>
+    <string name="ShortRouteInfo">Korte route door Breda</string>
+    <string name="NormalRouteInfo">De historische kilometer</string>
+    <string name="LongRouteInfo">Twee keer de historische kilometer</string>
+    <string name="ShortRoute">Korte route</string>
+    <string name="NormalRoute">Normale route</string>
+    <string name="LongRoute">Lange route</string>
 </resources>

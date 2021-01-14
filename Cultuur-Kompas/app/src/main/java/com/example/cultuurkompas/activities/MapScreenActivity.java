@@ -219,6 +219,7 @@ public class MapScreenActivity extends AppCompatActivity {
         if (DataConnector.getInstance().getLastKnownLocation() != null) {
             onLocationEvent(new LocationService.LocationEvent(DataConnector.getInstance().getLastKnownLocation()));
         }
+
     }
 
 
@@ -257,6 +258,7 @@ public class MapScreenActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        Log.e("Onresume", "resume");
 
         Intent intent = getIntent();
 
@@ -266,7 +268,9 @@ public class MapScreenActivity extends AppCompatActivity {
             mapController.setZoom(20);
         }
 
+
         drawMarkers();
+
 
         mapView.onResume();
     }
@@ -421,6 +425,36 @@ public class MapScreenActivity extends AppCompatActivity {
 
                 mapView.invalidate();
             }
+        }
+        else {
+            markers.clear();
+            for(Waypoint waypoint : DataConnector.getInstance().getWaypoints()){
+                Marker marker = new Marker(mapView);
+                marker.setPosition(waypoint.getGeoPoint());
+                Drawable unwrappedDrawable = AppCompatResources.getDrawable(MapScreenActivity.this, R.drawable.icon_waypoint);
+                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+                if(waypoint.isVisited()){
+                    DrawableCompat.setTint(wrappedDrawable, Color.GREEN);
+                }
+                else {
+                    DrawableCompat.setTint(wrappedDrawable, Color.GRAY);
+                }
+                marker.setIcon(wrappedDrawable);
+
+                marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker, MapView mapView) {
+                        Intent intent = new Intent(MapScreenActivity.this, BuildingDetailScreenActivity.class);
+                        intent.putExtra("waypoint", waypoint);
+                        startActivity(intent);
+                        return false;
+                    }
+                });
+                markers.add(marker);
+            }
+
+            mapView.getOverlays().addAll(markers);
+            mapView.invalidate();
         }
     }
 }

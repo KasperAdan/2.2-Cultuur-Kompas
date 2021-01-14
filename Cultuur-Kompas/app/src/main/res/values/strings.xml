@@ -63,5 +63,11 @@
     <string name="routeContinueText">Would you like to continue the route?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="ShortRouteInfo">Short route through Breda</string>
+    <string name="NormalRouteInfo">The historical kilometer</string>
+    <string name="LongRouteInfo">Two times the historical kilometer</string>
+    <string name="ShortRoute">Short route</string>
+    <string name="NormalRoute">Normal route</string>
+    <string name="LongRoute">Long route</string>
 
 </resources>

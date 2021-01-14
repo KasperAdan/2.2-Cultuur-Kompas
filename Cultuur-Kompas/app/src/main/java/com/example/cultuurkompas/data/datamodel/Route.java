@@ -14,6 +14,11 @@ public class Route implements Serializable {
     private List<String> tags;
     private boolean finished;
 
+    public void setDescriptionAndInfo(String description) {
+        this.description = description;
+        this.info=description;
+    }
+
     public Route(String name, List<Waypoint> waypoints, boolean isFinished, int progression) {
         this.name = name;
         this.waypoints = waypoints;
@@ -84,4 +89,5 @@ public class Route implements Serializable {
     public List<String> getTags() {
         return tags;
     }
+    
 }

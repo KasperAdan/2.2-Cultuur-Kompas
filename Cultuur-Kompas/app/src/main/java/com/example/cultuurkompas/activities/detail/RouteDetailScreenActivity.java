@@ -74,7 +74,7 @@ public class RouteDetailScreenActivity extends AppCompatActivity {
             tv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             ll.addView(tv);
         }
-        WaypointRVAdapter adapter = new WaypointRVAdapter();
+        WaypointRVAdapter adapter = new WaypointRVAdapter(route.getWaypoints());
         RecyclerView rc = findViewById(R.id.rv_routedetailscreen_waypoint);
 
         rc.setAdapter(adapter);
