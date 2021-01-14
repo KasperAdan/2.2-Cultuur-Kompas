@@ -96,10 +96,18 @@ public class DataConnector {
         Route routeLong = new Route(longRouteName, waypointsLong, sharedPref.getBoolean(longRouteName, false), sharedPref.getInt(longRouteName + "progression", 0),sharedPref.getBoolean(longRouteName+"start", false));
         routeLong.setDescriptionAndInfo(myActivity.getString(R.string.LongRouteInfo));
 
+        String testRouteName = "Test route";
+        List<Waypoint> waypointsTest = new ArrayList<>();
+        waypointsTest.add(waypoints.get(0));
+        waypointsTest.add(waypoints.get(1));
+        Route testRoute = new Route(testRouteName, waypointsTest, sharedPref.getBoolean(testRouteName, false), sharedPref.getInt(testRouteName + "progression",0), sharedPref.getBoolean(testRouteName+"start", false));
+        testRoute.setDescriptionAndInfo("Test");
+
         routes = new ArrayList<>();
         routes.add(routeShort);
         routes.add(routeNormal);
         routes.add(routeLong);
+        routes.add(testRoute);
     }
 
     public List<Waypoint> getWaypoints() { return this.waypoints; }
