@@ -48,8 +48,9 @@ public class RouteRVAdapter extends RecyclerView.Adapter<RouteRVAdapter.ViewHold
         Picasso.get().load(route.getImgLink()).into(holder.image);
         holder.name.setText(route.getName());
         holder.info.setText(route.getInfo());
-        if(route.isActive()){
+        if(route.isStarted()){
             holder.name.setTextColor(ContextCompat.getColor(context, R.color.gold_tips));
+            holder.info.setTextColor(ContextCompat.getColor(context,R.color.gold_tips));
         }
     }
 
