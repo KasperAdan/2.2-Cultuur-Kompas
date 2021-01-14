@@ -24,7 +24,7 @@
         android:id="@+id/tv_building_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Building screen"
+        android:text="@string/buildingScreenBuildingScreen"
         android:textColor="@color/black"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/btn_building_back"
@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/btn_rounded"
+        android:onClick="onButtonHelpBuildingClick"
         android:src="@drawable/icon_help"
         android:tint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,8 +62,9 @@
             android:id="@+id/btn_building_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onButtonAllBuildingClick"
             android:backgroundTint="@android:color/white"
-            android:text="ALL"
+            android:text="@string/buildingScreenAll"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
@@ -70,8 +72,9 @@
             android:id="@+id/btn_building_visited"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onButtonVisitedBuildingClick"
             android:backgroundTint="@android:color/white"
-            android:text="VISITED"
+            android:text="@string/buildingScreenVisited"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
@@ -79,8 +82,9 @@
             android:id="@+id/btn_building_unvisited"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onButtonUnvistedBuildingClick"
             android:backgroundTint="@android:color/white"
-            android:text="UNVISITED"
+            android:text="@string/buildingScreenUnvisited"
             android:textColor="@color/black"
             android:textSize="14sp" />
     </LinearLayout>
